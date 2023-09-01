@@ -63,7 +63,7 @@ Open the `server` and `client` in separate VSCode workspaces or open the combine
 
 ### Purpose
 
-2-5 sentences describing what the system does
+The system is an online geosocial networking application that focuses on matching together users for the purpose of ad-hoc organised martial arts competition. It allows users to create a fighter profile, carefully browse through other profiles from the same geographical location and challenge them to a refereed contest at an agreed upon location and date. Using these fighter profiles, KO! enables users to consentually engage in friendly competition with opponents that are they decide are a good competitive fit.
 
 ### Pages
 
