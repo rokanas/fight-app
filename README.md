@@ -67,8 +67,12 @@ The system is an online geosocial networking application that focuses on matchin
 
 ### Pages
 
-* Home: 1-3 sentences describing what the page displays and what a user can do
-* Shopping cart: ...
+* Login page: where user can create user profile or log in with existing credentials
+* User profile page: where user can view their own user profile and modify any information within it
+* Profile browser page: where user can browse through public profiles of other users and issue challenges
+* Issue challenge page: where user can insert details regarding the issued challenge, such as date and location
+* Inbox page: where user can view incoming challenges from other users 
+* Settings page: where user can modify certain settings, such as changing password, making profile private or deleting it
 
 ### Entity-Relationship (ER) Diagram
 
