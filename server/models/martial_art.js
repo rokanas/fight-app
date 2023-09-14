@@ -9,7 +9,7 @@ const martialArtSchema = new mongoose.Schema({
         unique: true,
         trim: true
     },
-    Ruleset: {
+    ruleset: {
         type: String,
         required: true,
         unique: false,
