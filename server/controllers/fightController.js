@@ -1,93 +1,93 @@
 const express = require("express")
 const router = express.Router()
-const Fighter = require('../models/fighter');
+const Fight = require('../models/fight');
 
 router.use(express.json())
 
-// create new fighter
+// create new fight
 router.post('/', async (req, res) => {
     try {
-        const fighter = new Fighter(req.body);
-        await fighter.save();
-        res.status(201).json(fighter);              // new resource has been created
+        const fight = new fight(req.body);
+        await fight.save();
+        res.status(201).json(fight);              // new resource has been created
     } catch(err) {
         res.status(400).json({error: err.message}); // issue with the client's request
     }
 });
 
-// get all fighters
+// get all fights
 router.get('/', async (req, res) => {
     try {
-        const fighters = await Fighter.find();
-        res.status(200).json(fighters);             // request successful
+        const fights = await fight.find();
+        res.status(200).json(fights);             // request successful
     } catch(err) {
         res.status(500).json({error: err.message});  // internal server error
     }
 });
 
-// delete all fighters
+// delete all fights
 router.delete('/', async (req, res) => {
     try {
-        await Fighter.deleteMany({}); 
-        res.status(200).json({message: 'Fighters deleted successfully   '}); // request successful
+        await fight.deleteMany({}); 
+        res.status(200).json({message: 'Fights deleted successfully   '}); // request successful
     } catch(err) {
         res.status(500).json({error: err.message});  // internal server error
     }
 });
 
-// get fighter by id
+// get fight by id
 router.get('/:id', async (req, res) => {
     try {
-        const fighter = await Fighter.findById(req.params.id);
-        if(!fighter) {
-            return res.status(404).json({error: 'Fighter not found'}); // resource not found
+        const fight = await fight.findById(req.params.id);
+        if(!fight) {
+            return res.status(404).json({error: 'Fight not found'}); // resource not found
         }
-        res.status(200).json(fighter);               // request successful
+        res.status(200).json(fight);               // request successful
     } catch (err) {
         res.status(500).json({error: err.message});  // internal server error
     }
 });
 
-// update fighter by id
+// update fight by id
 router.put('/:id', async (req, res) => {
     try {
-        const fighter = await Fighter.findByIdAndUpdate(req.parameters.id, req.body, 
-            {new: true}                              // tell mongoose to return updated fighter, not original
+        const fight = await fight.findByIdAndUpdate(req.parameters.id, req.body, 
+            {new: true}                              // tell mongoose to return updated fight, not original
         );
-        if(!fighter) {
-            return res.status(404).json({error: 'Fighter not found'}); // resource not found
+        if(!fight) {
+            return res.status(404).json({error: 'Fight not found'}); // resource not found
         }
-        res.status(200).json(fighter);               // request successful 
+        res.status(200).json(fight);               // request successful 
     } catch (err) {
         res.status(500).json({error: err.message});  // internal server error
     }
 
 });
 
-// partially update fighter by id
+// partially update fight by id
 router.patch('/:id', async (req, res) => {
     try {
-        const fighter = await Fighter.findByIdAndUpdate(req.params.id,
+        const fight = await fight.findByIdAndUpdate(req.params.id,
             { $set: req.body },
             { new: true }
         );
-        if (!fighter) {
-          return res.status(404).json({ error: 'Fighter not found' }); // resource not found
+        if (!fight) {
+          return res.status(404).json({ error: 'Fight not found' }); // resource not found
         }
-        res.status(200).json(fighter);               // request successful
+        res.status(200).json(fight);               // request successful
     } catch (err) {
         res.status(500).json({error: err.message }); // internal server error
       }
 });
 
-// delete fighter by id
+// delete fight by id
 router.delete('/:id', async (req, res) => {
     try {
-      const fighter = await Fighter.findByIdAndDelete(req.params.id);
-      if (!fighter) {
-        return res.status(404).json({ error: 'Fighter not found' }); // resource not found
+      const fight = await fight.findByIdAndDelete(req.params.id);
+      if (!fight) {
+        return res.status(404).json({ error: 'Fight not found' }); // resource not found
       }
-      res.status(200).json({ message: 'Fighter deleted successfully' }); // request successful
+      res.status(200).json({ message: 'Fight deleted successfully' }); // request successful
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
