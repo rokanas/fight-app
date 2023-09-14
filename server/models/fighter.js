@@ -21,6 +21,10 @@ const fighterSchema = new mongoose.Schema({
     unique: false,
     trim: true
   },
+  martial_art: [{
+    type: this.schema.Types.ObjectId,
+    ref: "martial_art"
+  }],
   fight_history: [{
     type: Schema.Types.ObjectId, 
     ref: "fight"                        // find out if it's necessary to include required or unique here

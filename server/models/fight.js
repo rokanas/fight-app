@@ -27,6 +27,10 @@ date: {                                        // consider changing to email
     unique: false,
     trim: false
   },
+  martial_art: [{
+    type: this.schema.Types.ObjectId,
+    ref: "martial_art"
+  }],
   winner: {
     type: Schema.Types.ObjectId, 
     ref: "fighter"                             
