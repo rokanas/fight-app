@@ -2,34 +2,38 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Define schema for entity
-const fighterSchema = new mongoose.Schema({
-  id: {                                        // consider changing to email
+const fightSchema = new mongoose.Schema({
+id: {
     type: String,
     required: true,
     unique: true,
     trim: true
-  },
-  age: {
-    type: Number,
+    },
+date: {                                        // consider changing to email
+    type: Date,
     required: true,
     unique: false,
-    trim: true
-  },    
-  full_name: {
+    trim: false
+  },
+  location: {
     type: String,
     required: true,
     unique: false,
     trim: true
   },
-  fight_history: [{
-    type: Schema.Types.ObjectId, 
-    ref: "fight"                        // find out if it's necessary to include required or unique here
-  }],
-  bio: {
+  weight_class: {
     type: String,
     required: true,
     unique: false,
     trim: false
+  },
+  winner: {
+    type: Schema.Types.ObjectId, 
+    ref: "fighter"                             
+  },
+  loser: {
+    type: Schema.Types.ObjectId, 
+    ref: "fighter"                             
   },
   fight_record: {
     type: String,
@@ -46,6 +50,6 @@ const fighterSchema = new mongoose.Schema({
 });
 
 // Create model from schema
-const Fighter = mongoose.model('Fighter', fighterSchema);
+const Fight = mongoose.model('Fight', fightSchema);
 
-module.exports = Fighter;
+module.exports = Fight;
