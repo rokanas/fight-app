@@ -1,8 +1,8 @@
-const express = require("express")
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 const Fighter = require('../models/fighter');
 
-router.use(express.json())
+router.use(express.json());
 
 // create new fighter
 router.post('/', async (req, res) => {
@@ -35,10 +35,10 @@ router.delete('/', async (req, res) => {
     }
 });
 
-// get fighter by id
-router.get('/:id', async (req, res) => {
+// get fighter by email
+router.get('/:email', async (req, res) => {
     try {
-        const fighter = await Fighter.findById(req.params.id);
+        const fighter = await Fighter.findOne({email : req.params.email});
         if(!fighter) {
             return res.status(404).json({error: 'Fighter not found'}); // resource not found
         }
@@ -48,10 +48,12 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// update fighter by id
-router.put('/:id', async (req, res) => {
+// update fighter by email
+router.put('/:email', async (req, res) => {
     try {
-        const fighter = await Fighter.findByIdAndUpdate(req.parameters.id, req.body, 
+        const fighter = await Fighter.findOneAndUpdate(
+            {email : req.params.email}, 
+             req.body, 
             {new: true}                              // tell mongoose to return updated fighter, not original
         );
         if(!fighter) {
@@ -64,10 +66,11 @@ router.put('/:id', async (req, res) => {
 
 });
 
-// partially update fighter by id
-router.patch('/:id', async (req, res) => {
+// partially update fighter by email
+router.patch('/:email', async (req, res) => {
     try {
-        const fighter = await Fighter.findByIdAndUpdate(req.params.id,
+        const fighter = await Fighter.updateOne(
+            {email : req.params.email},
             { $set: req.body },
             { new: true }
         );
@@ -80,10 +83,10 @@ router.patch('/:id', async (req, res) => {
       }
 });
 
-// delete fighter by id
-router.delete('/:id', async (req, res) => {
+// delete fighter by email
+router.delete('/:email', async (req, res) => {
     try {
-      const fighter = await Fighter.findByIdAndDelete(req.params.id);
+      const fighter = await Fighter.findOneAndDelete({id : req.params.id});
       if (!fighter) {
         return res.status(404).json({ error: 'Fighter not found' }); // resource not found
       }

@@ -3,10 +3,16 @@ const Schema = mongoose.Schema;
 
 // Define schema for entity
 const fighterSchema = new mongoose.Schema({
-  id: {                                        // consider changing to email
+  email: {                                        // consider changing to email
     type: String,
     required: true,
     unique: true,
+    trim: true
+  },
+  password: {
+    type: String,
+    required: true,
+    unique: false,
     trim: true
   },
   age: {
@@ -21,8 +27,14 @@ const fighterSchema = new mongoose.Schema({
     unique: false,
     trim: true
   },
+  sex : {
+    type: String,
+    required: true,
+    unique: false,
+    trim: true
+  },
   martial_art: [{
-    type: this.schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "martial_art"
   }],
   fight_history: [{
@@ -35,9 +47,15 @@ const fighterSchema = new mongoose.Schema({
     unique: false,
     trim: false
   },
-  fight_record: {
+  location: {
     type: String,
     required: true,
+    unique: false,
+    trim: false
+  },
+  fight_record: {
+    type: String,
+    required: false,
     unique: false,
     trim: false
   },
@@ -46,7 +64,13 @@ const fighterSchema = new mongoose.Schema({
     required: true,
     unique: false,
     trim: false                 // consider removing trims and uniques where not required
-  }
+  },
+  height: {
+    type: Number,
+    required: true,
+    unique: false,
+    trim: true
+  },
 });
 
 // Create model from schema

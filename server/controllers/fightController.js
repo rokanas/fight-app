@@ -1,13 +1,13 @@
-const express = require("express")
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 const Fight = require('../models/fight');
 
-router.use(express.json())
+router.use(express.json());
 
 // create new fight
 router.post('/', async (req, res) => {
     try {
-        const fight = new fight(req.body);
+        const fight = new Fight(req.body);
         await fight.save();
         res.status(201).json(fight);              // new resource has been created
     } catch(err) {
@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
 // get all fights
 router.get('/', async (req, res) => {
     try {
-        const fights = await fight.find();
+        const fights = await Fight.find();
         res.status(200).json(fights);             // request successful
     } catch(err) {
         res.status(500).json({error: err.message});  // internal server error
@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
 // delete all fights
 router.delete('/', async (req, res) => {
     try {
-        await fight.deleteMany({}); 
+        await Fight.deleteMany({}); 
         res.status(200).json({message: 'Fights deleted successfully   '}); // request successful
     } catch(err) {
         res.status(500).json({error: err.message});  // internal server error
@@ -38,7 +38,7 @@ router.delete('/', async (req, res) => {
 // get fight by id
 router.get('/:id', async (req, res) => {
     try {
-        const fight = await fight.findById(req.params.id);
+        const fight = await Fight.findOne({id :req.params.id});
         if(!fight) {
             return res.status(404).json({error: 'Fight not found'}); // resource not found
         }
@@ -51,7 +51,9 @@ router.get('/:id', async (req, res) => {
 // update fight by id
 router.put('/:id', async (req, res) => {
     try {
-        const fight = await fight.findByIdAndUpdate(req.parameters.id, req.body, 
+        const fight = await Fight.findOneAndUpdate(
+            {id : req.params.id} ,
+            req.body, 
             {new: true}                              // tell mongoose to return updated fight, not original
         );
         if(!fight) {
@@ -67,7 +69,8 @@ router.put('/:id', async (req, res) => {
 // partially update fight by id
 router.patch('/:id', async (req, res) => {
     try {
-        const fight = await fight.findByIdAndUpdate(req.params.id,
+        const fight = await Fight.updateOne(
+            {id : req.params.id},
             { $set: req.body },
             { new: true }
         );
@@ -83,7 +86,7 @@ router.patch('/:id', async (req, res) => {
 // delete fight by id
 router.delete('/:id', async (req, res) => {
     try {
-      const fight = await fight.findByIdAndDelete(req.params.id);
+      const fight = await Fight.findOneAndDelete({id :req.params.id});
       if (!fight) {
         return res.status(404).json({ error: 'Fight not found' }); // resource not found
       }
