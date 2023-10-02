@@ -10,7 +10,7 @@ const martialArtController = require('./controllers/martialArtController');
 const dateController = require('./controllers/dateController');
 
 // Variables
-const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/animalDevelopmentDB';
+const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/fightAppDB';
 const port = process.env.PORT || 3000;
 
 // Connect to MongoDB
@@ -35,10 +35,6 @@ app.options('*', cors());
 app.use(cors());
 
 // Import routes
-/* app.get('/api', function(req, res) {
-    res.json({'message': 'Welcome to your DIT342 backend ExpressJS project!'});
-}); */
-
 app.use('/api/fighter',fighterController);
 app.use('/api/date',dateController);
 app.use('/api/fight',fightController);
@@ -72,6 +68,10 @@ app.use(function(err, req, res, next) {
     }
     res.status(err.status || 500);
     res.json(err_res);
+});
+
+app.get('/api', function(req, res) {
+    res.json({'message': 'Welcome to your DIT342 backend ExpressJS project!'});
 });
 
 app.listen(port, function(err) {

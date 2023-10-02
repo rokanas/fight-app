@@ -8,20 +8,15 @@ const router = express.Router();
 // Middleware to parse JSON requests
 router.use(express.json());
 
-router.post('/', async (req,res) => {
-    try{
-        const newMartialArt = new martialArt({
-            name: req.body.name,
-            ruleset: req.body.ruleset
-    });
-        await newMartialArt.save();
-        // New martial art has been created
-        res.status(201).json(newMartialArt);
-    } catch(err){
-        // Wrong client request
-        res.status(400).json({error: err.message});
+
+router.post('/', async (req, res) => {
+    try {
+        const newMartialArt = new martialArt(req.body);
+        await  newMartialArt.save();
+        res.status(201).json(newMartialArt);              // new resource has been created
+    } catch(err) {
+        res.status(400).json({error: err.message}); // issue with the client's request
     }
-    
 });
 
 router.get('/', async (req,res) => {
@@ -37,7 +32,7 @@ router.delete('/', async (req,res) => {
     try{
         await martialArt.deleteMany({});
         // Martial Art has been deleted
-        res.status(200).json({message : "Martial arts deleted successfully"});
+        res.status(200).json({message : "Martial Arts deleted successfully"});
     }catch(err){
         // Wrong client request
         res.status(400).json({error: err.message});
@@ -49,7 +44,7 @@ router.get('/:name', async (req,res) =>{
     // This checks if there is a martial art with that specific name
     // P.S. in js undefined,null,0, and empty strings are all considered FALSE
     if(!newMartialArt){
-        res.status(404).send({message : "The requested martial arts does not exist!"});
+        res.status(404).send({message : "The requested Martial Art does not exist!"});
         return;
     }
     res.status(200).send(newMartialArt);
@@ -65,7 +60,7 @@ router.put('/:name', async (req,res) => {
         );
         // Checks the existence of the martial art with the requested name
         if(!newMartialArt){
-            res.status(404).send({message : "The requested martial arts does not exist!"});
+            res.status(404).send({message : "The requested Martial Art does not exist!"});
             return;
         }
         res.status(200).send(newMartialArt);
@@ -95,7 +90,7 @@ router.patch('/:name', async (req,res) => {
         if(Object.keys(req.body).length === 1 && req.body.name){
             const newMartialArt = await martialArt.updateOne({name : req.params.name}, {name : req.body.name}, {new : true});
             if(!newMartialArt){
-                res.status(404).send({message : "Martial art not found"});
+                res.status(404).send({message : "Martial Art not found"});
                 return;
             }
             res.status(200).send(newMartialArt);
@@ -104,7 +99,7 @@ router.patch('/:name', async (req,res) => {
         if(Object.keys(req.body).length === 1 && req.body.ruleset){
             const newMartialArt = await martialArt.updateOne({name : req.params.name}, {ruleset : req.body.ruleset}, {new : true});
             if(!newMartialArt){
-                res.status(404).send({message : "Martial art not found"});
+                res.status(404).send({message : "Martial At not found"});
                 return;
             }
             res.status(200).send(newMartialArt);
@@ -120,11 +115,11 @@ router.delete('/:name', async (req,res) => {
     try{
         const newMartialArt = await martialArt.findOneAndDelete({name : req.params.name});
         if(!newMartialArt){
-            res.status(404).send({message : "Martial art not found"});
+            res.status(404).send({message : "Martial Art not found"});
             return;
         }
         // Martial Art has been deleted
-        res.status(200).json({ message: 'Martial art deleted successfully' });
+        res.status(200).json({ message: 'Martial Art deleted successfully' });
         
     }catch(err){
         // Wrong client request

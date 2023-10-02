@@ -16,8 +16,7 @@ const dateSchema = new mongoose.Schema({
     trim: false
   },
   fighters: [{
-    type: Schema.Types.ObjectId,
-    ref: "fighter"
+    type: String
   }],
   location: {
     type: String,

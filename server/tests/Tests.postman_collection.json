@@ -1,16 +1,16 @@
 {
 	"info": {
-		"_postman_id": "35e0f34c-9aa0-4a27-885e-44637b9c6979",
+		"_postman_id": "f860e5f8-4de6-4c39-ae8c-cbf7de89dbcc",
 		"name": "Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29845206"
+		"_exporter_id": "29533952"
 	},
 	"item": [
 		{
 			"name": "Martial Art",
 			"item": [
 				{
-					"name": "Create new martial art",
+					"name": "Create new martial art 1",
 					"event": [
 						{
 							"listen": "test",
@@ -63,6 +63,59 @@
 					"response": []
 				},
 				{
+					"name": "Create new martial art 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 201\", function () {",
+									"  pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Response to be json\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Response to have all attributes\", function(){",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.have.property('name');",
+									"    pm.expect(responseData).to.have.property('ruleset');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n    \"name\": \"Wrestling\",\r\n    \"ruleset\": \"Wrestling ruleset\"\r\n}\r\n\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/martial-art",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"martial-art"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Read all martial arts",
 					"event": [
 						{
@@ -89,49 +142,6 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3000/api/martial-art",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"martial-art"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete all martial arts",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 200\",function(){",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"pm.test(\"Response to have only one message as property\", function(){",
-									"    const responseData = pm.response.json();",
-									"    pm.expect(responseData).to.have.property(\"message\");",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -240,7 +250,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"Boxing1\",\r\n    \"ruleset\" : \"Boxing ruleset1\"\r\n}"
+							"raw": "{\r\n    \"name\" : \"Kickboxing\",\r\n    \"ruleset\" : \"Kickboxing ruleset\"\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/martial-art/Boxing",
@@ -288,10 +298,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"Boxing1\"\r\n}"
+							"raw": "{\r\n    \"ruleset\" : \"New wrestling ruleset\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/martial-art/Boxing",
+							"raw": "http://localhost:3000/api/martial-art/Wrestling",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -300,7 +310,7 @@
 							"path": [
 								"api",
 								"martial-art",
-								"Boxing"
+								"Wrestling"
 							]
 						}
 					},
@@ -336,10 +346,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"Boxing\"\r\n}"
+							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/martial-art/Boxing",
+							"raw": "http://localhost:3000/api/martial-art/Wrestling",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -348,7 +358,50 @@
 							"path": [
 								"api",
 								"martial-art",
-								"Boxing"
+								"Wrestling"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete all martial arts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\",function(){",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response to have only one message as property\", function(){",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData).to.have.property(\"message\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/martial-art",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"martial-art"
 							]
 						}
 					},
@@ -360,7 +413,7 @@
 			"name": "Fighter",
 			"item": [
 				{
-					"name": "Create new fighter",
+					"name": "Create new fighter 1",
 					"event": [
 						{
 							"listen": "test",
@@ -402,7 +455,127 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"example@email.com\",\r\n    \"password\" : \"Example@123\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Arvin Rahimi\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 83,\r\n    \"height\" : 185\r\n}"
+							"raw": "{\r\n    \"email\" : \"example@email.com\",\r\n    \"password\" : \"Example@123\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Arvin Rahimi\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 83,\r\n    \"height\" : 185\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fighter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new fighter 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('email');\r",
+									"    pm.expect(responseData).to.have.property('password');\r",
+									"    pm.expect(responseData).to.have.property('age');\r",
+									"    pm.expect(responseData).to.have.property('full_name');\r",
+									"    pm.expect(responseData).to.have.property('sex');\r",
+									"    pm.expect(responseData).to.have.property('bio');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('fight_record');\r",
+									"    pm.expect(responseData).to.have.property('weight');\r",
+									"    pm.expect(responseData).to.have.property('height');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"rokanasc94@hotmail.com\",\r\n    \"password\" : \"Doom\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Kostas Rokanas\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 78,\r\n    \"height\" : 174\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fighter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new fighter 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('email');\r",
+									"    pm.expect(responseData).to.have.property('password');\r",
+									"    pm.expect(responseData).to.have.property('age');\r",
+									"    pm.expect(responseData).to.have.property('full_name');\r",
+									"    pm.expect(responseData).to.have.property('sex');\r",
+									"    pm.expect(responseData).to.have.property('bio');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('fight_record');\r",
+									"    pm.expect(responseData).to.have.property('weight');\r",
+									"    pm.expect(responseData).to.have.property('height');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"bob@bobson.com\",\r\n    \"password\" : \"bobbyboy\",\r\n    \"age\" : 88,\r\n    \"full_name\" : \"Bob Bobson\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"I'm a wrestler\",\r\n    \"location\" : \"Stockholm\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 88,\r\n    \"height\" : 188\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fighter",
@@ -469,18 +642,24 @@
 					"response": []
 				},
 				{
-					"name": "Delete all fighters",
+					"name": "Get all fighters by location",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response status code is 200\",function(){\r",
+									"pm.test(\"Response status code is 200\", function(){\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
-									"pm.test(\"Response to have only one message as property\", function(){\r",
+									"\r",
+									"pm.test(\"Response to be json\",function(){\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response to be an array\",function(){\r",
 									"    const responseData = pm.response.json();\r",
-									"    pm.expect(responseData).to.have.property(\"message\");\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -488,20 +667,10 @@
 						}
 					],
 					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
+						"method": "GET",
+						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/fighter",
+							"raw": "http://localhost:3000/api/fighter/location/Gothenburg",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -509,7 +678,9 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"fighter"
+								"fighter",
+								"location",
+								"Gothenburg"
 							]
 						}
 					},
@@ -543,7 +714,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/fighter/example@email.com",
+							"raw": "http://localhost:3000/api/fighter/email/example@email.com",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -552,6 +723,7 @@
 							"path": [
 								"api",
 								"fighter",
+								"email",
 								"example@email.com"
 							]
 						}
@@ -602,7 +774,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"example@email.com\",\r\n    \"password\" : \"Example@123\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Arvin Rahimi\",\r\n    \"sex\" : \"M\",\r\n    \"martial_art\" : [\"650c531790e2c9a8226e50cd\"],\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 83,\r\n    \"height\" : 185\r\n}"
+							"raw": "{\r\n    \"email\" : \"example@email.com\",\r\n    \"password\" : \"Example@123\",\r\n    \"age\" : 25,\r\n    \"full_name\" : \"Arvin Rahimi\",\r\n    \"sex\" : \"M\",\r\n    \"martial_art\" : [\"650c531790e2c9a8226e50cd\"],\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 83,\r\n    \"height\" : 185\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fighter/example@email.com",
@@ -649,10 +821,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"weight\" : 85\r\n}"
+							"raw": "{\r\n    \"age\" : 29\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/fighter/example@email.com",
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -661,25 +833,339 @@
 							"path": [
 								"api",
 								"fighter",
-								"example@email.com"
+								"rokanasc94@hotmail.com"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Delete a specific fighter",
+					"name": "Create new martial art 1",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response status code is 200\",function(){\r",
+									"",
+									"pm.test(\"Response status code is 201\", function () {",
+									"  pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Response to be json\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Response to have all attributes\", function(){",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.have.property('name');",
+									"    pm.expect(responseData).to.have.property('ruleset');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n    \"name\": \"Boxing\",\r\n    \"ruleset\": \"Boxing ruleset\"\r\n}\r\n\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/martial-art",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"martial-art"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new martial art 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 201\", function () {",
+									"  pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Response to be json\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Response to have all attributes\", function(){",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.have.property('name');",
+									"    pm.expect(responseData).to.have.property('ruleset');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Brazilian Jiu Jitsu\",\r\n    \"ruleset\": \"Brazilian Jiu Jitsu ruleset\"\r\n}\r\n\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/martial-art",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"martial-art"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add martial art by name 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 201\", function () {",
+									"  pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Response to be json\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Response to have all attributes\", function(){",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.have.property('email');",
+									"    pm.expect(responseData).to.have.property('password');",
+									"    pm.expect(responseData).to.have.property('age');",
+									"    pm.expect(responseData).to.have.property('full_name');",
+									"    pm.expect(responseData).to.have.property('sex');",
+									"    pm.expect(responseData).to.have.property('bio');",
+									"    pm.expect(responseData).to.have.property('location');",
+									"    pm.expect(responseData).to.have.property('fight_record');",
+									"    pm.expect(responseData).to.have.property('martial_art');",
+									"    pm.expect(responseData).to.have.property('weight');",
+									"    pm.expect(responseData).to.have.property('height');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Boxing\"\r\n}   "
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/martial-art",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"martial-art"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add martial art by name 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 201\", function () {",
+									"  pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Response to be json\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Response to have all attributes\", function(){",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.have.property('email');",
+									"    pm.expect(responseData).to.have.property('password');",
+									"    pm.expect(responseData).to.have.property('age');",
+									"    pm.expect(responseData).to.have.property('full_name');",
+									"    pm.expect(responseData).to.have.property('sex');",
+									"    pm.expect(responseData).to.have.property('bio');",
+									"    pm.expect(responseData).to.have.property('location');",
+									"    pm.expect(responseData).to.have.property('fight_record');",
+									"    pm.expect(responseData).to.have.property('martial_art');",
+									"    pm.expect(responseData).to.have.property('weight');",
+									"    pm.expect(responseData).to.have.property('height');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Brazilian Jiu Jitsu\"\r\n}   "
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/martial-art",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"martial-art"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all martial arts in fighter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function(){\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
-									"pm.test(\"Response to have only one message as property\", function(){\r",
+									"\r",
+									"pm.test(\"Response to be json\",function(){\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response to be an array\",function(){\r",
 									"    const responseData = pm.response.json();\r",
-									"    pm.expect(responseData).to.have.property(\"message\");\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/martial-art",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"martial-art"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get specific martial art in fighter by name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response to be json\",function(){\r",
+									"    pm.response.to.be.json;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/martial-art/Brazilian%20Jiu%20Jitsu",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"martial-art",
+								"Brazilian%20Jiu%20Jitsu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete specific martial art in fighter by name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 204\",function(){",
+									"    pm.response.to.have.status(204);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -696,7 +1182,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/fighter/example@email.com",
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/martial-art/Brazilian%20Jiu%20Jitsu",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -705,19 +1191,59 @@
 							"path": [
 								"api",
 								"fighter",
-								"example@email.com"
+								"rokanasc94@hotmail.com",
+								"martial-art",
+								"Brazilian%20Jiu%20Jitsu"
 							]
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "Fight",
-			"item": [
+				},
 				{
-					"name": "Create new fight",
+					"name": "Delete all martial arts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\",function(){",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response to have only one message as property\", function(){",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData).to.have.property(\"message\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/martial-art",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"martial-art"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new fight 1",
 					"event": [
 						{
 							"listen": "test",
@@ -755,6 +1281,965 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id\" : \"01\",\r\n    \"date\" : \"2023-12-20T18:00:00Z\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight_class\" : \"Light heavyweight\",\r\n    \"fighters\" : \"6512e20a2106bba14e561d2a\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fight",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new fight 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('id');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('weight_class');\r",
+									"    pm.expect(responseData).to.have.property('fighters');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : \"02\",\r\n    \"date\" : \"2023-12-20T18:00:00Z\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight_class\" : \"Light heavyweight\",\r\n    \"fighters\" : \"6512e20a2106bba14e561d2a\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fight",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add fight by id 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('email');\r",
+									"    pm.expect(responseData).to.have.property('password');\r",
+									"    pm.expect(responseData).to.have.property('age');\r",
+									"    pm.expect(responseData).to.have.property('full_name');\r",
+									"    pm.expect(responseData).to.have.property('sex');\r",
+									"    pm.expect(responseData).to.have.property('bio');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('fight_record');\r",
+									"    pm.expect(responseData).to.have.property('fight_history');\r",
+									"    pm.expect(responseData).to.have.property('weight');\r",
+									"    pm.expect(responseData).to.have.property('height');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"01\"\r\n}   "
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/fight",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"fight"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add fight by id 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('email');\r",
+									"    pm.expect(responseData).to.have.property('password');\r",
+									"    pm.expect(responseData).to.have.property('age');\r",
+									"    pm.expect(responseData).to.have.property('full_name');\r",
+									"    pm.expect(responseData).to.have.property('sex');\r",
+									"    pm.expect(responseData).to.have.property('bio');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('fight_record');\r",
+									"    pm.expect(responseData).to.have.property('fight_history');\r",
+									"    pm.expect(responseData).to.have.property('weight');\r",
+									"    pm.expect(responseData).to.have.property('height');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"02\"\r\n}   "
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/fight",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"fight"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all fights in fighter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response to be json\",function(){\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response to be an array\",function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/fight",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"fight"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get specific fight in fighter by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response to be json\",function(){\r",
+									"    pm.response.to.be.json;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/fight/01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"fight",
+								"01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete specific fight in fighter by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 204\",function(){",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/fight/02",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"fight",
+								"02"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete all fights",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response to have only one message as property\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"    pm.expect(responseData).to.have.property(\"message\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/fight",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new date 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('id');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('fighters');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : \"69\",\r\n    \"date\": \"2023-12-20T18:00:00.000Z\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fighters\" : [\"6512ec612106bba14e561d47\"]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/date",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"date"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new date 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('id');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('fighters');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : \"70\",\r\n    \"date\": \"2023-12-20T18:00:00.000Z\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fighters\" : [\"6512ec612106bba14e561d47\"]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/date",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"date"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add date by id 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('email');\r",
+									"    pm.expect(responseData).to.have.property('password');\r",
+									"    pm.expect(responseData).to.have.property('age');\r",
+									"    pm.expect(responseData).to.have.property('full_name');\r",
+									"    pm.expect(responseData).to.have.property('sex');\r",
+									"    pm.expect(responseData).to.have.property('bio');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('fight_record');\r",
+									"    pm.expect(responseData).to.have.property('date_history');\r",
+									"    pm.expect(responseData).to.have.property('weight');\r",
+									"    pm.expect(responseData).to.have.property('height');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"69\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/date",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"date"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add date by id 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('email');\r",
+									"    pm.expect(responseData).to.have.property('password');\r",
+									"    pm.expect(responseData).to.have.property('age');\r",
+									"    pm.expect(responseData).to.have.property('full_name');\r",
+									"    pm.expect(responseData).to.have.property('sex');\r",
+									"    pm.expect(responseData).to.have.property('bio');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('fight_record');\r",
+									"    pm.expect(responseData).to.have.property('date_history');\r",
+									"    pm.expect(responseData).to.have.property('weight');\r",
+									"    pm.expect(responseData).to.have.property('height');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"70\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/date",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"date"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all dates in fighter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response to be json\",function(){\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response to be an array\",function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/date",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"date"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get specific date in fighter by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response to be json\",function(){\r",
+									"    pm.response.to.be.json;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/date/70",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"date",
+								"70"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete specific date in fighter by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 204\",function(){",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/date/70",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"date",
+								"70"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete all dates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response to have only one message as property\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"    pm.expect(responseData).to.have.property(\"message\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/date",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"date"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a specific fighter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response to have only one message as property\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"    pm.expect(responseData).to.have.property(\"message\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/bob@bobson.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"bob@bobson.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete all fighters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response to have only one message as property\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"    pm.expect(responseData).to.have.property(\"message\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fighter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fight",
+			"item": [
+				{
+					"name": "Create new fight 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('id');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('weight_class');\r",
+									"    pm.expect(responseData).to.have.property('fighters');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : \"66\",\r\n    \"date\" : \"2023-12-20T18:00:00Z\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight_class\" : \"Middleweight\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fight",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new fight 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('id');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('weight_class');\r",
+									"    pm.expect(responseData).to.have.property('fighters');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : \"67\",\r\n    \"date\" : \"2023-12-20T18:00:00Z\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight_class\" : \"Heavyweight\"\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fight",
@@ -821,6 +2306,621 @@
 					"response": []
 				},
 				{
+					"name": "Read specific fight",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response to be json\",function(){\r",
+									"    pm.response.to.be.json;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/fight/66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight",
+								"66"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update all attributes of specific fight",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function(){\r",
+									"    pm.response.to.be.status(200);\r",
+									"});\r",
+									"pm.test(\"Response to be json\",function(){\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('id');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('weight_class');\r",
+									"    pm.expect(responseData).to.have.property('martial_art');\r",
+									"    pm.expect(responseData).to.have.property('fighters');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : \"66\",\r\n    \"date\" : \"2023-12-20T18:00:00Z\",\r\n    \"location\" : \"Stockholm\",\r\n    \"weight_class\" : \"Middleweight\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fight/66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight",
+								"66"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update specific attribute of fight",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function(){\r",
+									"    pm.response.to.be.status(200);\r",
+									"});\r",
+									"pm.test(\"Response to be json\",function(){\r",
+									"    pm.response.to.be.json;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"location\" : \"Malmo\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fight/67",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight",
+								"67"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new fighter 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('email');\r",
+									"    pm.expect(responseData).to.have.property('password');\r",
+									"    pm.expect(responseData).to.have.property('age');\r",
+									"    pm.expect(responseData).to.have.property('full_name');\r",
+									"    pm.expect(responseData).to.have.property('sex');\r",
+									"    pm.expect(responseData).to.have.property('bio');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('fight_record');\r",
+									"    pm.expect(responseData).to.have.property('weight');\r",
+									"    pm.expect(responseData).to.have.property('height');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"rokanasc94@hotmail.com\",\r\n    \"password\" : \"Doom\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Kostas Rokanas\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 78,\r\n    \"height\" : 174\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fighter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new fighter 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('email');\r",
+									"    pm.expect(responseData).to.have.property('password');\r",
+									"    pm.expect(responseData).to.have.property('age');\r",
+									"    pm.expect(responseData).to.have.property('full_name');\r",
+									"    pm.expect(responseData).to.have.property('sex');\r",
+									"    pm.expect(responseData).to.have.property('bio');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('fight_record');\r",
+									"    pm.expect(responseData).to.have.property('weight');\r",
+									"    pm.expect(responseData).to.have.property('height');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"example@email.com\",\r\n    \"password\" : \"Example@123\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Arvin Rahimi\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 83,\r\n    \"height\" : 185\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fighter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add fighter by email 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('id');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('weight_class');\r",
+									"    pm.expect(responseData).to.have.property('fighters');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"rokanasc94@hotmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fight/66/fighter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight",
+								"66",
+								"fighter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add fighter by email 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('id');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('weight_class');\r",
+									"    pm.expect(responseData).to.have.property('fighters');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"example@email.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fight/66/fighter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight",
+								"66",
+								"fighter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add winner fighter by email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('id');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('weight_class');\r",
+									"    pm.expect(responseData).to.have.property('fighters');\r",
+									"    pm.expect(responseData).to.have.property('winner');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"rokanasc94@hotmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fight/66/fighter/winner",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight",
+								"66",
+								"fighter",
+								"winner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all fighters in fight",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response to be json\",function(){\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response to be an array\",function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/fight/66/fighter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight",
+								"66",
+								"fighter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get winner in fight",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response to be json\",function(){\r",
+									"    pm.response.to.be.json;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/fight/66/fighter/winner",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight",
+								"66",
+								"fighter",
+								"winner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete all fighters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response to have only one message as property\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"    pm.expect(responseData).to.have.property(\"message\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fighter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a specific fight",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response to have only one message as property\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"    pm.expect(responseData).to.have.property(\"message\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/fight/66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight",
+								"66"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Delete all fights",
 					"event": [
 						{
@@ -862,198 +2962,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Read specific fight",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 200\", function(){\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test(\"Response to be json\",function(){\r",
-									"    pm.response.to.be.json;\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3000/api/fight/01",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"fight",
-								"01"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Upadate all attributes of specific fight",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 200\", function(){\r",
-									"    pm.response.to.be.status(200);\r",
-									"});\r",
-									"pm.test(\"Response to be json\",function(){\r",
-									"    pm.response.to.be.json;\r",
-									"});\r",
-									"pm.test(\"Response to have all attributes\", function(){\r",
-									"    const responseData = pm.response.json();\r",
-									"\r",
-									"     pm.expect(responseData).to.have.property('id');\r",
-									"    pm.expect(responseData).to.have.property('date');\r",
-									"    pm.expect(responseData).to.have.property('location');\r",
-									"    pm.expect(responseData).to.have.property('weight_class');\r",
-									"    pm.expect(responseData).to.have.property('martial_art');\r",
-									"    pm.expect(responseData).to.have.property('winner');\r",
-									"    pm.expect(responseData).to.have.property('fighter');\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\" : \"02\",\r\n    \"date\" : \"2024-12-20T18:00:00.000Z\",\r\n    \"location\" : \"Stockholm\",\r\n    \"weight_class\" : \"Heavyweight\",\r\n    \"martial_art\" : [\"650c531790e2c9a8226e50cd\"],\r\n    \"winner\" : \"6512e20a2106bba14e561d2a\",\r\n    \"fighters\" : [\"6512e20a2106bba14e561d2a\"]\r\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/fight/01",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"fight",
-								"01"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update specific attribute of fight",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 200\", function(){\r",
-									"    pm.response.to.be.status(200);\r",
-									"});\r",
-									"pm.test(\"Response to be json\",function(){\r",
-									"    pm.response.to.be.json;\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"location\" : \"Malmo\"\r\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/fight/01",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"fight",
-								"01"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete a specific fight",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 200\",function(){\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test(\"Response to have only one message as property\", function(){\r",
-									"    const responseData = pm.response.json();\r",
-									"    pm.expect(responseData).to.have.property(\"message\");\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3000/api/fight/01",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"fight",
-								"01"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -1061,7 +2969,7 @@
 			"name": "Date",
 			"item": [
 				{
-					"name": "Create new date",
+					"name": "Create new date 1",
 					"event": [
 						{
 							"listen": "test",
@@ -1097,7 +3005,61 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\" : \"01\",\r\n    \"date\": \"2023-12-20T18:00:00.000Z\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fighters\" : [\"6512ec612106bba14e561d47\"]\r\n}"
+							"raw": "{\r\n    \"id\" : \"69\",\r\n    \"date\": \"2023-12-20T18:00:00.000Z\",\r\n    \"location\" : \"Gothenburg\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/date",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"date"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new date 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('id');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('fighters');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : \"70\",\r\n    \"date\": \"2023-12-20T18:00:00.000Z\",\r\n    \"location\" : \"Gothenburg\"\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/date",
@@ -1164,49 +3126,6 @@
 					"response": []
 				},
 				{
-					"name": "Delete all dates",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 200\",function(){\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test(\"Response to have only one message as property\", function(){\r",
-									"    const responseData = pm.response.json();\r",
-									"    pm.expect(responseData).to.have.property(\"message\");\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3000/api/date",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"date"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Read specific date",
 					"event": [
 						{
@@ -1234,7 +3153,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/date/01",
+							"raw": "http://localhost:3000/api/date/69",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1243,7 +3162,7 @@
 							"path": [
 								"api",
 								"date",
-								"01"
+								"69"
 							]
 						}
 					},
@@ -1286,10 +3205,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\" : \"02\",\r\n    \"date\" : \"2024-12-20T18:00:00.000Z\",\r\n    \"fighters\" : [\"6512ec612106bba14e561d47\"],\r\n    \"location\" : \"Stockholm\"\r\n}"
+							"raw": "{\r\n    \"id\" : \"69\",\r\n    \"date\" : \"2024-12-20T18:00:00.000Z\",\r\n    \"fighters\" : [\"6512ec612106bba14e561d47\"],\r\n    \"location\" : \"Stockholm\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/date/01",
+							"raw": "http://localhost:3000/api/date/69",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1298,7 +3217,7 @@
 							"path": [
 								"api",
 								"date",
-								"01"
+								"69"
 							]
 						}
 					},
@@ -1336,7 +3255,7 @@
 							"raw": "{\r\n    \"location\" : \"Malmo\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/date/01",
+							"raw": "http://localhost:3000/api/date/70",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1345,7 +3264,239 @@
 							"path": [
 								"api",
 								"date",
-								"01"
+								"70"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new fighter 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('email');\r",
+									"    pm.expect(responseData).to.have.property('password');\r",
+									"    pm.expect(responseData).to.have.property('age');\r",
+									"    pm.expect(responseData).to.have.property('full_name');\r",
+									"    pm.expect(responseData).to.have.property('sex');\r",
+									"    pm.expect(responseData).to.have.property('bio');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('fight_record');\r",
+									"    pm.expect(responseData).to.have.property('weight');\r",
+									"    pm.expect(responseData).to.have.property('height');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"rokanasc94@hotmail.com\",\r\n    \"password\" : \"Doom\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Kostas Rokanas\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 78,\r\n    \"height\" : 174\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fighter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new fighter 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('email');\r",
+									"    pm.expect(responseData).to.have.property('password');\r",
+									"    pm.expect(responseData).to.have.property('age');\r",
+									"    pm.expect(responseData).to.have.property('full_name');\r",
+									"    pm.expect(responseData).to.have.property('sex');\r",
+									"    pm.expect(responseData).to.have.property('bio');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"    pm.expect(responseData).to.have.property('fight_record');\r",
+									"    pm.expect(responseData).to.have.property('weight');\r",
+									"    pm.expect(responseData).to.have.property('height');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"example@email.com\",\r\n    \"password\" : \"Example@123\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Arvin Rahimi\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 83,\r\n    \"height\" : 185\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fighter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add fighter by email 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('id');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('fighters');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"rokanasc94@hotmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/date/69/fighter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"date",
+								"69",
+								"fighter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add fighter by email 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response to be json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('id');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('fighters');\r",
+									"    pm.expect(responseData).to.have.property('location');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"example@email.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/date/69/fighter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"date",
+								"69",
+								"fighter"
 							]
 						}
 					},
@@ -1380,7 +3531,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/date/01",
+							"raw": "http://localhost:3000/api/date/70",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1389,7 +3540,50 @@
 							"path": [
 								"api",
 								"date",
-								"01"
+								"70"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete all dates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response to have only one message as property\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"    pm.expect(responseData).to.have.property(\"message\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/date",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"date"
 							]
 						}
 					},

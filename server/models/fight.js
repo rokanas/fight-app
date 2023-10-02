@@ -28,16 +28,13 @@ date: {                                        // consider changing to email
     trim: false
   },
   martial_art: [{
-    type: Schema.Types.ObjectId, // ObjectId works with the actual mongo "_id" not our own id
-    ref: "martial_art"
+    type: String
   }],
   winner: {
-    type: Schema.Types.ObjectId, 
-    ref: "fighter"                             
+    type: String                           
   },
   fighters: [{
-    type: Schema.Types.ObjectId, 
-    ref: "fighter"                             
+    type: String                             
   }]
 });
 

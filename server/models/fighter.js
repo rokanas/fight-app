@@ -34,12 +34,13 @@ const fighterSchema = new mongoose.Schema({
     trim: true
   },
   martial_art: [{
-    type: Schema.Types.ObjectId,
-    ref: "martial_art"
+    type: String,
   }],
   fight_history: [{
-    type: Schema.Types.ObjectId, 
-    ref: "fight"                        // find out if it's necessary to include required or unique here
+    type: String,
+  }],
+  date_history: [{
+    type: String,
   }],
   bio: {
     type: String,
