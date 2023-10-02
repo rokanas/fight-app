@@ -28,29 +28,14 @@ date: {                                        // consider changing to email
     trim: false
   },
   martial_art: [{
-    type: this.schema.Types.ObjectId,
-    ref: "martial_art"
+    type: String
   }],
   winner: {
-    type: Schema.Types.ObjectId, 
-    ref: "fighter"                             
+    type: String                           
   },
-  loser: {
-    type: Schema.Types.ObjectId, 
-    ref: "fighter"                             
-  },
-  fight_record: {
-    type: String,
-    required: true,
-    unique: false,
-    trim: false
-  },
-  weight: {
-    type: Number,
-    required: true,
-    unique: false,
-    trim: false                 // consider removing trims and uniques where not required
-  }
+  fighters: [{
+    type: String                             
+  }]
 });
 
 // Create model from schema

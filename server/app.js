@@ -1,13 +1,17 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var morgan = require('morgan');
-var path = require('path');
-var cors = require('cors');
-var history = require('connect-history-api-fallback');
+const express = require('express');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const path = require('path');
+const cors = require('cors');
+const history = require('connect-history-api-fallback');
+const fightController = require('./controllers/fightController');
+const fighterController = require('./controllers/fighterController');
+const martialArtController = require('./controllers/martialArtController');
+const dateController = require('./controllers/dateController');
 
 // Variables
-var mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/animalDevelopmentDB';
-var port = process.env.PORT || 3000;
+const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/fightAppDB';
+const port = process.env.PORT || 3000;
 
 // Connect to MongoDB
 mongoose.connect(mongoURI).catch(function(err) {
@@ -20,7 +24,7 @@ mongoose.connect(mongoURI).catch(function(err) {
 });
 
 // Create Express app
-var app = express();
+const app = express();
 // Parse requests of content-type 'application/json'
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -31,9 +35,10 @@ app.options('*', cors());
 app.use(cors());
 
 // Import routes
-app.get('/api', function(req, res) {
-    res.json({'message': 'Welcome to your DIT342 backend ExpressJS project!'});
-});
+app.use('/api/fighter',fighterController);
+app.use('/api/date',dateController);
+app.use('/api/fight',fightController);
+app.use('/api/martial-art',martialArtController);
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
 app.use('/api/*', function (req, res) {
@@ -44,16 +49,16 @@ app.use('/api/*', function (req, res) {
 // Support Vuejs HTML 5 history mode
 app.use(history());
 // Serve static assets
-var root = path.normalize(__dirname + '/..');
-var client = path.join(root, 'client', 'dist');
+let root = path.normalize(__dirname + '/..');
+let client = path.join(root, 'client', 'dist');
 app.use(express.static(client));
 
 // Error handler (i.e., when exception is thrown) must be registered last
-var env = app.get('env');
+const env = app.get('env');
 // eslint-disable-next-line no-unused-vars
 app.use(function(err, req, res, next) {
     console.error(err.stack);
-    var err_res = {
+    let err_res = {
         'message': err.message,
         'error': {}
     };
@@ -63,6 +68,10 @@ app.use(function(err, req, res, next) {
     }
     res.status(err.status || 500);
     res.json(err_res);
+});
+
+app.get('/api', function(req, res) {
+    res.json({'message': 'Welcome to your DIT342 backend ExpressJS project!'});
 });
 
 app.listen(port, function(err) {
