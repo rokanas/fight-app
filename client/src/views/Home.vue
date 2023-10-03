@@ -1,40 +1,29 @@
 <template>
-  <div>
-    <b-jumbotron header="DIT342 Frontend" lead="Welcome to your DIT342 Frontend Vue.js App">
-      <b-button class="btn_message" variant="primary" v-on:click="getMessage()" >Get Message from Server</b-button>
-      <p>Message from the server:<br/>
-      {{ message }}</p>
-    </b-jumbotron>
-  </div>
+  <div class="container">
+    <div class="row">
+        <div class="col-4">
+            <h2>Column 1</h2>
+            <p>This is the first column content.</p>
+        </div>
+        <div class="col-8">
+                        <h2>Column 2</h2>
+            <p>This is the second column content.</p>
+        </div>
+        <div class="col-2">
+            <h2>Column 3</h2>
+            <p>This is the third column content.</p>
+        </div>
+    </div>
+</div>
 </template>
 
-<script>
+<script setup>
 // @ is an alias to /src
 import { Api } from '@/Api'
 
-export default {
-  name: 'home',
-  data() {
-    return {
-      message: 'none'
-    }
-  },
-  methods: {
-    getMessage() {
-      Api.get('/')
-        .then(response => {
-          this.message = response.data.message
-        })
-        .catch(error => {
-          this.message = error
-        })
-    }
-  }
-}
+
 </script>
 
 <style>
-.btn_message {
-  margin-bottom: 1em;
-}
+
 </style>
