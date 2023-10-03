@@ -1,9 +1,0 @@
-// tsconfig.json
-{
-  "compilerOptions": {
-    // ...
-  },
-  "vueCompilerOptions": {
-    "target": 2, // For Vue version <= 2.6.14
-  }
-}
