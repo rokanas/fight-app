@@ -1,0 +1,14 @@
+/*
+This file defines global css styles.
+*/
+
+/* custom font */
+@font-face {
+    font-family: 'MetalMania';
+    src: url('../assets/fonts/MetalMania-Regular.ttf') format('truetype');
+  }
+
+  a {
+    color: #45C059;                      /* Link color */
+    font-size: 2.5vh;
+}
