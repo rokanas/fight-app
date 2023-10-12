@@ -1,9 +1,14 @@
+require('dotenv').config();
+
 const express = require("express");
 const router = express.Router();
+const bcrypt = require ('bcrypt');
+const jwt = require('jsonwebtoken');
 const Fighter = require('../models/fighter');
 const MartialArt = require('../models/martial_art');
 const Fight = require('../models/fight');
 const Date = require('../models/date');
+const { authenticateToken } = require('./authenticationController');
 
 router.use(express.json());
 
@@ -11,6 +16,8 @@ router.use(express.json());
 router.post('/', async (req, res) => {
     try {
         const fighter = new Fighter(req.body);
+        const hashPassword = await bcrypt.hash(fighter.password, 10); // generate password hash and salt
+        fighter.password = hashPassword; // replace unencrypted password with encrypted one
         await fighter.save();
         res.status(201).json(fighter);              // new resource has been created
     } catch(err) {
@@ -49,7 +56,7 @@ router.delete('/', async (req, res) => {
 });
 
 // get fighter by email
-router.get('/email/:email', async (req, res) => {
+router.get('/email/:email', authenticateToken, async (req, res) => {
     try {
         const fighter = await Fighter.findOne({email : req.params.email});
         if(!fighter) {
@@ -216,7 +223,7 @@ router.delete('/:email/martial-art/:name', async (req, res) => {
         // Save the updated fighter document
         await fighter.save();
 
-        res.status(204).json({ message: "Martial Art deleted successfully" }); // no content, successfully deleted
+        res.status(204).send(); // no content, successfully deleted
         
     } catch (err) {
         res.status(500).json({ error: err.message }); // Internal server error
@@ -448,5 +455,73 @@ router.delete('/:email/date/:id', async (req, res) => {
         res.status(500).json({ error: err.message }); // Internal server error
     }
 });
+
+/* ========================= FIGHTER AUTHENTICATION ==============================*/
+/*
+let refreshTokens = [] // !!!!! may have to crete new entry in database for this
+
+// login fighter
+router.post('/login', async(req, res) => {
+    const fighter = await Fighter.findOne({email : req.body.email});
+    if(!fighter) {
+        return res.status(404).json({error: 'Fighter not found'}); // resource not found
+    }
+    try {
+        if (await bcrypt.compare(req.body.password, fighter.password)) {
+            const user = { username: fighter.email}; // create fighter user object
+            const accessToken = generateAccessToken(user); // create access token
+            const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET); // create refresh token
+            refreshTokens.push(refreshToken); // add to list of valid refresh tokens
+
+            res.status(200).json({message : 'Login successful', accessToken: accessToken, refreshToken: refreshToken}); // return message and login tokens
+        } else {
+            res.status(401).json({error: 'Login unauthorized'});  
+        }
+    } catch(err) {
+        res.status(500).json({error: err.message});  // internal server error
+    }
+});
+
+// authenticate access token
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'] // authorization header that contains the token
+    const token = authHeader && authHeader.split(' ')[1] // if we have an authHeader, then return the token portion of the Bearer token, or return undefined
+    if(token == null) {
+        return res.status(401).json({error: 'Token not found, access unauthorized'});
+    }
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {     // verify token, takes callback that takes value we serialized (fighter user object)
+        if(err) {
+            return res.status(403).json({error: 'Token invalid, access unauthorized'})
+        }
+        req.user = user;
+        next();
+    }) 
+};
+
+// generate access token
+function generateAccessToken(user) {
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '10s'}); // return access token that expires in xxx time
+}
+
+// create new token
+router.post('/token', async(req, res) => { 
+    const refreshToken = req.body.token;
+    if(refreshToken == null) {
+        return res.status(401).json({error: 'Token not found, access unauthorized'});
+    }
+    if(!refreshTokens.includes(refreshToken)) { // is refreshToken valid i.e. does it exist in our list of valid refreshTokens?
+        console.log(refreshTokens);
+        return res.status(403).json({error: 'Token invalid, access unathorized'});
+    }
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+        if(err) {
+            return res.status(403).json({error: 'Token invalid, access unathorized'});
+        }
+        const accessToken = generateAccessToken({ username: user.username }); // if all checks passed, create new access token
+        res.status(201).json({ accessToken: accessToken });
+        })
+});
+
+*/
 
 module.exports = router

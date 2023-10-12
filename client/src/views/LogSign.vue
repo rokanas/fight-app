@@ -118,30 +118,68 @@
     </div>
 </template>
 
-<script setup>
+<script>
 
 import { ref } from 'vue'
+import { Api } from '@/Api'
 
-    let isLogIn = ref (true);
-    let isSignUp = ref (false);
+export default {
+  name: 'LogSign',
+  props: ['LogSign'],
 
-    let userDescription = ref ('');
+  data() {
+    return {
+        isLogIn: ref (true),
+        isSignUp: ref (false),
 
-    let loginButtonColor = ref('#B30000');
-    let signupButtonColor = ref('#6B0801');
+        userDescription: ref (''),
 
-    function showLogIn(){
+        loginButtonColor: ref('#B30000'),
+        signupButtonColor: ref('#6B0801'),
+
+        email: '',
+        password: ''
+    }
+  },
+  methods: {
+    showLogIn() {
         isLogIn.value = true;
         isSignUp.value = false;
         loginButtonColor.value = '#B30000';
         signupButtonColor.value = '#6B0801';
-    }
-    function showSignUp(){
+    },
+    showSignUp() {
         isLogIn.value = false;
         isSignUp.value = true;
         signupButtonColor.value = '#B30000';
         loginButtonColor.value = '#6B0801';
+    },
+    loginFighter() {
+        try {
+        // create fighter object with given data
+        const fighter = {
+          email: this.email,
+          password: this.password,
+        }
+        // make post request to backend API
+        const response = Api.post('/auth/login', fighter)
+
+        if (response.status === 201) {
+          alert('Fighter logged in successfully.')
+        }
+        // clear the login form
+        this.email = ''
+        this.password = ''
+
+      } catch (error) {
+        alert(error)
+      }
+    },
+    registerFighter() {
+
     }
+  }
+}
 </script>
 
 <style scoped>
