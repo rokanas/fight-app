@@ -9,28 +9,57 @@ const Token = require('../models/token');
 
 router.use(express.json());
 
-let refreshTokens = [] // !!!!! may have to crete new entry in database for this
-
 // login fighter
 router.post('/login', async(req, res) => {
-    const fighter = await Fighter.findOne({email : req.body.email});
-    if(!fighter) {
-        return res.status(404).json({error: 'Fighter not found'}); // resource not found
-    }
     try {
+        const fighter = await Fighter.findOne({email : req.body.email});
+        if(!fighter) {
+            return res.status(404).json({error: 'Fighter not found'}); // resource not found
+        }
+
         if (await bcrypt.compare(req.body.password, fighter.password)) {
             const user = { username: fighter.email}; // create fighter user object
             const accessToken = generateAccessToken(user); // create access token
-            const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET); // create refresh token
-            refreshTokens.push(refreshToken); // add to list of valid refresh tokens
-            console.log(refreshTokens)
 
-            res.status(200).json({message : 'Login successful', accessToken: accessToken, refreshToken: refreshToken}); // return message and login tokens
+            let validTokens = await Token.findOne({type: 'authentication'})
+            if (!validTokens) {
+                validTokens = new Token({ type: 'authentication', tokens: [] });
+            }
+            validTokens.tokens.push(accessToken); // Add the access token to list of valid tokens
+            await validTokens.save()
+            
+            res.status(201).json({message : 'Login successful', accessToken: accessToken}); // return message and login tokens
         } else {
             res.status(401).json({error: 'Login unauthorized'});  
         }
     } catch(err) {
         res.status(500).json({error: err.message});  // internal server error
+    }
+});
+
+router.post('/register', async(req, res) => {
+    try {
+        const existingFighter = await Fighter.findOne({ email: req.body.email });
+        if (!existingFighter) { // if fighter doesn't already exist, proceed
+            const fighter = new Fighter(req.body);
+            const hashPassword = await bcrypt.hash(fighter.password, 10); // generate password hash and salt
+            fighter.password = hashPassword; // replace unencrypted password with encrypted one
+            await fighter.save();
+        } else {
+            return res.status(409).json({ error: 'Fighter already exists' });
+        }
+        const user = { username: req.body.email}; // create fighter user object
+        const accessToken = generateAccessToken(user); // create access token
+        let validTokens = await Token.findOne({type: 'authentication'})
+        if (!validTokens) {
+            validTokens = new Token({ type: 'authentication', tokens: [] });
+        }
+        validTokens.tokens.push(accessToken); // Add the access token to list of valid tokens
+        await validTokens.save()
+
+        return res.status(201).json({message: 'Fighter created successfully', accessToken: accessToken})
+    } catch(err) {
+        return res.status(500).json({error: err.message})
     }
 });
 
@@ -55,29 +84,11 @@ function generateAccessToken(user) {
     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '2h'}); // return access token that expires in xxx time
 }
 
-// create new token
-router.post('/token', async(req, res) => { 
-    const refreshToken = req.body.token;
-    if(refreshToken == null) {
-        return res.status(401).json({error: 'Token not found, access unauthorized'});
-    }
-    if(!refreshTokens.includes(refreshToken)) { // is refreshToken valid i.e. does it exist in our list of valid refreshTokens?
-        return res.status(403).json({error: 'Token invalid, access unathorized'});
-    }
-    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-        if(err) {
-            return res.status(403).json({error: 'Token invalid, access unathorized'});
-        }
-        const accessToken = generateAccessToken({ username: user.username }); // if all checks passed, create new access token
-        res.status(201).json({ accessToken: accessToken });
-        })
-});
-
 // delete refresh token (user logout)
 router.delete('/logout', async (req, res) => {
-    refreshTokens = refreshTokens.filter(token => token !== req.body.token); // check to make sure the tokens stored are not equal to the token we send in request body
-    console.log(refreshTokens)
+    validTokens = await Token.findOne({type: 'authentication'})
+    validTokens.tokens.filter(token => token !== req.body.token); // check to make sure the tokens stored are not equal to the token we send in request body
     res.status(204).send();
 });
 
-module.exports = {router, authenticateToken};
+module.exports = {router, authenticateToken, generateAccessToken};

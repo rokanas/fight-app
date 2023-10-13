@@ -8,20 +8,35 @@ const Fighter = require('../models/fighter');
 const MartialArt = require('../models/martial_art');
 const Fight = require('../models/fight');
 const Date = require('../models/date');
-const { authenticateToken } = require('./authenticationController');
+const Token = require('../models/token')
+const { authenticateToken, generateAccessToken } = require('./authenticationController');
 
 router.use(express.json());
 
 // create new fighter
 router.post('/', async (req, res) => {
     try {
-        const fighter = new Fighter(req.body);
-        const hashPassword = await bcrypt.hash(fighter.password, 10); // generate password hash and salt
-        fighter.password = hashPassword; // replace unencrypted password with encrypted one
-        await fighter.save();
-        res.status(201).json(fighter);              // new resource has been created
+        const existingFighter = await Fighter.findOne({ email: req.body.email });
+        if (!existingFighter) { // if fighter doesn't already exist, proceed
+            const fighter = new Fighter(req.body);
+            const hashPassword = await bcrypt.hash(fighter.password, 10); // generate password hash and salt
+            fighter.password = hashPassword; // replace unencrypted password with encrypted one
+            await fighter.save();
+        } else {
+            return res.status(409).json({ error: 'Fighter already exists' });
+        }
+        const user = { username: req.body.email}; // create fighter user object
+        const accessToken = generateAccessToken(user); // create access token
+        let validTokens = await Token.findOne({type: 'authentication'})
+        if (!validTokens) {
+            validTokens = new Token({ type: 'authentication', tokens: [] });
+        }
+        validTokens.tokens.push(accessToken); // Add the access token to list of valid tokens
+        await validTokens.save()
+
+        return res.status(201).json({message: 'Fighter created successfully', accessToken: accessToken})
     } catch(err) {
-        res.status(400).json({error: err.message}); // issue with the client's request
+        return res.status(500).json({error: err.message})
     }
 });
 

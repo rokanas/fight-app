@@ -1,12 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from './views/Home.vue'
+import LogSign from './views/LogSign.vue'
 
 const routes = [
   {
+    path: '/login',
+    name: 'Login',
+    component: LogSign
+  },
+  {
     path: '/',
-    name: 'Home',
-    component: Home
-  }
+    redirect: '/login'
+  },
 ]
 
 const router = createRouter({

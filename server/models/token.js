@@ -3,6 +3,11 @@ const Schema = mongoose.Schema;
 
 // Define schema for entity
 const tokenSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        required: true,
+        unique: true,
+      },
     tokens: [{
         type: String
     }],
