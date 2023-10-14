@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="row d-flex flex-row justify-content-center">
-                    <div class="col-5 background-color me-2">
+                    <div class="col-sm-5 col-12 background-color mb-md-0 mb-2">
                         <div class="row flex-row text-color">
                             <div class="col-6 align-items-start">
                                 <p class="flex-fill">Sex:</p>
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     
-                    <div class="col-6 d-flex flex-wrap background-color">
+                    <div class="col-sm-6 col-12 d-flex flex-wrap background-color ms-md-2">
                         <label class="fs-4 flex-wrap flex-fill align-self-top w-100 text-color" for="martialArtBox">Martial Arts:</label>
                         <ul v-for="item in selectedMartialArts" class="flex-row flex-wrap align-items-center justify-content-center list-group" id="martialArtBox">
                             <li class="d-inline-flex rounded-pill text-color list-border list-margin">{{ item.value }}</li>
@@ -141,7 +141,7 @@ import { ref } from 'vue';
     background-color: rgba(255, 255, 255, 0.15) !important;
 }
 .list-margin{
-    margin-right: 6px;
+    margin: 3px;
 }
 .profile-pic-size{
     size: 180px;

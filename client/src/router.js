@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LogSign from './views/LogSign.vue'
 import Profile from './views/Profile.vue'
 import EditProfile from './views/EditProfile.vue'
+import Opponent from './views/Opponent.vue'
 
 const routes = [
   {
@@ -22,8 +23,12 @@ const routes = [
     path: '/edit-profile',
     name: 'EditProfile',
     component: EditProfile
+  },
+  {
+    path: '/opponent',
+    name: 'Opponent',
+    component: Opponent
   }
->>>>>>> client/src/router.js
 ]
 
 const router = createRouter({
