@@ -1,31 +1,14 @@
-<!------------------------------------------------------------------------------------------
-   Page header component containing slot for logotype, navigation bar and a Log in button.
-   The Log in button is a child component meaning it is its own component nested
-   within the header component.
-   The navbar of the header changes based on weather the page is is logged in or not.
-   Additional links appear to logged in users.
-   --------------------------------------------------------------------------------------->
-   <template>
+ <template>
     <header class="fightapp_header">
-      <div class="logo_container">
-      </div>
       <nav class="header_nav_bar"> <!-- Signed out user menu -->
-        <a href="#/" class="header_link">Home</a>
-        <a href="#/about" class="header_link">About</a>
-        <a href="#/help" class="header_link">Help</a>
-        <a href="#/contact" class="header_link">Contact</a>
+        <a href="#/" class="header_link">Logout</a>
       </nav>
-      <nav class="header_nav_bar">                   <!-- Signed in user menu -->
-        <a href="#/" class="header_link">Home</a>
-        <a href="#/about" class="header_link">About</a>
-        <a href="#/help" class="header_link">Help</a>
-        <a href="#/contact" class="header_link">Contact</a>
-        <a href="#/settings" class="header_link">Settings</a>
-      </nav>
-      <div class="header_button">
-        <!-- The 'AccessButton' component serves as a sign in/out button -->
-        <AccessButton @accessButtonEvent="$emit('accessButtonEvent')" />
+      <div class="logo_container">
+        <a href="#/" class = "header_link">FightApp</a>
       </div>
+      <nav class="header_nav_bar">                   <!-- Signed in user menu -->
+        <a href="#/" class="header_link">Browse<br>Fighters</a>
+      </nav>
     </header>
   </template>
   
