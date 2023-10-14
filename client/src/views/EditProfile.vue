@@ -146,8 +146,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-2 mt-1 mb-3">
-                    <button class="btn btn-lg button-border text-color" v-on:click ="applyProfileChanges">Apply</button>
+                <div class="col-2 d-flex flex-row justify-content-evenly w-50 mt-1 mb-3">
+                    <button class="btn btn-lg button-border text-color" v-on:click ="deleteProfile">Delete profile</button>
+                    <button class="btn btn-lg button-border text-color ms-3" v-on:click ="applyProfileChanges">Apply</button>   
                 </div>
             </div>
         </form>
@@ -178,7 +179,9 @@ import { ref } from 'vue';
     let selectedMartialArts = ref([judo, bjj, muayThai, bullshido]);
     let listOfMartialArts = ref([judo, bjj, muayThai, bullshido, boxing, kickBox, wushu, taekwondo]);
     let bio = ref('Japanese fighter from Tokyo. Have practised martial arts since a nuclear explosion caused me to horrifically mutate into a giant lizard. Started at 13 with judo foundation, then BJJ at 18 to cover my ground game. If anyone thinks they can outgrapple me, I beg for the challenge, I will meet you any place (but it has to be outdoors). Special call-out to any wrestlers, especially sambo, who keep talking trash about how BJJ has no real street-fight application. I will fight any day of the week you trash, swear on me');
+    function deleteProfile() {
 
+}
     function slecetMartialArts() {
 
     }
