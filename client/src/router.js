@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LogSign from './views/LogSign.vue'
+import Profile from './views/Profile.vue'
+import EditProfile from './views/EditProfile.vue'
 
 const routes = [
   {
@@ -11,6 +13,17 @@ const routes = [
     path: '/',
     redirect: '/login'
   },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
+  },
+  {
+    path: '/edit-profile',
+    name: 'EditProfile',
+    component: EditProfile
+  }
+>>>>>>> client/src/router.js
 ]
 
 const router = createRouter({
