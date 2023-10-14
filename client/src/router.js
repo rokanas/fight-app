@@ -23,7 +23,6 @@ const routes = [
     name: 'EditProfile',
     component: EditProfile
   }
->>>>>>> client/src/router.js
 ]
 
 const router = createRouter({
