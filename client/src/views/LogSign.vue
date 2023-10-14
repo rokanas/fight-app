@@ -29,7 +29,7 @@
                             placeholder="password"/>
                         </div>
                         <div class="col">
-                            <button class="w-20 submit-border mb-2 btn btn-lg text-white" type="submit">Submit</button>
+                            <button class="w-20 submit-border mb-2 btn btn-lg text-white" type="submit" :disabled="isEmpty">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -119,7 +119,7 @@
                             </textarea>
                         </div>
                         <div class="col">
-                            <button class="w-20 submit-border mb-2 btn btn-lg text-white" type="submit">Submit</button>
+                            <button class="w-20 submit-border mb-2 btn btn-lg text-white" type="submit" :disabled="isEmpty">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -179,6 +179,7 @@ export default {
         const response = await Api.post('/auth/login', fighter)
 
         if (response.status === 201) {
+            localStorage.setItem('fightAppAccessToken', response.data.accessToken)
           alert('Fighter logged in successfully.')
         }
         // clear the login form
@@ -207,6 +208,7 @@ export default {
         const response = await Api.post('/fighter', fighter)
 
         if (response.status === 201) {
+          localStorage.setItem('fightAppAccessToken', response.data.accessToken)  
           alert('Fighter registered successfully.')
         }
         // clear the login form
@@ -223,6 +225,16 @@ export default {
       } catch (error) {
         alert(error.message)
       }
+    }
+  },
+  computed: {
+    isEmpty() {                     // method returns true if at least 1 field isn't complete
+        if(this.isLogIn) {
+            return this.email == '' || this.password == '';
+        } else if (this.isSignUp) {
+            return this.email == '' || this.password == '' || this.fullName == '' || this.sex == '' || this.age == '' ||
+            this.height == '' || this.weight == '' || this.location == '' || this.bio == '';
+        }
     }
   }
 }
