@@ -25,7 +25,7 @@ const routes = [
     component: EditProfile
   },
   {
-    path: '/opponent',
+    path: '/opponent/:id',
     name: 'Opponent',
     component: Opponent
   }

@@ -112,10 +112,12 @@ import { Api } from "@/Api";
 import router from "../router";
 
 export default {
-    name: 'ProfileForm',
+    name: 'Opponent',
 
     data() {
         return {
+            sessionUser: '',
+
             fullName: '',
             sex: '',
             age: '',
@@ -130,15 +132,36 @@ export default {
             selectedMartialArts: []
         }
     },
-    mounted() {
-        this.populateProfile()
-        this.populateFightRecord()
-        // this.populateMartialArts()
+    mounted: async function() {
+        await this.authenticateUser();
+        await this.populateProfile();
+        await this.populateFightRecord();
     },
     methods: {
+        async authenticateUser() {
+            try {
+                const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
+                this.sessionUser = user.data
+                if(this.$route.params.id !== user.data) {
+                    alert('Unauthorized access')
+                    
+                    router.push({
+                        name: 'Profile',
+                        params: {id: this.sessionUser}
+                    })
+                    }
+            } catch(error) {
+                console.error(error)
+            }
+        },
+        editProfile() {
+            router.push({
+                name: 'EditProfile'
+            })
+        },
         async populateProfile() {
             try {
-                const fighterData = await Api.get('/fighter/' + this.$route.params.id)
+                const fighterData = await Api.get('/fighter/' + this.sessionUser)
 
                 this.fullName = fighterData.data.full_name
                 this.sex = fighterData.data.sex
@@ -148,7 +171,7 @@ export default {
                 this.location = fighterData.data.location
                 this.bio = fighterData.data.bio
 
-                const fighterMartialArts = await Api.get('/fighter/' + this.$route.params.id + '/martial-art')
+                const fighterMartialArts = await Api.get('/fighter/' + this.sessionUser + '/martial-art')
                 this.selectedMartialArts = fighterMartialArts.data
                     
             } catch (error) {
@@ -157,7 +180,7 @@ export default {
         },
         async populateFightRecord() {
             try {
-                const fighterFights = await Api.get('/fighter/' + this.$route.params.id + '/fight')
+                const fighterFights = await Api.get('/fighter/' + this.sessionUser + '/fight')
                 
                 let wins = 0;
                 let losses = 0;
@@ -174,19 +197,6 @@ export default {
             } catch(error) {
                 console.error(error)
             }
-        },
-            /*async populateMartialArts() {
-                try {
-                    const response = await Api.get('/martial-art');
-                    this.selectedMartialArts = response.data.map(item => item.name);
-                } catch (error) {
-                    console.error(error);
-                }
-            }, */
-        editProfile() {
-            router.push({
-                name: 'EditProfile'
-            })
         }
     }   
 }

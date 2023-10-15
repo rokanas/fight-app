@@ -18,15 +18,15 @@ router.post('/login', async(req, res) => {
         }
 
         if (await bcrypt.compare(req.body.password, fighter.password)) {
-            const user = { username: fighter.email}; // create fighter user object
+            const user = { email: req.body.email}; // create fighter user object
             const accessToken = generateAccessToken(user); // create access token
-
-            let validTokens = await Token.findOne({type: 'authentication'})
-            if (!validTokens) {
-                validTokens = new Token({ type: 'authentication', tokens: [] });
-            }
-            validTokens.tokens.push(accessToken); // Add the access token to list of valid tokens
-            await validTokens.save()
+            let userToken = await Token.findOne({user: user.email})
+            if (!userToken) {
+                const newToken = new Token({ user: user.email, token: accessToken });
+                await newToken.save()
+            } else {
+                await Token.updateOne({user: user.email}, {$set: {token: accessToken}})
+            } 
             
             res.status(201).json({message : 'Login successful', accessToken: accessToken}); // return message and login tokens
         } else {
@@ -48,18 +48,33 @@ router.post('/register', async(req, res) => {
         } else {
             return res.status(409).json({ error: 'Fighter already exists' });
         }
-        const user = { username: req.body.email}; // create fighter user object
+        const user = { email: req.body.email}; // create fighter user object
         const accessToken = generateAccessToken(user); // create access token
-        let validTokens = await Token.findOne({type: 'authentication'})
-        if (!validTokens) {
-            validTokens = new Token({ type: 'authentication', tokens: [] });
-        }
-        validTokens.tokens.push(accessToken); // Add the access token to list of valid tokens
-        await validTokens.save()
+        let userToken = await Token.findOne({user: user.email})
+        if (!userToken) {
+            const newToken = new Token({ user: user.email, token: accessToken });
+            await newToken.save()
+        } else {
+            await Token.updateOne({user: user.email}, {$set: {token: accessToken}})
+        } 
 
         return res.status(201).json({message: 'Fighter created successfully', accessToken: accessToken})
     } catch(err) {
+        console.error(err)
         return res.status(500).json({error: err.message})
+    }
+});
+
+// get user by access token
+router.get('/:token', async (req, res) => {
+    try {
+        const token = await Token.findOne({token: req.params.token});
+        if(!token) {
+            return res.status(404).json({error: 'Token not found'}); // resource not found
+        }
+        res.status(200).json(token.user);               // request successful
+    } catch (err) {
+        res.status(500).json({error: err.message});  // internal server error
     }
 });
 

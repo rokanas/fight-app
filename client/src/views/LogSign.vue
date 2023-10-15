@@ -210,8 +210,8 @@ export default {
           bio: this.bio
         }
         // make post request to backend API
-        const response = await Api.post('/fighter', fighter)
-
+        const response = await Api.post('/auth/register', fighter)
+        
         if (response.status === 201) {
           localStorage.setItem('fightAppAccessToken', response.data.accessToken)  
           console.log('Fighter registered successfully.')
