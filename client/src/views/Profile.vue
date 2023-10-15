@@ -156,20 +156,24 @@ export default {
             }
         },
         async populateFightRecord() {
-            const fighterFights = await Api.get('/fighter/' + this.$route.params.id + '/fight')
+            try {
+                const fighterFights = await Api.get('/fighter/' + this.$route.params.id + '/fight')
                 
-            let wins = 0;
-            let losses = 0;
+                let wins = 0;
+                let losses = 0;
 
-            fighterFights.data.forEach(fight => {
-                if (fight.winner === this.$route.params.id) {
-                    wins++;
-                } else {
-                    losses++;
-                }
-            });
-        this.win = wins
-        this.loss = losses
+                fighterFights.data.forEach(fight => {
+                    if (fight.winner === this.$route.params.id) {
+                        wins++;
+                    } else {
+                        losses++;
+                    }
+                });
+            this.win = wins
+            this.loss = losses
+            } catch(error) {
+                console.error(error)
+            }
         },
             /*async populateMartialArts() {
                 try {

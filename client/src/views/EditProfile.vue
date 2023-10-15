@@ -120,13 +120,13 @@
                                                     <div class="modal-body  d-flex flex-row flex-wrap align-items-center justify-content-center">
                                                         <ul class="list-group" v-for="item in listOfMartialArts">
                                                             <li class="list-group-item d-inline-flex rounded-pill text-color list-border list-margin">
-                                                                <input class="btn-check" type="checkbox" :id="'checkbox-' + item.value" autocomplete="off">
+                                                                <input class="btn-check" type="checkbox" :id="'checkbox-' + item.name" :checked="isMartialArtSelected(item)" autocomplete="off" v-on:click ="selectMartialArts(item)">
                                                                 <label class="btn text-color" :for="'checkbox-' + item.name">{{ item.name }}</label>
                                                             </li>
                                                         </ul>    
                                                     </div>
                                                     <div class="modal-footer justify-content-center">
-                                                        <button type="button" class="btn btn-lg justify-content-center modal-button text-color" v-on:click ="slecetMartialArts">Select</button>
+                                                        <button type="button" class="btn btn-lg justify-content-center modal-button text-color" data-bs-dismiss="modal" v-on:click ="saveMartialArts">Select</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -183,6 +183,7 @@ export default {
             draw: '0',
                 
             selectedMartialArts: [],
+            newSelection: [],
             listOfMartialArts: [],
 
             imageSrc: '../../public/Godzilla.png' 
@@ -191,6 +192,7 @@ export default {
     mounted() {
         this.populateProfile()
         this.getMartialArts()
+
     },
     methods: {
         async populateProfile() {
@@ -207,6 +209,7 @@ export default {
 
                 const fighterMartialArts = await Api.get('/fighter/' + this.$route.params.id + '/martial-art')
                 this.selectedMartialArts = fighterMartialArts.data
+                this.newSelection = this.selectedMartialArts.slice()
                     
             } catch (error) {
                 console.error(error)
@@ -216,8 +219,63 @@ export default {
             const martialArts = await Api.get('/martial-art')
             this.listOfMartialArts = martialArts.data
         },
-        selectMartialArts() {
+        selectMartialArts(item) {
+            if (this.newSelection.some(selected => selected.name === item.name)) {
+                // if martial art already exists, remove it
+                this.newSelection = this.newSelection.filter(selected => selected.name !== item.name);
+            } else {
+                // if martial art doesn't already exist, add it
+                this.newSelection.push(item);
+                
+            } console.log(this.newSelection)
+        },
+        async saveMartialArts() {
+            try {
+                const toAdd = [];
+                const toDelete = [];
 
+                // fetch fighter's list of known martial arts from db
+                const knownMartialArts = await Api.get('/fighter/' + this.$route.params.id + '/martial-art/')
+
+                // compare fighter's known arts to the new selection and add to addition queue accordingly
+                this.newSelection.forEach(selectedArt => {
+                    if(!knownMartialArts.data.some(knownArt => knownArt.name === selectedArt.name)) {
+                        toAdd.push(selectedArt)
+                    }
+                })
+
+                // compare fighter's known arts to the new selection and add to deletion queue accordingly
+                knownMartialArts.data.forEach(knownArt => {
+                    if (!this.newSelection.some(selectedArt => selectedArt.name === knownArt.name)) {
+                        toDelete.push(knownArt)
+                    }
+                });
+
+
+                // perform additions to db
+                for (var martialArtToAdd of toAdd) {
+                    await Api.post('/fighter/' + this.$route.params.id + '/martial-art', martialArtToAdd);
+                }
+
+                // perform deletions to db
+                for (var martialArtToDelete of toDelete) {
+                    await Api.delete('/fighter/' + this.$route.params.id + '/martial-art/' + martialArtToDelete.name);
+                }
+
+                // update clientside
+                const fighterMartialArts = await Api.get('/fighter/' + this.$route.params.id + '/martial-art')
+                this.selectedMartialArts = fighterMartialArts.data
+
+            } catch (error) {
+                console.error(error)
+            }
+        },
+        isMartialArtSelected(item) {
+            if(this.selectedMartialArts.some(selected => selected.name === item.name)) {
+                return true
+            } else {    
+                return false
+            }
         },
         deleteProfile() {  // donn't forget to delete from local storage
             try {
@@ -230,10 +288,30 @@ export default {
                 console.error(error)
             }
         },
-        applyProfileChanges() {
-            router.push({
+        async applyProfileChanges() {
+            try {
+                const newData = {
+                email: this.email,
+                password: this.password,
+                full_name: this.fullName,
+                sex: this.sex,
+                age: this.age,
+                height: this.height,
+                weight: this.weight,
+                location: this.location,
+                bio: this.bio
+                }
+
+                // make post request to backend API
+                Api.put('/fighter/' + this.$route.params.id, newData)
+            
+                router.push({
                 name: 'Profile'
-            })
+                })
+
+            } catch(error) {
+                console.error(error)
+            }
         }
     }
 }
