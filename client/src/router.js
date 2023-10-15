@@ -15,12 +15,12 @@ const routes = [
     redirect: '/login'
   },
   {
-    path: '/profile',
+    path: '/profile/:id',
     name: 'Profile',
     component: Profile
   },
   {
-    path: '/edit-profile',
+    path: '/profile/:id/edit',
     name: 'EditProfile',
     component: EditProfile
   },

@@ -51,7 +51,7 @@ router.get('/', async (req, res) => {
 });
 
 // get all fighters by location
-router.get('/location/:location', async (req, res) => {
+router.get('/browse/:location', async (req, res) => {
     try {
         const fighters = await Fighter.find({location : req.params.location});
         res.status(200).json(fighters);               // request successful
@@ -71,7 +71,7 @@ router.delete('/', async (req, res) => {
 });
 
 // get fighter by email
-router.get('/email/:email', authenticateToken, async (req, res) => {
+router.get('/:email', async (req, res) => {
     try {
         const fighter = await Fighter.findOne({email : req.params.email});
         if(!fighter) {
@@ -122,7 +122,7 @@ router.patch('/:email', async (req, res) => {
 // delete fighter by email
 router.delete('/:email', async (req, res) => {
     try {
-      const fighter = await Fighter.findOneAndDelete({id : req.params.id});
+      const fighter = await Fighter.findOneAndDelete({email : req.params.email});
       if (!fighter) {
         return res.status(404).json({ error: 'Fighter not found' }); // resource not found
       }

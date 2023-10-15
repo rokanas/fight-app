@@ -130,7 +130,7 @@
 
 <script>
 import { Api } from '@/Api'
-// import axios from 'axios'
+import router from "../router";
 
 export default {
   name: 'LogSign',
@@ -180,11 +180,16 @@ export default {
 
         if (response.status === 201) {
             localStorage.setItem('fightAppAccessToken', response.data.accessToken)
-          alert('Fighter logged in successfully.')
+          console.log('Fighter logged in successfully.')
         }
         // clear the login form
         this.email = ''
         this.password = ''
+
+        router.push({
+            name: 'Profile',
+            params: {id: fighter.email}
+        })
 
       } catch (error) {
         alert(error.message)
@@ -209,7 +214,7 @@ export default {
 
         if (response.status === 201) {
           localStorage.setItem('fightAppAccessToken', response.data.accessToken)  
-          alert('Fighter registered successfully.')
+          console.log('Fighter registered successfully.')
         }
         // clear the login form
         this.email = ''
@@ -221,6 +226,11 @@ export default {
         this.weight = ''
         this.location = ''
         this.bio = ''
+
+        router.push({
+            name: 'Profile',
+            params: {id: fighter.email}
+        })
 
       } catch (error) {
         alert(error.message)
