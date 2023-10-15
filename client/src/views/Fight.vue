@@ -22,6 +22,30 @@
                 >
             </div>
         </div>
+        <div class="row">
+            <div class="col mt-2">
+                <button type="button" class="fs-4 background-color text-color button-border pt-1" data-bs-toggle="modal" data-bs-target="#winnerModal">Choose winner</button>
+                <div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="winnerModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content background-color text-color">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Choose the winner!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body d-flex flex-row flex-wrap align-items-center justify-content-center">
+                                <form>
+                                    <label class="form-label" for="winnerBox">Who won?</label>
+                                    <input type="text" id="winnerBox" class="form-control" placeholder="winner's name">
+                                </form>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-lg justify-content-center modal-button text-color" v-on:click ="submitWinner">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row d-flex flex-column justify-content-center mt-2">
             <div class="col d-flex flex-row flex-wrap flex-fill align-items-center background-color text-color">
                 <i class="bi bi-trophy w-25"></i>
@@ -96,6 +120,9 @@
     function deleteFight(){
 
     }
+    function submitWinner(){
+
+}
 
 </script>
 
@@ -103,6 +130,11 @@
 .button-border{
     border-radius: 10px;
     border: none;
+}
+.modal-button{
+    border-radius: 10px;
+    border: none;
+    background-color: #B30000;
 }
 .container-padding{
     padding: 20px;
