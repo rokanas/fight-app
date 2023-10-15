@@ -13,6 +13,7 @@
                                     <div class="col-8">
                                         <input 
                                         type="text"
+                                        v-model="fullName"
                                         id="fullnameBox"
                                         class="form-control">
                                     </div>
@@ -41,6 +42,7 @@
                                         <div class="col-6">
                                             <select 
                                             id="sexBox"
+                                            v-model="sex"
                                             class="form-select">
                                                 <option value="M">Male</option>
                                                 <option value="F">Female</option>
@@ -54,6 +56,7 @@
                                         <div class="col-6">
                                             <input
                                             id="ageBox"
+                                            v-model="age"
                                             class="form-control" 
                                             type="number"
                                             >
@@ -66,6 +69,7 @@
                                         <div class="col-6">
                                             <input 
                                             id="weightBox"
+                                            v-model="weight"
                                             type="number"
                                             class="form-control"
                                             >
@@ -78,6 +82,7 @@
                                         <div class="col-6">
                                             <input 
                                             id="heightBox"
+                                            v-model="height"
                                             type="number"
                                             class="form-control"
                                             >
@@ -90,6 +95,7 @@
                                         <div class="col-6">
                                             <input 
                                             id="locationBox"
+                                            v-model="location"
                                             type="text"
                                             class="form-control">
                                         </div>
@@ -101,7 +107,7 @@
                                     </div>
                                     <div class="col-10 col-sm-10 d-flex align-items-center flex-wrap w-100">
                                         <ul v-for="item in selectedMartialArts" class="flex-row flex-wrap justify-content-center list-group" id="martialArtBox">
-                                        <li class="d-inline-flex rounded-pill text-color list-border list-margin">{{ item.value }}</li>
+                                        <li class="d-inline-flex rounded-pill text-color list-border list-margin">{{ item.name }}</li>
                                         </ul>
                                         <button type="button" class="d-inline-flex justify-content-center rounded-circle text-color list-border list-margin plus-button-size" data-bs-toggle="modal" data-bs-target="#martialArtsModal">+</button>
                                         <div class="modal fade" id="martialArtsModal" tabindex="-1" aria-labelledby="martialArtsModalLabel" aria-hidden="true">
@@ -115,7 +121,7 @@
                                                         <ul class="list-group" v-for="item in listOfMartialArts">
                                                             <li class="list-group-item d-inline-flex rounded-pill text-color list-border list-margin">
                                                                 <input class="btn-check" type="checkbox" :id="'checkbox-' + item.value" autocomplete="off">
-                                                                <label class="btn text-color" :for="'checkbox-' + item.value">{{ item.value }}</label>
+                                                                <label class="btn text-color" :for="'checkbox-' + item.name">{{ item.name }}</label>
                                                             </li>
                                                         </ul>    
                                                     </div>
@@ -138,6 +144,7 @@
                             <div class="col-md-10 w-100 ps-1">
                                 <textarea 
                                 type="text"
+                                v-model="bio"
                                 class="form-control"
                                 id="bioBox"
                                 rows="10">
@@ -155,39 +162,81 @@
     </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
+<script>
+import { Api } from "@/Api";
+import router from "../router";
 
-    let fullName = ref('Godzilla');
-    let imageSrc = ref('../../public/Godzilla.png');
+export default {
+    name: 'ProfileForm',
 
-    let sex = ref('M');
-    let age = ref('66');
-    let weight = ref('60,000 Tons');
-    let height = ref('120 M');
-    let location = ref('Tokyo, Japan');
+    data() {
+        return {
+            fullName: '',
+            sex: '',
+            age: '',
+            weight: '',
+            height: '',
+            location: '',
+            bio: '',
+            win: '0',
+            loss: '0',
+            draw: '0',
+                
+            selectedMartialArts: [],
+            listOfMartialArts: [],
 
-    let judo = ref('Judo');
-    let bjj = ref('Brazilian Jiu-Jitsu');
-    let muayThai = ref('Muay Thai');
-    let bullshido = ref('Bullshido');
-    let boxing = ref('Boxing');
-    let kickBox = ref('Kick Box');
-    let wushu = ref('Wushu');
-    let taekwondo = ref('taekwondo');
-    
-    let selectedMartialArts = ref([judo, bjj, muayThai, bullshido]);
-    let listOfMartialArts = ref([judo, bjj, muayThai, bullshido, boxing, kickBox, wushu, taekwondo]);
-    let bio = ref('Japanese fighter from Tokyo. Have practised martial arts since a nuclear explosion caused me to horrifically mutate into a giant lizard. Started at 13 with judo foundation, then BJJ at 18 to cover my ground game. If anyone thinks they can outgrapple me, I beg for the challenge, I will meet you any place (but it has to be outdoors). Special call-out to any wrestlers, especially sambo, who keep talking trash about how BJJ has no real street-fight application. I will fight any day of the week you trash, swear on me');
-    function deleteProfile() {
+            imageSrc: '../../public/Godzilla.png' 
+        }
+    },
+    mounted() {
+        this.populateProfile()
+        this.getMartialArts()
+    },
+    methods: {
+        async populateProfile() {
+            try {
+                const fighterData = await Api.get('/fighter/' + this.$route.params.id)
 
+                this.fullName = fighterData.data.full_name
+                this.sex = fighterData.data.sex
+                this.age = fighterData.data.age
+                this.weight = fighterData.data.weight
+                this.height = fighterData.data.height
+                this.location = fighterData.data.location
+                this.bio = fighterData.data.bio
+
+                const fighterMartialArts = await Api.get('/fighter/' + this.$route.params.id + '/martial-art')
+                this.selectedMartialArts = fighterMartialArts.data
+                    
+            } catch (error) {
+                console.error(error)
+            }
+        },
+        async getMartialArts() {
+            const martialArts = await Api.get('/martial-art')
+            this.listOfMartialArts = martialArts.data
+        },
+        selectMartialArts() {
+
+        },
+        deleteProfile() {  // donn't forget to delete from local storage
+            try {
+                Api.delete('/fighter/' + this.$route.params.id)
+                localStorage.removeItem('fightAppAccessToken')
+                router.push({
+                    name: 'Login'
+                })
+            } catch (error) {
+                console.error(error)
+            }
+        },
+        applyProfileChanges() {
+            router.push({
+                name: 'Profile'
+            })
+        }
+    }
 }
-    function slecetMartialArts() {
-
-    }
-    function applyProfileChanges() {
-
-    }
 </script>
 
 <style scoped>
