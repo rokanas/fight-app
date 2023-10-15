@@ -152,7 +152,6 @@ export default {
         await this.getSessionUser()
         await this.getNearbyFighters()
         await this.populateProfile()
-        await this.populateFightRecord()
     },
     watch: {
     '$route.params.id': 'populateProfile',
@@ -183,6 +182,8 @@ export default {
 
                 const fighterMartialArts = await Api.get('/fighter/' + this.$route.params.id + '/martial-art')
                 this.selectedMartialArts = fighterMartialArts.data
+
+                await this.populateFightRecord()
                     
             } catch (error) {
                 console.error(error)
