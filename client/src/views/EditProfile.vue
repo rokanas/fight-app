@@ -274,7 +274,6 @@ export default {
                     }
                 });
 
-
                 // perform additions to db
                 for (var martialArtToAdd of toAdd) {
                     await Api.post('/fighter/' + this.sessionUser + '/martial-art', martialArtToAdd);

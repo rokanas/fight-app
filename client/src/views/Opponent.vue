@@ -36,7 +36,7 @@
                         <span class="span-center">{{ draw }}</span>
                     </div>
                     <div class="col-3">
-                        <button class="button-border text-color background-color">Fight History</button>
+                        <button class="button-border text-color background-color" v-on:click="goToHistory">Fight / Date History</button>
                     </div>
                 </div>
                 <div class="row d-flex flex-row justify-content-center">
@@ -151,6 +151,8 @@ export default {
     mounted: async function() {
         await this.getSessionUser()
         await this.getNearbyFighters()
+        await this.verifyOpponent()
+        await this.filterUser()
         await this.populateProfile()
     },
     watch: {
@@ -161,12 +163,27 @@ export default {
             try {
                 const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
                 this.sessionUser = user.data
-                console.log(this.sessionUser)
 
             } catch(error) {
                 console.error(error)
             }
             
+        },
+        async verifyOpponent() {
+            try {
+                await Api.get('/fighter/' + this.$route.params.id)
+            } catch(error) {
+                if(error.response && error.response.status === 404) {
+                    alert('404: Fighter does not exist!')
+
+                    router.push({ 
+                        name: 'Profile', 
+                        params: { id: this.sessionUser }
+                    })
+                } else {
+                    console.error(error)
+                }
+            }
         },
         async populateProfile() {
             try {
@@ -228,6 +245,12 @@ export default {
                 console.error(error)
             }
         },
+        async filterUser() { // ensure user isn't able to browse their own profile
+            if(this.sessionUser === this.$route.params.id) {
+                const randomIndex = Math.floor(Math.random() * this.nearbyFighters.length)
+                router.push({ name: 'Opponent', params: { id: this.nearbyFighters[randomIndex] }})
+            }
+        },
         nextFighter() {
             let newIndex
             const currentIndex = this.nearbyFighters.indexOf(this.$route.params.id)
@@ -250,6 +273,12 @@ export default {
 
             router.push({ name: 'Opponent', params: { id: this.nearbyFighters[newIndex] }})
 
+        },
+        goToHistory() {
+            router.push({
+                name: 'FightDateHistory',
+                params: {id: this.$route.params.id}
+            })
         }
     }   
 }

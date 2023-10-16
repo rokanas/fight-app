@@ -3,6 +3,9 @@ import LogSign from './views/LogSign.vue'
 import Profile from './views/Profile.vue'
 import EditProfile from './views/EditProfile.vue'
 import Opponent from './views/Opponent.vue'
+import FightDateHistory from './views/FightDateHistory.vue'
+import Fight from './views/Fight.vue'
+import Date from './views/Date.vue'
 
 const routes = [
   {
@@ -28,6 +31,21 @@ const routes = [
     path: '/opponent/:id',
     name: 'Opponent',
     component: Opponent
+  },
+  {
+    path: '/fight-date-history/:id',
+    name: 'FightDateHistory',
+    component: FightDateHistory
+  },
+  {
+    path: '/fight/:id',
+    name: 'Fight',
+    component: Fight
+  },
+  {
+    path: '/date/:id',
+    name: 'Date',
+    component: Date
   }
 ]
 

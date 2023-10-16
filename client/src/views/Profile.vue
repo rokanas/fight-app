@@ -31,7 +31,7 @@
                         <span class="span-center">{{ draw }}</span>
                     </div>
                     <div class="col-3">
-                        <button class="button-border text-color background-color">Fight History</button>
+                        <button class="button-border text-color background-color" v-on:click="goToHistory">Fight / Date History</button>
                     </div>
                 </div>
                 <div class="row d-flex flex-row justify-content-center">
@@ -197,6 +197,12 @@ export default {
             } catch(error) {
                 console.error(error)
             }
+        },
+        goToHistory() {
+            router.push({
+                name: 'FightDateHistory',
+                params: {id: this.$route.params.id}
+            })
         }
     }   
 }

@@ -180,7 +180,7 @@ export default {
 
         if (response.status === 201) {
             localStorage.setItem('fightAppAccessToken', response.data.accessToken)
-          console.log('Fighter logged in successfully.')
+            console.log('Fighter logged in successfully.')
         }
         // clear the login form
         this.email = ''
@@ -210,7 +210,7 @@ export default {
           bio: this.bio
         }
         // make post request to backend API
-        const response = await Api.post('/auth/register', fighter)
+        const response = await Api.post('/fighter', fighter)
         
         if (response.status === 201) {
           localStorage.setItem('fightAppAccessToken', response.data.accessToken)  
