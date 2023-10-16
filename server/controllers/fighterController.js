@@ -25,17 +25,19 @@ router.post('/', async (req, res) => {
         } else {
             return res.status(409).json({ error: 'Fighter already exists' });
         }
-        const user = { username: req.body.email}; // create fighter user object
+        const user = { email: req.body.email}; // create fighter user object
         const accessToken = generateAccessToken(user); // create access token
-        let validTokens = await Token.findOne({type: 'authentication'})
-        if (!validTokens) {
-            validTokens = new Token({ type: 'authentication', tokens: [] });
-        }
-        validTokens.tokens.push(accessToken); // Add the access token to list of valid tokens
-        await validTokens.save()
+        let userToken = await Token.findOne({user: user.email})
+        if (!userToken) {
+            const newToken = new Token({ user: user.email, token: accessToken });
+            await newToken.save()
+        } else {
+            await Token.updateOne({user: user.email}, {$set: {token: accessToken}})
+        } 
 
         return res.status(201).json({message: 'Fighter created successfully', accessToken: accessToken})
     } catch(err) {
+        console.error(err)
         return res.status(500).json({error: err.message})
     }
 });
@@ -51,7 +53,7 @@ router.get('/', async (req, res) => {
 });
 
 // get all fighters by location
-router.get('/location/:location', async (req, res) => {
+router.get('/opponents/:location', async (req, res) => {
     try {
         const fighters = await Fighter.find({location : req.params.location});
         res.status(200).json(fighters);               // request successful
@@ -71,7 +73,7 @@ router.delete('/', async (req, res) => {
 });
 
 // get fighter by email
-router.get('/email/:email', authenticateToken, async (req, res) => {
+router.get('/:email', async (req, res) => {
     try {
         const fighter = await Fighter.findOne({email : req.params.email});
         if(!fighter) {
@@ -122,7 +124,7 @@ router.patch('/:email', async (req, res) => {
 // delete fighter by email
 router.delete('/:email', async (req, res) => {
     try {
-      const fighter = await Fighter.findOneAndDelete({id : req.params.id});
+      const fighter = await Fighter.findOneAndDelete({email : req.params.email});
       if (!fighter) {
         return res.status(404).json({ error: 'Fighter not found' }); // resource not found
       }
@@ -358,6 +360,35 @@ router.delete('/:email/fight/:id', async (req, res) => {
     }
 });
 
+// delete all fights in fighter
+router.delete('/:email/fight', async (req, res) => {
+    try {
+        // find fighter by email
+        const fighter = await Fighter.findOne({ email: req.params.email });
+
+        if (!fighter) {
+            return res.status(404).json({ error: 'Fighter not found' });
+        }
+
+        const numberOfFights = fighter.fight_history.length
+
+        if (numberOfFights === 0) {
+            return res.status(404).json({ error: 'Fighter has no fights!' });
+        }
+
+        // remove all fights from the fighter's profile
+        fighter.fight_history.splice(0, numberOfFights);  
+
+        // save the updated fighter document
+        await fighter.save();
+
+        res.status(204).send(); // no content, successfully deleted
+        
+    } catch (err) {
+        res.status(500).json({ error: err.message }); // Internal server error
+    }
+});
+
 /* ========================= DATE RELATIONSHIP ==============================*/
 
 // add date relationship
@@ -462,6 +493,35 @@ router.delete('/:email/date/:id', async (req, res) => {
         fighter.date_history.splice(index, 1);   
 
         // Save the updated fighter document
+        await fighter.save();
+
+        res.status(204).send(); // no content, successfully deleted
+        
+    } catch (err) {
+        res.status(500).json({ error: err.message }); // Internal server error
+    }
+});
+
+// delete all dates in fighter
+router.delete('/:email/date', async (req, res) => {
+    try {
+        // find fighter by email
+        const fighter = await Fighter.findOne({ email: req.params.email });
+
+        if (!fighter) {
+            return res.status(404).json({ error: 'Fighter not found' });
+        }
+
+        const numberOfDates = fighter.date_history.length
+
+        if (numberOfDates === 0) {
+            return res.status(404).json({ error: 'Fighter has no dates!' });
+        }
+
+        // remove all dates from the fighter's profile
+        fighter.date_history.splice(0, numberOfDates);  
+
+        // save the updated fighter document
         await fighter.save();
 
         res.status(204).send(); // no content, successfully deleted

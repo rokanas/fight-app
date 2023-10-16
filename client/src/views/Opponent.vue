@@ -1,9 +1,13 @@
 <template>
-
-    <div class="container">
-        <div class="col-md-12 d-flex flex-column align-items-center">
-            <div class="col-10">
-    <div class="container-fluid mt-5 bg-black">
+    <div class="contatiner">
+        <div class="row d-flex flex-row flex-wrap mt-3">
+            <div class="col-2 col-sm-2 d-flex align-items-center justify-content-end">
+                <button type="button" class="bi bi-arrow-left-circle-fill text-color" style="background: none; border: none;" v-on:click ="previousFighter"></button>
+            </div>
+            <div class="col-8 col-sm-8">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="container-fluid mt-5 bg-black">
         <div class="row">
             <div class="col-md-4 d-flex flex-column align-items-center">
                 <div class="col-3 pt-1">
@@ -15,6 +19,7 @@
                     class="img-fluid profile-pic-size background-color img-thumbnail"
                     alt="Profile picture needed">
                 </div>
+                
             </div>
             <div class="col-md-8">
                 <div class="row d-flex flex-row align-items-center mt-1 mb-2">
@@ -99,9 +104,19 @@
             
         </div>
     </div>
+                    </div>
+                </div>
+                <div class="row d-flex flex-row-reverse align-self-start mt-2">
+                    <div class="col-sm-3 mb-sm-0 mb-2">
+                        <button type="button" class="button-border text-color background-color">Challenge to fight</button>
+                    </div>
+                    <div class="col-sm-3 mb-sm-0 mb-2">
+                        <button type="button" class="button-border text-color background-color">Ask on date</button>
+                    </div>
+                </div>
             </div>
-            <div class="col-2 mt-1">
-                <button class="btn btn-lg button-border text-color" v-on:click ="editProfile">Edit</button>
+            <div class="col-2 col-sm-2 d-flex align-items-center ">
+                <button type="button" class="bi bi-arrow-right-circle-fill text-color" style="background: none; border: none;" v-on:click ="nextFighter"></button>
             </div>
         </div>
     </div>
@@ -112,7 +127,7 @@ import { Api } from "@/Api";
 import router from "../router";
 
 export default {
-    name: 'Opponent',
+    name: 'ProfileForm',
 
     data() {
         return {
@@ -129,39 +144,50 @@ export default {
             loss: '0',
             draw: '0',
                 
-            selectedMartialArts: []
+            selectedMartialArts: [],
+            nearbyFighters: []
         }
     },
     mounted: async function() {
-        await this.authenticateUser();
-        await this.populateProfile();
-        await this.populateFightRecord();
+        await this.getSessionUser()
+        await this.getNearbyFighters()
+        await this.verifyOpponent()
+        await this.filterUser()
+        await this.populateProfile()
+    },
+    watch: {
+    '$route.params.id': 'populateProfile',
     },
     methods: {
-        async authenticateUser() {
+        async getSessionUser() {
             try {
                 const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
                 this.sessionUser = user.data
-                if(this.$route.params.id !== user.data) {
-                    alert('Unauthorized access')
-                    
-                    router.push({
-                        name: 'Profile',
-                        params: {id: this.sessionUser}
-                    })
-                    }
+
             } catch(error) {
                 console.error(error)
             }
+            
         },
-        editProfile() {
-            router.push({
-                name: 'EditProfile'
-            })
+        async verifyOpponent() {
+            try {
+                await Api.get('/fighter/' + this.$route.params.id)
+            } catch(error) {
+                if(error.response && error.response.status === 404) {
+                    alert('404: Fighter does not exist!')
+
+                    router.push({ 
+                        name: 'Profile', 
+                        params: { id: this.sessionUser }
+                    })
+                } else {
+                    console.error(error)
+                }
+            }
         },
         async populateProfile() {
             try {
-                const fighterData = await Api.get('/fighter/' + this.sessionUser)
+                const fighterData = await Api.get('/fighter/' + this.$route.params.id)
 
                 this.fullName = fighterData.data.full_name
                 this.sex = fighterData.data.sex
@@ -171,8 +197,10 @@ export default {
                 this.location = fighterData.data.location
                 this.bio = fighterData.data.bio
 
-                const fighterMartialArts = await Api.get('/fighter/' + this.sessionUser + '/martial-art')
+                const fighterMartialArts = await Api.get('/fighter/' + this.$route.params.id + '/martial-art')
                 this.selectedMartialArts = fighterMartialArts.data
+
+                await this.populateFightRecord()
                     
             } catch (error) {
                 console.error(error)
@@ -180,7 +208,7 @@ export default {
         },
         async populateFightRecord() {
             try {
-                const fighterFights = await Api.get('/fighter/' + this.sessionUser + '/fight')
+                const fighterFights = await Api.get('/fighter/' + this.$route.params.id + '/fight')
                 
                 let wins = 0;
                 let losses = 0;
@@ -198,6 +226,54 @@ export default {
                 console.error(error)
             }
         },
+        async getNearbyFighters() {
+            try {
+                const fighterData = await Api.get('/fighter/' + this.sessionUser)
+                const location = fighterData.data.location
+                const response = await Api.get('/fighter/opponents/' + location)
+        
+                if(response.length <= 1) {
+                    alert('No nearby fighters at your location. Sorry :(')
+                    router.push({
+                        name: 'Profile',
+                        params: {id: this.sessionUser}
+                    })
+                }
+                this.nearbyFighters = response.data.map(fighter => fighter.email)
+                this.nearbyFighters = this.nearbyFighters.filter(fighter => fighter !== this.sessionUser) // filter the array so the session User isn't able to browse their own profile
+            } catch(error) {
+                console.error(error)
+            }
+        },
+        async filterUser() { // ensure user isn't able to browse their own profile
+            if(this.sessionUser === this.$route.params.id) {
+                const randomIndex = Math.floor(Math.random() * this.nearbyFighters.length)
+                router.push({ name: 'Opponent', params: { id: this.nearbyFighters[randomIndex] }})
+            }
+        },
+        nextFighter() {
+            let newIndex
+            const currentIndex = this.nearbyFighters.indexOf(this.$route.params.id)
+            if(currentIndex === this.nearbyFighters.length - 1) {
+                newIndex = 0
+            } else {
+                newIndex = currentIndex + 1
+            }
+
+            router.push({ name: 'Opponent', params: { id: this.nearbyFighters[newIndex] }})
+        },
+        previousFighter() {
+            let newIndex
+            const currentIndex = this.nearbyFighters.indexOf(this.$route.params.id)
+            if(currentIndex === 0) {
+                newIndex = this.nearbyFighters.length - 1
+            } else {
+                newIndex = currentIndex - 1
+            }
+
+            router.push({ name: 'Opponent', params: { id: this.nearbyFighters[newIndex] }})
+
+        },
         goToHistory() {
             router.push({
                 name: 'FightDateHistory',
@@ -206,9 +282,22 @@ export default {
         }
     }   
 }
+
+
+
 </script>
 
 <style scoped>
+.button-border{
+    border-radius: 10px;
+    border: none;
+}
+.background-color{
+    background-color: #6B0801;
+}
+.text-color{
+    color: #FFFF00;
+}
 
 .span-center {
     display: flex;
@@ -256,12 +345,4 @@ export default {
     background-color: rgba(0, 51, 204, 0.5);
 }
 
-.button-border{
-    border-radius: 10px;
-    border: none;
-    background-color: #6B0801;
-}
-.text-color{
-    color: #FFFF00;
-}
 </style>

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Fight = require('../models/fight');
 const Fighter = require('../models/fighter');
+const MartialArt = require('../models/martial_art');
 
 router.use(express.json());
 
@@ -204,3 +205,116 @@ router.get('/:id/fighter/winner', async (req, res) => {
 });
 
 module.exports = router
+
+/* ========================= MARTIAL ART RELATIONSHIP ==============================*/
+
+// add martial art relationship
+router.post('/:id/martial-art', async (req, res) => {
+  try {
+
+    // find the fight by id
+    const fight = await Fight.findOne({ id : req.params.id });
+
+    if (!fight) {
+      return res.status(404).json({ error: 'Fight not found' });
+    }
+
+    // find the existing martial art by name
+    const martialArt = await MartialArt.findOne({ name : req.body.name });
+
+    if (!martialArt) {
+      return res.status(404).json({ error: 'Martial art not found' });
+    }
+
+    // add the martial art to the fight's list of martial arts
+    fight.martial_art.push(req.body.name);
+
+    // save the updated fight document
+    await fight.save();
+
+    res.status(201).json(fight); // respond with the updated fight
+  } catch (err) {
+    res.status(400).json({ error: err.message }); // issue with the client's request
+  }
+});
+
+// get all martial arts in fight
+router.get('/:id/martial-art', async (req, res) => {
+  try {
+      // find the fight by id
+      const fight = await Fight.findOne({ id: req.params.id });
+
+      if (!fight) {
+          return res.status(404).json({ error: 'Fight not found' });
+      }
+
+      // retrieve martial arts based on names stored in fight
+      const martialArts = await MartialArt.find({ name: { $in: fight.martial_art } });
+
+      // return the list of martial arts in fight
+      res.status(200).json(martialArts);
+
+  } catch (err) {
+      res.status(500).json({ error: err.message }); // internal server error
+  }
+});
+
+// get specific martial art in fight by name
+router.get('/:id/martial-art/:name', async (req, res) => {
+  try {
+      // Find the fight by id
+      const fight = await Fight.findOne({ id: req.params.id });
+
+      if (!fight) {
+          return res.status(404).json({ error: 'Fight not found' });
+      }
+
+      const martialArtName = req.params.name;
+
+      // check if the fight has specific martial art
+      if (!fight.martial_art.includes(martialArtName)) {
+          return res.status(404).json({ error: 'Fight does not have Martial Art' });
+      }
+
+      // retrieve martial arts based on names stored in fight   
+      const martialArt = await MartialArt.findOne({ name: martialArtName });
+
+      // return the specific martial art
+      res.status(200).json(martialArt);
+
+  } catch (err) {
+      res.status(500).json({ error: err.message }); // internal server error
+  }
+});
+
+// delete specific martial art in fight by name
+router.delete('/:id/martial-art/:name', async (req, res) => {
+  try {
+      // find fight by id
+      const fight = await Fight.findOne({ id: req.params.id });
+
+      if (!fight) {
+          return res.status(404).json({ error: 'Fight not found' });
+      }
+
+      const martialArt = req.params.name;
+
+      // Check if the fight has the specified martial art
+      const index = fight.martial_art.indexOf(martialArt);
+
+      if (index === -1) {
+          return res.status(404).json({ error: 'Fight does not have Martial Art' });
+      }
+
+      // Remove the martial art from the fighte
+      fight.martial_art.splice(index, 1);   
+
+      // Save the updated fight document
+      await fight.save();
+
+      res.status(204).send(); // no content, successfully deleted
+      
+  } catch (err) {
+      res.status(500).json({ error: err.message }); // Internal server error
+  }
+});
