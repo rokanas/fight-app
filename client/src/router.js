@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LogSign from './views/LogSign.vue'
 import Profile from './views/Profile.vue'
 import EditProfile from './views/EditProfile.vue'
-import FightDateHistory from './views/FightDate.vue'
+import Opponent from './views/Opponent.vue'
+import FightDateHistory from './views/FightDateHistory.vue'
 import Fight from './views/Fight.vue'
 import Date from './views/Date.vue'
 
@@ -17,17 +18,22 @@ const routes = [
     redirect: '/login'
   },
   {
-    path: '/profile',
+    path: '/profile/:id',
     name: 'Profile',
     component: Profile
   },
   {
-    path: '/edit-profile',
+    path: '/profile/:id/edit',
     name: 'EditProfile',
     component: EditProfile
   },
   {
-    path: '/fight-date-history',
+    path: '/opponent/:id',
+    name: 'Opponent',
+    component: Opponent
+  },
+  {
+    path: '/fight-date-history/:id',
     name: 'FightDateHistory',
     component: FightDateHistory
   },

@@ -3,14 +3,14 @@ const Schema = mongoose.Schema;
 
 // Define schema for entity
 const tokenSchema = new mongoose.Schema({
-    type: {
+    user: {
         type: String,
         required: true,
         unique: true,
       },
-    tokens: [{
+    token: {
         type: String
-    }],
+    },
 });
 
 // Create model from schema

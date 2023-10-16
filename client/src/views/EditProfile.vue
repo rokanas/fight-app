@@ -13,6 +13,7 @@
                                     <div class="col-8">
                                         <input 
                                         type="text"
+                                        v-model="fullName"
                                         id="fullnameBox"
                                         class="form-control">
                                     </div>
@@ -41,6 +42,7 @@
                                         <div class="col-6">
                                             <select 
                                             id="sexBox"
+                                            v-model="sex"
                                             class="form-select">
                                                 <option value="M">Male</option>
                                                 <option value="F">Female</option>
@@ -54,6 +56,7 @@
                                         <div class="col-6">
                                             <input
                                             id="ageBox"
+                                            v-model="age"
                                             class="form-control" 
                                             type="number"
                                             >
@@ -66,6 +69,7 @@
                                         <div class="col-6">
                                             <input 
                                             id="weightBox"
+                                            v-model="weight"
                                             type="number"
                                             class="form-control"
                                             >
@@ -78,6 +82,7 @@
                                         <div class="col-6">
                                             <input 
                                             id="heightBox"
+                                            v-model="height"
                                             type="number"
                                             class="form-control"
                                             >
@@ -90,6 +95,7 @@
                                         <div class="col-6">
                                             <input 
                                             id="locationBox"
+                                            v-model="location"
                                             type="text"
                                             class="form-control">
                                         </div>
@@ -101,7 +107,7 @@
                                     </div>
                                     <div class="col-10 col-sm-10 d-flex align-items-center flex-wrap w-100">
                                         <ul v-for="item in selectedMartialArts" class="flex-row flex-wrap justify-content-center list-group" id="martialArtBox">
-                                        <li class="d-inline-flex rounded-pill text-color list-border list-margin">{{ item.value }}</li>
+                                        <li class="d-inline-flex rounded-pill text-color list-border list-margin">{{ item.name }}</li>
                                         </ul>
                                         <button type="button" class="d-inline-flex justify-content-center rounded-circle text-color list-border list-margin plus-button-size" data-bs-toggle="modal" data-bs-target="#martialArtsModal">+</button>
                                         <div class="modal fade" id="martialArtsModal" tabindex="-1" aria-labelledby="martialArtsModalLabel" aria-hidden="true">
@@ -114,13 +120,13 @@
                                                     <div class="modal-body  d-flex flex-row flex-wrap align-items-center justify-content-center">
                                                         <ul class="list-group" v-for="item in listOfMartialArts">
                                                             <li class="list-group-item d-inline-flex rounded-pill text-color list-border list-margin">
-                                                                <input class="btn-check" type="checkbox" :id="'checkbox-' + item.value" autocomplete="off">
-                                                                <label class="btn text-color" :for="'checkbox-' + item.value">{{ item.value }}</label>
+                                                                <input class="btn-check" type="checkbox" :id="'checkbox-' + item.name" :checked="isMartialArtSelected(item)" autocomplete="off" v-on:click ="selectMartialArts(item)">
+                                                                <label class="btn text-color" :for="'checkbox-' + item.name">{{ item.name }}</label>
                                                             </li>
                                                         </ul>    
                                                     </div>
                                                     <div class="modal-footer justify-content-center">
-                                                        <button type="button" class="btn btn-lg justify-content-center modal-button text-color" v-on:click ="slecetMartialArts">Select</button>
+                                                        <button type="button" class="btn btn-lg justify-content-center modal-button text-color" data-bs-dismiss="modal" v-on:click ="saveMartialArts">Select</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -138,6 +144,7 @@
                             <div class="col-md-10 w-100 ps-1">
                                 <textarea 
                                 type="text"
+                                v-model="bio"
                                 class="form-control"
                                 id="bioBox"
                                 rows="10">
@@ -155,39 +162,181 @@
     </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
+<script>
+import { Api } from "@/Api";
+import router from "../router";
 
-    let fullName = ref('Godzilla');
-    let imageSrc = ref('../../public/Godzilla.png');
+export default {
+    name: 'ProfileForm',
 
-    let sex = ref('M');
-    let age = ref('66');
-    let weight = ref('60,000 Tons');
-    let height = ref('120 M');
-    let location = ref('Tokyo, Japan');
+    data() {
+        return {
+            sessionUser: '',
 
-    let judo = ref('Judo');
-    let bjj = ref('Brazilian Jiu-Jitsu');
-    let muayThai = ref('Muay Thai');
-    let bullshido = ref('Bullshido');
-    let boxing = ref('Boxing');
-    let kickBox = ref('Kick Box');
-    let wushu = ref('Wushu');
-    let taekwondo = ref('taekwondo');
-    
-    let selectedMartialArts = ref([judo, bjj, muayThai, bullshido]);
-    let listOfMartialArts = ref([judo, bjj, muayThai, bullshido, boxing, kickBox, wushu, taekwondo]);
-    let bio = ref('Japanese fighter from Tokyo. Have practised martial arts since a nuclear explosion caused me to horrifically mutate into a giant lizard. Started at 13 with judo foundation, then BJJ at 18 to cover my ground game. If anyone thinks they can outgrapple me, I beg for the challenge, I will meet you any place (but it has to be outdoors). Special call-out to any wrestlers, especially sambo, who keep talking trash about how BJJ has no real street-fight application. I will fight any day of the week you trash, swear on me');
-    function deleteProfile() {
+            fullName: '',
+            sex: '',
+            age: '',
+            weight: '',
+            height: '',
+            location: '',
+            bio: '',
+            win: '0',
+            loss: '0',
+            draw: '0',
+                
+            selectedMartialArts: [],
+            newSelection: [],
+            listOfMartialArts: [],
 
+            imageSrc: '../../public/Godzilla.png' 
+        }
+    },
+    mounted: async function() {
+        await this.authenticateUser();
+        await this.populateProfile();
+        await this.getMartialArts()
+    },
+    methods: {
+        async authenticateUser() {
+            try {
+                const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
+                this.sessionUser = user.data
+                if(this.$route.params.id !== user.data) {
+                    alert('Unauthorized access')
+                    
+                    router.push({
+                        name: 'EditProfile',
+                        params: {id: this.sessionUser}
+                    })
+                    }
+            } catch(error) {
+                console.error(error)
+            }
+        },
+        editProfile() {
+            router.push({
+                name: 'EditProfile'
+            })
+        },
+        async populateProfile() {
+            try {
+                const fighterData = await Api.get('/fighter/' + this.sessionUser)
+
+                this.fullName = fighterData.data.full_name
+                this.sex = fighterData.data.sex
+                this.age = fighterData.data.age
+                this.weight = fighterData.data.weight
+                this.height = fighterData.data.height
+                this.location = fighterData.data.location
+                this.bio = fighterData.data.bio
+
+                const fighterMartialArts = await Api.get('/fighter/' + this.sessionUser + '/martial-art')
+                this.selectedMartialArts = fighterMartialArts.data
+                this.newSelection = this.selectedMartialArts.slice()
+                    
+            } catch (error) {
+                console.error(error)
+            }
+        },
+        async getMartialArts() {
+            const martialArts = await Api.get('/martial-art')
+            this.listOfMartialArts = martialArts.data
+        },
+        selectMartialArts(item) {
+            if (this.newSelection.some(selected => selected.name === item.name)) {
+                // if martial art already exists, remove it
+                this.newSelection = this.newSelection.filter(selected => selected.name !== item.name);
+            } else {
+                // if martial art doesn't already exist, add it
+                this.newSelection.push(item);
+                
+            } console.log(this.newSelection)
+        },
+        async saveMartialArts() {
+            try {
+                const toAdd = [];
+                const toDelete = [];
+
+                // fetch fighter's list of known martial arts from db
+                const knownMartialArts = await Api.get('/fighter/' + this.sessionUser + '/martial-art/')
+
+                // compare fighter's known arts to the new selection and add to addition queue accordingly
+                this.newSelection.forEach(selectedArt => {
+                    if(!knownMartialArts.data.some(knownArt => knownArt.name === selectedArt.name)) {
+                        toAdd.push(selectedArt)
+                    }
+                })
+
+                // compare fighter's known arts to the new selection and add to deletion queue accordingly
+                knownMartialArts.data.forEach(knownArt => {
+                    if (!this.newSelection.some(selectedArt => selectedArt.name === knownArt.name)) {
+                        toDelete.push(knownArt)
+                    }
+                });
+
+                // perform additions to db
+                for (var martialArtToAdd of toAdd) {
+                    await Api.post('/fighter/' + this.sessionUser + '/martial-art', martialArtToAdd);
+                }
+
+                // perform deletions to db
+                for (var martialArtToDelete of toDelete) {
+                    await Api.delete('/fighter/' + this.sessionUser + '/martial-art/' + martialArtToDelete.name);
+                }
+
+                // update clientside
+                const fighterMartialArts = await Api.get('/fighter/' + this.sessionUser + '/martial-art')
+                this.selectedMartialArts = fighterMartialArts.data
+
+            } catch (error) {
+                console.error(error)
+            }
+        },
+        isMartialArtSelected(item) {
+            if(this.selectedMartialArts.some(selected => selected.name === item.name)) {
+                return true
+            } else {    
+                return false
+            }
+        },
+        deleteProfile() {  // donn't forget to delete from local storage
+            try {
+                Api.delete('/fighter/' + this.sessionUser)
+                localStorage.removeItem('fightAppAccessToken')
+                router.push({
+                    name: 'Login'
+                })
+            } catch (error) {
+                console.error(error)
+            }
+        },
+        async applyProfileChanges() {
+            try {
+                const newData = {
+                email: this.email,
+                password: this.password,
+                full_name: this.fullName,
+                sex: this.sex,
+                age: this.age,
+                height: this.height,
+                weight: this.weight,
+                location: this.location,
+                bio: this.bio
+                }
+
+                // make post request to backend API
+                Api.put('/fighter/' + this.sessionUser, newData)
+            
+                router.push({
+                name: 'Profile'
+                })
+
+            } catch(error) {
+                console.error(error)
+            }
+        }
+    }
 }
-    function slecetMartialArts() {
-
-    }
-    function applyProfileChanges() {
-
-    }
 </script>
 
 <style scoped>
