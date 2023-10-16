@@ -38,12 +38,12 @@ const routes = [
     component: FightDateHistory
   },
   {
-    path: '/fight',
+    path: '/fight/:id',
     name: 'Fight',
     component: Fight
   },
   {
-    path: '/date',
+    path: '/date/:id',
     name: 'Date',
     component: Date
   }

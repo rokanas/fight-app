@@ -52,7 +52,7 @@ router.get('/:id', async (req,res) =>{
     // This checks if there is a date with that specific id
     // P.S. in js undefined,null,0, and empty strings are all considered FALSE
     if(!newDate){
-        res.status(404).send({"message" : "The requested date does not exist!"});
+        res.status(404).send({message : "The requested date does not exist!"});
         return;
     }
     res.status(200).send(newDate);

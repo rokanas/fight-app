@@ -1,9 +1,8 @@
 <template>
-    <Background></Background>
     <div class="container container-padding">
         <div class="row d-flex flex-wrap">
             <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
-                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter1 }}</label>
+                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter2 }}</label>
                 <img
                 src="../../public/Godzilla.png"
                 class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
@@ -14,7 +13,7 @@
                 <p class="fs-1 text-color">VS</p>
             </div>
             <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
-                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter2 }}</label>
+                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter1 }}</label>
                 <img
                 src="../../public/blank-profile-pic.png"
                 class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
@@ -54,12 +53,12 @@
             </div>
             <div class="col d-flex flex-column">
                 <div class="col-1 col-sm-2 w-100 d-flex flex-fill align-content-center justify-content-center mt-2">
-                    <p class="fs-1 text-color">Fight stats</p>
+                    <p class="fs-1 text-color">Fight details:</p>
                 </div>
                 <div class="col-11 col-sm-10 w-100 flex-fill justify-content-center background-color text-color">
                     <div class="row d-flex flex-row mt-2">
                         <div class="col-6">
-                            <p class="flex-fill">date:</p>
+                            <p class="flex-fill">Date:</p>
                         </div>
                         <div class="col-6">
                             <p class="flex-fill">{{ date }}</p>
@@ -67,7 +66,7 @@
                     </div>
                     <div class="row d-flex flex-row">
                         <div class="col-6">
-                            <p class="flex-fill">location:</p>
+                            <p class="flex-fill">Location:</p>
                         </div>
                         <div class="col-6">
                             <p class="flex-fill">{{ location }}</p>
@@ -83,11 +82,11 @@
                     </div>
                     <div class="row d-flex flex-row">
                         <div class="col-6">
-                            <p class="flex-fill">Martial art:</p>
+                            <p class="flex-fill">Martial Art(s):</p>
                         </div>
                         <div class="col-6">
                             <ul v-for="item in martialArts" class="d-flex flex-row">
-                                <li class="flex-fill">{{ item.value }} </li>
+                                <li class="flex-fill">{{ item.name }} </li>
                             </ul>
                         </div>
                     </div>
@@ -102,28 +101,98 @@
     </div>
 </template>
 
-<script setup>
-    import { ref } from 'vue';
-    import Background from '../components/Background.vue';
+<script>
+import router from "../router";
+import { Api } from '../Api';
 
-    let fighter1 = ref('Godzilla');
-    let fighter2 = ref('Anonymous');
-    let winner = ref('Godzilla');
-    
-    let boxing = ref('Boxing');
-    let wushu = ref('Wushu');
+export default {
+    name: 'Fight',
 
-    let date = ref('2023-12-12');
-    let location = ref('Gothenburg');
-    let weightClass = ref('Heavy Weight');
-    let martialArts = ref([boxing, wushu]);
-    function deleteFight(){
+    data() {
+        return {
+            sessionUser: '',
 
-    }
-    function submitWinner(){
+            fighter1: '',
+            fighter2: '',
+            winner: '',
+
+            date: '',
+            location: '',
+            weightClass: '',
+
+            martialArts: []
+        }
+    },
+    mounted: async function() {
+        await this.authenticateUser();
+        await this.verifyFight();
+        await this.populateFight();
+    },
+    methods: {
+        async authenticateUser() {
+            try {
+                const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
+                this.sessionUser = user.data
+            } catch(error) {
+                console.error(error)
+            }
+        },
+        async verifyFight() {
+            try {
+                await Api.get('/fight/' + this.$route.params.id)
+            } catch(error) {
+                if(error.response && error.response.status === 404) {
+                    alert('404: Fight does not exist!')
+
+                    router.push({ 
+                        name: 'Profile', 
+                        params: { id: this.sessionUser }
+                    })
+                } else {
+                    console.error(error)
+                }
+            }
+        },
+        async populateFight() {
+            try {
+                const fightData = await Api.get('/fight/' + this.$route.params.id)
+                this.date = fightData.data.date
+                this.location = fightData.data.location
+                this.weightClass = fightData.data.weight_class
+
+                const fighters = await Api.get('/fight/' + this.$route.params.id + '/fighter')
+                this.fighter1 = fighters.data[0].full_name
+                this.fighter2 = fighters.data[1].full_name
+
+                if(!fightData.data.winner.key) { // if winner attribute is empty (therefore the winner key is 'falsy')
+                    this.winner = 'TBD'
+                }
+
+                const fightMartialArts = await Api.get('/fight/' + this.$route.params.id + '/martial-art')
+                this.martialArts = fightMartialArts.data
+            } catch(error) {
+                console.error(error)
+            }
+        },
+        submitWinner() {
+
+        },
+        async deleteFight() {
+            try {
+                Api.delete('/fight/' + this.$route.params.id)
+
+                router.push({
+                    name: 'Profile',
+                    params: {id: this.sessionUser}
+        
+                })
+            } catch (error) {
+                console.error(error)
+            }
+        }
+    },
 
 }
-
 </script>
 
 <style scoped>

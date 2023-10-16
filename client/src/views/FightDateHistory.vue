@@ -11,7 +11,7 @@
                 <div class="col d-flex flex-column mt-2" v-if = "isFights">
                     <div class="col w-100">
                         <ul v-for="item in fights" class="justify-content-center pe-4">
-                            <button type="button" class="list-items background-color text-color w-75" :id="'fight-' + item.name">{{ item.name }}</button>
+                            <button type="button" class="list-items background-color text-color w-75" :id="'fight-' + item.name" v-on:click="goToFight(item)">{{ item.name }} </button>
                             <button type="button" class="bi bi-trash3-fill w-25 list-items background-color text-color" :for="'fight-' + item" v-on:click="deleteOneFight(item.id)"></button>
                         </ul>
                     </div>
@@ -22,7 +22,7 @@
                 <div class="co d-flex flex-column mt-2" v-if="isDates">
                     <div class="col w-100">
                         <ul v-for="item in dates" class="justify-content-center pe-4">
-                            <button type="button" class="list-items background-color text-color w-75" :id="'date-' + item.name">{{ item.name }}</button>
+                            <button type="button" class="list-items background-color text-color w-75" :id="'date-' + item.name" v-on:click="goToDate(item)">{{ item.name }}</button>
                             <button type="button" class="bi bi-trash3-fill w-25 list-items background-color text-color" :for="'date-' + item" v-on:click="deleteOneDate(item.id)"></button>
                         </ul>
                     </div>
@@ -191,6 +191,18 @@ export default {
             } catch(error) {
                 console.error(error)
             }
+        },
+        goToFight(fight) {
+            router.push({
+                name: 'Fight',
+                params: { id: fight.id}
+            })
+        },
+        goToDate(date) {
+            router.push({
+                name: 'Date',
+                params: { id: date.id}
+            })
         }
     }
 }
