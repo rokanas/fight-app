@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LogSign from './views/LogSign.vue'
 import Profile from './views/Profile.vue'
 import EditProfile from './views/EditProfile.vue'
+import ChallengeToFight from './views/ChallengeToFight.vue'
+import AskOnDate from './views/AskOnDate.vue'
 
 const routes = [
   {
@@ -22,8 +24,17 @@ const routes = [
     path: '/edit-profile',
     name: 'EditProfile',
     component: EditProfile
+  },
+  {
+    path: '/challenge-to-fight',
+    name: 'ChallengeToFight',
+    component: ChallengeToFight
+  },
+  {
+    path: '/ask-on-date',
+    name: 'AskOnDate',
+    component: AskOnDate
   }
->>>>>>> client/src/router.js
 ]
 
 const router = createRouter({
