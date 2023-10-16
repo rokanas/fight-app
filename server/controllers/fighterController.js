@@ -51,7 +51,7 @@ router.get('/', async (req, res) => {
 });
 
 // get all fighters by location
-router.get('/browse/:location', async (req, res) => {
+router.get('/opponents/:location', async (req, res) => {
     try {
         const fighters = await Fighter.find({location : req.params.location});
         res.status(200).json(fighters);               // request successful

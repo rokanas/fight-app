@@ -171,6 +171,8 @@ export default {
 
     data() {
         return {
+            sessionUser: '',
+
             fullName: '',
             sex: '',
             age: '',
@@ -189,15 +191,36 @@ export default {
             imageSrc: '../../public/Godzilla.png' 
         }
     },
-    mounted() {
-        this.populateProfile()
-        this.getMartialArts()
-
+    mounted: async function() {
+        await this.authenticateUser();
+        await this.populateProfile();
+        await this.getMartialArts()
     },
     methods: {
+        async authenticateUser() {
+            try {
+                const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
+                this.sessionUser = user.data
+                if(this.$route.params.id !== user.data) {
+                    alert('Unauthorized access')
+                    
+                    router.push({
+                        name: 'EditProfile',
+                        params: {id: this.sessionUser}
+                    })
+                    }
+            } catch(error) {
+                console.error(error)
+            }
+        },
+        editProfile() {
+            router.push({
+                name: 'EditProfile'
+            })
+        },
         async populateProfile() {
             try {
-                const fighterData = await Api.get('/fighter/' + this.$route.params.id)
+                const fighterData = await Api.get('/fighter/' + this.sessionUser)
 
                 this.fullName = fighterData.data.full_name
                 this.sex = fighterData.data.sex
@@ -207,7 +230,7 @@ export default {
                 this.location = fighterData.data.location
                 this.bio = fighterData.data.bio
 
-                const fighterMartialArts = await Api.get('/fighter/' + this.$route.params.id + '/martial-art')
+                const fighterMartialArts = await Api.get('/fighter/' + this.sessionUser + '/martial-art')
                 this.selectedMartialArts = fighterMartialArts.data
                 this.newSelection = this.selectedMartialArts.slice()
                     
@@ -235,7 +258,7 @@ export default {
                 const toDelete = [];
 
                 // fetch fighter's list of known martial arts from db
-                const knownMartialArts = await Api.get('/fighter/' + this.$route.params.id + '/martial-art/')
+                const knownMartialArts = await Api.get('/fighter/' + this.sessionUser + '/martial-art/')
 
                 // compare fighter's known arts to the new selection and add to addition queue accordingly
                 this.newSelection.forEach(selectedArt => {
@@ -254,16 +277,16 @@ export default {
 
                 // perform additions to db
                 for (var martialArtToAdd of toAdd) {
-                    await Api.post('/fighter/' + this.$route.params.id + '/martial-art', martialArtToAdd);
+                    await Api.post('/fighter/' + this.sessionUser + '/martial-art', martialArtToAdd);
                 }
 
                 // perform deletions to db
                 for (var martialArtToDelete of toDelete) {
-                    await Api.delete('/fighter/' + this.$route.params.id + '/martial-art/' + martialArtToDelete.name);
+                    await Api.delete('/fighter/' + this.sessionUser + '/martial-art/' + martialArtToDelete.name);
                 }
 
                 // update clientside
-                const fighterMartialArts = await Api.get('/fighter/' + this.$route.params.id + '/martial-art')
+                const fighterMartialArts = await Api.get('/fighter/' + this.sessionUser + '/martial-art')
                 this.selectedMartialArts = fighterMartialArts.data
 
             } catch (error) {
@@ -279,7 +302,7 @@ export default {
         },
         deleteProfile() {  // donn't forget to delete from local storage
             try {
-                Api.delete('/fighter/' + this.$route.params.id)
+                Api.delete('/fighter/' + this.sessionUser)
                 localStorage.removeItem('fightAppAccessToken')
                 router.push({
                     name: 'Login'
@@ -303,7 +326,7 @@ export default {
                 }
 
                 // make post request to backend API
-                Api.put('/fighter/' + this.$route.params.id, newData)
+                Api.put('/fighter/' + this.sessionUser, newData)
             
                 router.push({
                 name: 'Profile'
