@@ -8,6 +8,7 @@ const fightController = require('./controllers/fightController');
 const fighterController = require('./controllers/fighterController');
 const martialArtController = require('./controllers/martialArtController');
 const dateController = require('./controllers/dateController');
+const authenticationController = require('./controllers/authenticationController');
 
 // Variables
 const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/fightAppDB';
@@ -39,6 +40,7 @@ app.use('/api/fighter',fighterController);
 app.use('/api/date',dateController);
 app.use('/api/fight',fightController);
 app.use('/api/martial-art',martialArtController);
+app.use('/api/auth',authenticationController.router);
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
 app.use('/api/*', function (req, res) {
