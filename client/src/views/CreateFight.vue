@@ -134,8 +134,16 @@ export default {
     methods: {
         async authenticateUser() {
             try {
-                const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
-                this.sessionUser = user.data
+                if(localStorage.getItem('fightAppAccessToken') === null) {
+                    alert('Unauthorized access')
+                    
+                    router.push({
+                        name: 'Login',
+                    })
+                } else {
+                    const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
+                    this.sessionUser = user.data
+                }
             } catch(error) {
                 console.error(error)
             }

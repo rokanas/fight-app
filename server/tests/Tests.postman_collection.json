@@ -250,10 +250,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"Kickboxing\",\r\n    \"ruleset\" : \"Kickboxing ruleset\"\r\n}"
+							"raw": "{\r\n    \"name\" : \"Sambo Wrestling\",\r\n    \"ruleset\" : \"Sambo Wrestling ruleset\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/martial-art/Boxing",
+							"raw": "http://localhost:3000/api/martial-art/Wrestling",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -262,7 +262,7 @@
 							"path": [
 								"api",
 								"martial-art",
-								"Boxing"
+								"Wrestling"
 							]
 						}
 					},
@@ -298,10 +298,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"ruleset\" : \"New wrestling ruleset\"\r\n}"
+							"raw": "{\r\n    \"ruleset\" : \"New Boxing ruleset\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/martial-art/Wrestling",
+							"raw": "http://localhost:3000/api/martial-art/Boxing",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -310,7 +310,7 @@
 							"path": [
 								"api",
 								"martial-art",
-								"Wrestling"
+								"Boxing"
 							]
 						}
 					},
@@ -349,7 +349,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/martial-art/Wrestling",
+							"raw": "http://localhost:3000/api/martial-art/Sambo Wrestling",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -358,7 +358,7 @@
 							"path": [
 								"api",
 								"martial-art",
-								"Wrestling"
+								"Sambo Wrestling"
 							]
 						}
 					},
@@ -428,16 +428,9 @@
 									"pm.test(\"Response to have all attributes\", function(){\r",
 									"    const responseData = pm.response.json();\r",
 									"\r",
-									"    pm.expect(responseData).to.have.property('email');\r",
-									"    pm.expect(responseData).to.have.property('password');\r",
-									"    pm.expect(responseData).to.have.property('age');\r",
-									"    pm.expect(responseData).to.have.property('full_name');\r",
-									"    pm.expect(responseData).to.have.property('sex');\r",
-									"    pm.expect(responseData).to.have.property('bio');\r",
-									"    pm.expect(responseData).to.have.property('location');\r",
-									"    pm.expect(responseData).to.have.property('fight_record');\r",
-									"    pm.expect(responseData).to.have.property('weight');\r",
-									"    pm.expect(responseData).to.have.property('height');\r",
+									"    pm.expect(responseData).to.have.property('accessToken');\r",
+									"\r",
+									"\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -455,7 +448,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"example@email.com\",\r\n    \"password\" : \"Example@123\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Arvin Rahimi\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 83,\r\n    \"height\" : 185\r\n}"
+							"raw": "{\r\n    \"email\" : \"rokanasc94@hotmail.com\",\r\n    \"password\" : \"Doom\",\r\n    \"age\" : 29,\r\n    \"full_name\" : \"Konstantinos Rokanas\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"Tomorrow, and tomorrow, and tomorrow, creeps in this petty pace from day to day, to the last syllable of recorded time; and all our yesterdays have lighted fools the way to dusty death. Out, out, brief candle! Life's but a walking shadow, a poor player, that struts and frets his hour upon the stage,and then is heard no more. It is a tale told by an idiot, full of sound and fury, signifying nothing.\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight\" : 78,\r\n    \"height\" : 174\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fighter",
@@ -488,76 +481,9 @@
 									"pm.test(\"Response to have all attributes\", function(){\r",
 									"    const responseData = pm.response.json();\r",
 									"\r",
-									"    pm.expect(responseData).to.have.property('email');\r",
-									"    pm.expect(responseData).to.have.property('password');\r",
-									"    pm.expect(responseData).to.have.property('age');\r",
-									"    pm.expect(responseData).to.have.property('full_name');\r",
-									"    pm.expect(responseData).to.have.property('sex');\r",
-									"    pm.expect(responseData).to.have.property('bio');\r",
-									"    pm.expect(responseData).to.have.property('location');\r",
-									"    pm.expect(responseData).to.have.property('fight_record');\r",
-									"    pm.expect(responseData).to.have.property('weight');\r",
-									"    pm.expect(responseData).to.have.property('height');\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"rokanasc94@hotmail.com\",\r\n    \"password\" : \"Doom\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Kostas Rokanas\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 78,\r\n    \"height\" : 174\r\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/fighter",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"fighter"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create new fighter 3",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 201\", function () {\r",
-									"  pm.response.to.have.status(201);\r",
-									"});\r",
-									"pm.test(\"Response to be json\", function () {\r",
-									"    pm.response.to.be.json;\r",
-									"});\r",
-									"pm.test(\"Response to have all attributes\", function(){\r",
-									"    const responseData = pm.response.json();\r",
+									"    pm.expect(responseData).to.have.property('accessToken');\r",
 									"\r",
-									"    pm.expect(responseData).to.have.property('email');\r",
-									"    pm.expect(responseData).to.have.property('password');\r",
-									"    pm.expect(responseData).to.have.property('age');\r",
-									"    pm.expect(responseData).to.have.property('full_name');\r",
-									"    pm.expect(responseData).to.have.property('sex');\r",
-									"    pm.expect(responseData).to.have.property('bio');\r",
-									"    pm.expect(responseData).to.have.property('location');\r",
-									"    pm.expect(responseData).to.have.property('fight_record');\r",
-									"    pm.expect(responseData).to.have.property('weight');\r",
-									"    pm.expect(responseData).to.have.property('height');\r",
+									"\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -575,7 +501,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"bob@bobson.com\",\r\n    \"password\" : \"bobbyboy\",\r\n    \"age\" : 88,\r\n    \"full_name\" : \"Bob Bobson\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"I'm a wrestler\",\r\n    \"location\" : \"Stockholm\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 88,\r\n    \"height\" : 188\r\n}"
+							"raw": "{\r\n    \"email\" : \"arvinrahimi78@gmail.com\",\r\n    \"password\" : \"Arvin\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Arvin Rahimi\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"Friends, Romans, countrymen, lend me your ears; I come to bury Caesar, not to praise him. The evil that men do lives after them; The good is oft interred with their bones; So let it be with Caesar. The noble Brutus hath told you Caesar was ambitious: If it were so, it was a grievous fault, and grievously hath Caesar answer’d it. Here, under leave of Brutus and the rest–for Brutus is an honourable man; So are they all, all honourable men–come I to speak in Caesar’s funeral. He was my friend, faithful and just to me: but Brutus says he was ambitious; And Brutus is an honourable man. He hath brought many captives home to Rome whose ransoms did the general coffers fill: did this in Caesar seem ambitious? When that the poor have cried, Caesar hath wept: ambition should be made of sterner stuff: yet Brutus says he was ambitious; and Brutus is an honourable man. You all did see that on the Lupercal I thrice presented him a kingly crown, which he did thrice refuse: was this ambition? Yet Brutus says he was ambitious; and, sure, he is an honourable man. I speak not to disprove what Brutus spoke, but here I am to speak what I do know. You all did love him once, not without cause: what cause withholds you then, to mourn for him? O judgment! thou art fled to brutish beasts, and men have lost their reason. Bear with me; my heart is in the coffin there with Caesar, and I must pause till it come back to me.\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight\" : 80,\r\n    \"height\" : 185,\r\n    \"martial_art\": [\"Kickboxing\", \"Muay Thai\", \"Brazilian Jiu Jitsu\", \"Wrestling\"]\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fighter",
@@ -627,7 +553,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/fighter",
+							"raw": "http://localhost:3000/api/fighter/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -635,7 +561,8 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"fighter"
+								"fighter",
+								""
 							]
 						}
 					},
@@ -670,7 +597,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/fighter/location/Gothenburg",
+							"raw": "http://localhost:3000/api/fighter/opponents/NYC",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -679,8 +606,8 @@
 							"path": [
 								"api",
 								"fighter",
-								"location",
-								"Gothenburg"
+								"opponents",
+								"NYC"
 							]
 						}
 					},
@@ -704,7 +631,20 @@
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJva2FuYXNjOTRAaG90bWFpbC5jb20iLCJpYXQiOjE2OTY4MTUxMTEsImV4cCI6MTY5NjgxNTEyMX0.4oiAi7REth5BTZ82_w3qDmlBL1cuYo666TM_1C4E3uA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -713,8 +653,12 @@
 								"type": "text"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
-							"raw": "http://localhost:3000/api/fighter/email/example@email.com",
+							"raw": "http://localhost:3000/api/fighter/arvinrahimi78@gmail.com",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -723,8 +667,7 @@
 							"path": [
 								"api",
 								"fighter",
-								"email",
-								"example@email.com"
+								"arvinrahimi78@gmail.com"
 							]
 						}
 					},
@@ -746,7 +689,7 @@
 									"pm.test(\"Response to have all attributes\", function(){\r",
 									"    const responseData = pm.response.json();\r",
 									"\r",
-									"     pm.expect(responseData).to.have.property('email');\r",
+									"    pm.expect(responseData).to.have.property('email');\r",
 									"    pm.expect(responseData).to.have.property('password');\r",
 									"    pm.expect(responseData).to.have.property('age');\r",
 									"    pm.expect(responseData).to.have.property('full_name');\r",
@@ -754,7 +697,6 @@
 									"    pm.expect(responseData).to.have.property('martial_art');\r",
 									"    pm.expect(responseData).to.have.property('bio');\r",
 									"    pm.expect(responseData).to.have.property('location');\r",
-									"    pm.expect(responseData).to.have.property('fight_record');\r",
 									"    pm.expect(responseData).to.have.property('weight');\r",
 									"    pm.expect(responseData).to.have.property('height');\r",
 									"});"
@@ -774,10 +716,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"example@email.com\",\r\n    \"password\" : \"Example@123\",\r\n    \"age\" : 25,\r\n    \"full_name\" : \"Arvin Rahimi\",\r\n    \"sex\" : \"M\",\r\n    \"martial_art\" : [\"650c531790e2c9a8226e50cd\"],\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 83,\r\n    \"height\" : 185\r\n}"
+							"raw": "{\r\n    \"email\" : \"dukenukem@gmail.com\",\r\n    \"password\" : \"Duke\",\r\n    \"age\" : 45,\r\n    \"full_name\" : \"Duke Nukem\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"It’s time to kick ass and chew bubble gum...and I’m all outta gum.\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight\" : 95,\r\n    \"height\" : 190,\r\n    \"martial_art\": [\"Wrestling\", \"Boxing\"]\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/fighter/example@email.com",
+							"raw": "http://localhost:3000/api/fighter/arvinrahimi78@gmail.com",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -786,7 +728,7 @@
 							"path": [
 								"api",
 								"fighter",
-								"example@email.com"
+								"arvinrahimi78@gmail.com"
 							]
 						}
 					},
@@ -821,7 +763,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"age\" : 29\r\n}"
+							"raw": "{\r\n    \"location\" : \"NYC\"\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com",
@@ -969,7 +911,7 @@
 									"    pm.expect(responseData).to.have.property('sex');",
 									"    pm.expect(responseData).to.have.property('bio');",
 									"    pm.expect(responseData).to.have.property('location');",
-									"    pm.expect(responseData).to.have.property('fight_record');",
+									"    pm.expect(responseData).to.have.property('fight_history');",
 									"    pm.expect(responseData).to.have.property('martial_art');",
 									"    pm.expect(responseData).to.have.property('weight');",
 									"    pm.expect(responseData).to.have.property('height');",
@@ -1033,7 +975,7 @@
 									"    pm.expect(responseData).to.have.property('sex');",
 									"    pm.expect(responseData).to.have.property('bio');",
 									"    pm.expect(responseData).to.have.property('location');",
-									"    pm.expect(responseData).to.have.property('fight_record');",
+									"    pm.expect(responseData).to.have.property('fight_history');",
 									"    pm.expect(responseData).to.have.property('martial_art');",
 									"    pm.expect(responseData).to.have.property('weight');",
 									"    pm.expect(responseData).to.have.property('height');",
@@ -1182,7 +1124,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/martial-art/Brazilian%20Jiu%20Jitsu",
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/martial-art/Boxing",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1193,7 +1135,7 @@
 								"fighter",
 								"rokanasc94@hotmail.com",
 								"martial-art",
-								"Brazilian%20Jiu%20Jitsu"
+								"Boxing"
 							]
 						}
 					},
@@ -1280,7 +1222,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\" : \"01\",\r\n    \"date\" : \"2023-12-20T18:00:00Z\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight_class\" : \"Light heavyweight\",\r\n    \"fighters\" : \"6512e20a2106bba14e561d2a\"\r\n}"
+							"raw": "{\r\n    \"id\" : \"11111\",\r\n    \"date\" : \"2023-10-17\",\r\n    \"winner\": \"rokanasc94@hotmail.com\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight_class\" : \"Middleweight\",\r\n    \"fighters\": [\"rokanasc94@hotmail.com\", \"arvinrahimi78@gmail.com\"],\r\n    \"martial_art\": [\"Muay Thai\", \"Brazilian Jiu Jitsu\"]\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fight",
@@ -1335,7 +1277,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\" : \"02\",\r\n    \"date\" : \"2023-12-20T18:00:00Z\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight_class\" : \"Light heavyweight\",\r\n    \"fighters\" : \"6512e20a2106bba14e561d2a\"\r\n}"
+							"raw": "{\r\n    \"id\" : \"22222\",\r\n    \"date\" : \"2023-10-19\",\r\n    \"winner\": \"arvinrahimi78@gmail.com\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight_class\" : \"Heavyweight\",\r\n    \"fighters\": [\"rokanasc94@hotmail.com\", \"arvinrahimi78@gmail.com\"],\r\n    \"martial_art\": [\"Kickboxing\", \"Wrestling\"]\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fight",
@@ -1375,8 +1317,8 @@
 									"    pm.expect(responseData).to.have.property('sex');\r",
 									"    pm.expect(responseData).to.have.property('bio');\r",
 									"    pm.expect(responseData).to.have.property('location');\r",
-									"    pm.expect(responseData).to.have.property('fight_record');\r",
 									"    pm.expect(responseData).to.have.property('fight_history');\r",
+									"    pm.expect(responseData).to.have.property('date_history');\r",
 									"    pm.expect(responseData).to.have.property('weight');\r",
 									"    pm.expect(responseData).to.have.property('height');\r",
 									"});"
@@ -1396,7 +1338,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"01\"\r\n}   "
+							"raw": "{\r\n    \"id\": \"11111\"\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/fight",
@@ -1438,8 +1380,8 @@
 									"    pm.expect(responseData).to.have.property('sex');\r",
 									"    pm.expect(responseData).to.have.property('bio');\r",
 									"    pm.expect(responseData).to.have.property('location');\r",
-									"    pm.expect(responseData).to.have.property('fight_record');\r",
 									"    pm.expect(responseData).to.have.property('fight_history');\r",
+									"    pm.expect(responseData).to.have.property('date_history');\r",
 									"    pm.expect(responseData).to.have.property('weight');\r",
 									"    pm.expect(responseData).to.have.property('height');\r",
 									"});"
@@ -1459,7 +1401,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"02\"\r\n}   "
+							"raw": "{\r\n    \"id\": \"22222\"\r\n}   "
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/fight",
@@ -1545,7 +1487,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/fight/01",
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/fight/11111",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1556,7 +1498,7 @@
 								"fighter",
 								"rokanasc94@hotmail.com",
 								"fight",
-								"01"
+								"11111"
 							]
 						}
 					},
@@ -1587,7 +1529,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/fight/02",
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/fight/22222",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1598,7 +1540,48 @@
 								"fighter",
 								"rokanasc94@hotmail.com",
 								"fight",
-								"02"
+								"22222"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete all fights in fighter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 204\",function(){",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/fight",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"fight"
 							]
 						}
 					},
@@ -1684,7 +1667,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\" : \"69\",\r\n    \"date\": \"2023-12-20T18:00:00.000Z\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fighters\" : [\"6512ec612106bba14e561d47\"]\r\n}"
+							"raw": "{\r\n    \"id\" : \"11111\",\r\n    \"date\" : \"2023-10-17\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fighters\": [\"rokanasc94@hotmail.com\", \"arvinrahimi78@gmail.com\"]\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/date",
@@ -1738,7 +1721,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\" : \"70\",\r\n    \"date\": \"2023-12-20T18:00:00.000Z\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fighters\" : [\"6512ec612106bba14e561d47\"]\r\n}"
+							"raw": "{\r\n    \"id\" : \"22222\",\r\n    \"date\" : \"2023-10-19\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fighters\": [\"rokanasc94@hotmail.com\", \"arvinrahimi78@gmail.com\"]\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/date",
@@ -1778,7 +1761,7 @@
 									"    pm.expect(responseData).to.have.property('sex');\r",
 									"    pm.expect(responseData).to.have.property('bio');\r",
 									"    pm.expect(responseData).to.have.property('location');\r",
-									"    pm.expect(responseData).to.have.property('fight_record');\r",
+									"    pm.expect(responseData).to.have.property('fight_history');\r",
 									"    pm.expect(responseData).to.have.property('date_history');\r",
 									"    pm.expect(responseData).to.have.property('weight');\r",
 									"    pm.expect(responseData).to.have.property('height');\r",
@@ -1799,7 +1782,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"69\"\r\n}"
+							"raw": "{\r\n    \"id\": \"11111\"\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/date",
@@ -1841,7 +1824,7 @@
 									"    pm.expect(responseData).to.have.property('sex');\r",
 									"    pm.expect(responseData).to.have.property('bio');\r",
 									"    pm.expect(responseData).to.have.property('location');\r",
-									"    pm.expect(responseData).to.have.property('fight_record');\r",
+									"    pm.expect(responseData).to.have.property('fight_history');\r",
 									"    pm.expect(responseData).to.have.property('date_history');\r",
 									"    pm.expect(responseData).to.have.property('weight');\r",
 									"    pm.expect(responseData).to.have.property('height');\r",
@@ -1862,7 +1845,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"70\"\r\n}"
+							"raw": "{\r\n    \"id\": \"22222\"\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/date",
@@ -1948,7 +1931,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/date/70",
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/date/11111",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1959,7 +1942,7 @@
 								"fighter",
 								"rokanasc94@hotmail.com",
 								"date",
-								"70"
+								"11111"
 							]
 						}
 					},
@@ -1990,7 +1973,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/date/70",
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/date/11111",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2001,7 +1984,48 @@
 								"fighter",
 								"rokanasc94@hotmail.com",
 								"date",
-								"70"
+								"11111"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete all dates in fighter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 204\",function(){",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/fighter/rokanasc94@hotmail.com/date",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fighter",
+								"rokanasc94@hotmail.com",
+								"date"
 							]
 						}
 					},
@@ -2079,7 +2103,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/fighter/bob@bobson.com",
+							"raw": "http://localhost:3000/api/fighter/dukenukem@gmail.com",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2088,7 +2112,7 @@
 							"path": [
 								"api",
 								"fighter",
-								"bob@bobson.com"
+								"dukenukem@gmail.com"
 							]
 						}
 					},
@@ -2184,7 +2208,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\" : \"66\",\r\n    \"date\" : \"2023-12-20T18:00:00Z\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight_class\" : \"Middleweight\"\r\n}"
+							"raw": "{\r\n    \"id\" : \"11111\",\r\n    \"date\" : \"2023-10-17\",\r\n    \"winner\": \"\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight_class\" : \"Middleweight\",\r\n    \"fighters\": [],\r\n    \"martial_art\": []\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fight",
@@ -2239,7 +2263,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\" : \"67\",\r\n    \"date\" : \"2023-12-20T18:00:00Z\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight_class\" : \"Heavyweight\"\r\n}"
+							"raw": "{\r\n    \"id\" : \"22222\",\r\n    \"date\" : \"2023-10-19\",\r\n    \"winner\": \"arvinrahimi78@gmail.com\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight_class\" : \"Heavyweight\",\r\n    \"fighters\": [\"rokanasc94@hotmail.com\", \"arvinrahimi78@gmail.com\"],\r\n    \"martial_art\": [\"Kickboxing\", \"Wrestling\"]\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fight",
@@ -2333,7 +2357,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/fight/66",
+							"raw": "http://localhost:3000/api/fight/22222",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2342,7 +2366,7 @@
 							"path": [
 								"api",
 								"fight",
-								"66"
+								"22222"
 							]
 						}
 					},
@@ -2387,10 +2411,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\" : \"66\",\r\n    \"date\" : \"2023-12-20T18:00:00Z\",\r\n    \"location\" : \"Stockholm\",\r\n    \"weight_class\" : \"Middleweight\"\r\n}"
+							"raw": "{\r\n    \"id\" : \"33333\",\r\n    \"date\" : \"2033-10-19\",\r\n    \"winner\": \"rokanasc94@hotmail.com\",\r\n    \"location\" : \"Stockholm\",\r\n    \"weight_class\" : \"Middleweight\",\r\n    \"fighters\": [\"rokanasc94@hotmail.com\", \"dukenukem@gmail.com\"],\r\n    \"martial_art\": [\"Boxing\", \"Brazilian Jiu Jitsu\"]\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/fight/66",
+							"raw": "http://localhost:3000/api/fight/22222",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2399,7 +2423,7 @@
 							"path": [
 								"api",
 								"fight",
-								"66"
+								"22222"
 							]
 						}
 					},
@@ -2434,10 +2458,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"location\" : \"Malmo\"\r\n}"
+							"raw": "{\r\n    \"location\": \"Malmo\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/fight/67",
+							"raw": "http://localhost:3000/api/fight/11111",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2446,7 +2470,7 @@
 							"path": [
 								"api",
 								"fight",
-								"67"
+								"11111"
 							]
 						}
 					},
@@ -2468,16 +2492,9 @@
 									"pm.test(\"Response to have all attributes\", function(){\r",
 									"    const responseData = pm.response.json();\r",
 									"\r",
-									"    pm.expect(responseData).to.have.property('email');\r",
-									"    pm.expect(responseData).to.have.property('password');\r",
-									"    pm.expect(responseData).to.have.property('age');\r",
-									"    pm.expect(responseData).to.have.property('full_name');\r",
-									"    pm.expect(responseData).to.have.property('sex');\r",
-									"    pm.expect(responseData).to.have.property('bio');\r",
-									"    pm.expect(responseData).to.have.property('location');\r",
-									"    pm.expect(responseData).to.have.property('fight_record');\r",
-									"    pm.expect(responseData).to.have.property('weight');\r",
-									"    pm.expect(responseData).to.have.property('height');\r",
+									"    pm.expect(responseData).to.have.property('accessToken');\r",
+									"\r",
+									"\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2495,7 +2512,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"rokanasc94@hotmail.com\",\r\n    \"password\" : \"Doom\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Kostas Rokanas\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 78,\r\n    \"height\" : 174\r\n}"
+							"raw": "{\r\n    \"email\" : \"rokanasc94@hotmail.com\",\r\n    \"password\" : \"Doom\",\r\n    \"age\" : 29,\r\n    \"full_name\" : \"Konstantinos Rokanas\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"Tomorrow, and tomorrow, and tomorrow, creeps in this petty pace from day to day, to the last syllable of recorded time; and all our yesterdays have lighted fools the way to dusty death. Out, out, brief candle! Life's but a walking shadow, a poor player, that struts and frets his hour upon the stage,and then is heard no more. It is a tale told by an idiot, full of sound and fury, signifying nothing.\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight\" : 78,\r\n    \"height\" : 174,\r\n    \"martial_art\": [\"Kickboxing\", \"Muay Thai\", \"Brazilian Jiu Jitsu\", \"Wrestling\", \"Boxing\"]\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fighter",
@@ -2528,16 +2545,9 @@
 									"pm.test(\"Response to have all attributes\", function(){\r",
 									"    const responseData = pm.response.json();\r",
 									"\r",
-									"    pm.expect(responseData).to.have.property('email');\r",
-									"    pm.expect(responseData).to.have.property('password');\r",
-									"    pm.expect(responseData).to.have.property('age');\r",
-									"    pm.expect(responseData).to.have.property('full_name');\r",
-									"    pm.expect(responseData).to.have.property('sex');\r",
-									"    pm.expect(responseData).to.have.property('bio');\r",
-									"    pm.expect(responseData).to.have.property('location');\r",
-									"    pm.expect(responseData).to.have.property('fight_record');\r",
-									"    pm.expect(responseData).to.have.property('weight');\r",
-									"    pm.expect(responseData).to.have.property('height');\r",
+									"    pm.expect(responseData).to.have.property('accessToken');\r",
+									"\r",
+									"\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2555,7 +2565,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"example@email.com\",\r\n    \"password\" : \"Example@123\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Arvin Rahimi\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 83,\r\n    \"height\" : 185\r\n}"
+							"raw": "{\r\n    \"email\" : \"arvinrahimi78@gmail.com\",\r\n    \"password\" : \"Arvin\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Arvin Rahimi\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"Friends, Romans, countrymen, lend me your ears; I come to bury Caesar, not to praise him. The evil that men do lives after them; The good is oft interred with their bones; So let it be with Caesar. The noble Brutus hath told you Caesar was ambitious: If it were so, it was a grievous fault, and grievously hath Caesar answer’d it. Here, under leave of Brutus and the rest–for Brutus is an honourable man; So are they all, all honourable men–come I to speak in Caesar’s funeral. He was my friend, faithful and just to me: but Brutus says he was ambitious; And Brutus is an honourable man. He hath brought many captives home to Rome whose ransoms did the general coffers fill: did this in Caesar seem ambitious? When that the poor have cried, Caesar hath wept: ambition should be made of sterner stuff: yet Brutus says he was ambitious; and Brutus is an honourable man. You all did see that on the Lupercal I thrice presented him a kingly crown, which he did thrice refuse: was this ambition? Yet Brutus says he was ambitious; and, sure, he is an honourable man. I speak not to disprove what Brutus spoke, but here I am to speak what I do know. You all did love him once, not without cause: what cause withholds you then, to mourn for him? O judgment! thou art fled to brutish beasts, and men have lost their reason. Bear with me; my heart is in the coffin there with Caesar, and I must pause till it come back to me.\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight\" : 80,\r\n    \"height\" : 185,\r\n    \"martial_art\": [\"Kickboxing\", \"Muay Thai\", \"Brazilian Jiu Jitsu\", \"Wrestling\"]\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fighter",
@@ -2613,7 +2623,7 @@
 							"raw": "{\r\n    \"email\": \"rokanasc94@hotmail.com\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/fight/66/fighter",
+							"raw": "http://localhost:3000/api/fight/11111/fighter",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2622,7 +2632,7 @@
 							"path": [
 								"api",
 								"fight",
-								"66",
+								"11111",
 								"fighter"
 							]
 						}
@@ -2667,10 +2677,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"example@email.com\"\r\n}"
+							"raw": "{\r\n    \"email\": \"arvinrahimi78@gmail.com\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/fight/66/fighter",
+							"raw": "http://localhost:3000/api/fight/11111/fighter",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2679,67 +2689,8 @@
 							"path": [
 								"api",
 								"fight",
-								"66",
+								"11111",
 								"fighter"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add winner fighter by email",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 201\", function () {\r",
-									"  pm.response.to.have.status(201);\r",
-									"});\r",
-									"pm.test(\"Response to be json\", function () {\r",
-									"    pm.response.to.be.json;\r",
-									"});\r",
-									"pm.test(\"Response to have all attributes\", function(){\r",
-									"const responseData = pm.response.json();\r",
-									"\r",
-									"    pm.expect(responseData).to.have.property('id');\r",
-									"    pm.expect(responseData).to.have.property('date');\r",
-									"    pm.expect(responseData).to.have.property('location');\r",
-									"    pm.expect(responseData).to.have.property('weight_class');\r",
-									"    pm.expect(responseData).to.have.property('fighters');\r",
-									"    pm.expect(responseData).to.have.property('winner');\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"rokanasc94@hotmail.com\"\r\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/fight/66/fighter/winner",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"fight",
-								"66",
-								"fighter",
-								"winner"
 							]
 						}
 					},
@@ -2774,7 +2725,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/fight/66/fighter",
+							"raw": "http://localhost:3000/api/fight/33333/fighter",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2783,7 +2734,7 @@
 							"path": [
 								"api",
 								"fight",
-								"66",
+								"33333",
 								"fighter"
 							]
 						}
@@ -2812,7 +2763,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/fight/66/fighter/winner",
+							"raw": "http://localhost:3000/api/fight/33333/fighter/winner",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2821,7 +2772,7 @@
 							"path": [
 								"api",
 								"fight",
-								"66",
+								"33333",
 								"fighter",
 								"winner"
 							]
@@ -2877,6 +2828,306 @@
 					"response": []
 				},
 				{
+					"name": "Create new martial art 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 201\", function () {",
+									"  pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Response to be json\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Response to have all attributes\", function(){",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.have.property('name');",
+									"    pm.expect(responseData).to.have.property('ruleset');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Kickboxing\",\r\n    \"ruleset\": \"Kickboxing ruleset\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/martial-art",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"martial-art"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new martial art 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 201\", function () {",
+									"  pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Response to be json\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Response to have all attributes\", function(){",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.have.property('name');",
+									"    pm.expect(responseData).to.have.property('ruleset');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Boxing\",\r\n    \"ruleset\": \"Boxing ruleset\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/martial-art",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"martial-art"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add martial art by name 1 Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 201\", function () {",
+									"  pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Response to be json\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Response to have all attributes\", function(){",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.have.property('id');",
+									"    pm.expect(responseData).to.have.property('date');",
+									"    pm.expect(responseData).to.have.property('location');",
+									"    pm.expect(responseData).to.have.property('weight_class');",
+									"    pm.expect(responseData).to.have.property('winner');",
+									"    pm.expect(responseData).to.have.property('fighters');",
+									"    pm.expect(responseData).to.have.property('martial_art');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Kickboxing\"\r\n}   "
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/fight/11111/martial-art",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight",
+								"11111",
+								"martial-art"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all martial arts in fight",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response to be json\",function(){\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response to be an array\",function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/fight/11111/martial-art",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight",
+								"11111",
+								"martial-art"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get specific martial art in fight",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response to be json\",function(){\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response to have all attributes\", function(){\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('name');\r",
+									"    pm.expect(responseData).to.have.property('ruleset');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/fight/33333/martial-art/Boxing",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight",
+								"33333",
+								"martial-art",
+								"Boxing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a specific martial art in fight",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 204\",function(){\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/fight/33333/martial-art/Boxing",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fight",
+								"33333",
+								"martial-art",
+								"Boxing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Delete a specific fight",
 					"event": [
 						{
@@ -2905,7 +3156,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/fight/66",
+							"raw": "http://localhost:3000/api/fight/33333",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2914,7 +3165,7 @@
 							"path": [
 								"api",
 								"fight",
-								"66"
+								"33333"
 							]
 						}
 					},
@@ -3005,7 +3256,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\" : \"69\",\r\n    \"date\": \"2023-12-20T18:00:00.000Z\",\r\n    \"location\" : \"Gothenburg\"\r\n}"
+							"raw": "{\r\n    \"id\" : \"11111\",\r\n    \"date\" : \"2023-10-17\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fighters\": [\"rokanasc94@hotmail.com\", \"arvinrahimi78@gmail.com\"]\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/date",
@@ -3059,7 +3310,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\" : \"70\",\r\n    \"date\": \"2023-12-20T18:00:00.000Z\",\r\n    \"location\" : \"Gothenburg\"\r\n}"
+							"raw": "{\r\n    \"id\" : \"22222\",\r\n    \"date\" : \"2023-10-19\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fighters\": []\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/date",
@@ -3153,7 +3404,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/date/69",
+							"raw": "http://localhost:3000/api/date/11111",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -3162,7 +3413,7 @@
 							"path": [
 								"api",
 								"date",
-								"69"
+								"11111"
 							]
 						}
 					},
@@ -3205,10 +3456,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\" : \"69\",\r\n    \"date\" : \"2024-12-20T18:00:00.000Z\",\r\n    \"fighters\" : [\"6512ec612106bba14e561d47\"],\r\n    \"location\" : \"Stockholm\"\r\n}"
+							"raw": "{\r\n    \"id\" : \"33333\",\r\n    \"date\" : \"2033-10-17\",\r\n    \"location\" : \"Stockholm\",\r\n    \"fighters\": []\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/date/69",
+							"raw": "http://localhost:3000/api/date/11111",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -3217,7 +3468,7 @@
 							"path": [
 								"api",
 								"date",
-								"69"
+								"11111"
 							]
 						}
 					},
@@ -3255,7 +3506,7 @@
 							"raw": "{\r\n    \"location\" : \"Malmo\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/date/70",
+							"raw": "http://localhost:3000/api/date/22222",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -3264,7 +3515,7 @@
 							"path": [
 								"api",
 								"date",
-								"70"
+								"22222"
 							]
 						}
 					},
@@ -3286,16 +3537,9 @@
 									"pm.test(\"Response to have all attributes\", function(){\r",
 									"    const responseData = pm.response.json();\r",
 									"\r",
-									"    pm.expect(responseData).to.have.property('email');\r",
-									"    pm.expect(responseData).to.have.property('password');\r",
-									"    pm.expect(responseData).to.have.property('age');\r",
-									"    pm.expect(responseData).to.have.property('full_name');\r",
-									"    pm.expect(responseData).to.have.property('sex');\r",
-									"    pm.expect(responseData).to.have.property('bio');\r",
-									"    pm.expect(responseData).to.have.property('location');\r",
-									"    pm.expect(responseData).to.have.property('fight_record');\r",
-									"    pm.expect(responseData).to.have.property('weight');\r",
-									"    pm.expect(responseData).to.have.property('height');\r",
+									"    pm.expect(responseData).to.have.property('accessToken');\r",
+									"\r",
+									"\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -3313,7 +3557,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"rokanasc94@hotmail.com\",\r\n    \"password\" : \"Doom\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Kostas Rokanas\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 78,\r\n    \"height\" : 174\r\n}"
+							"raw": "{\r\n    \"email\" : \"rokanasc94@hotmail.com\",\r\n    \"password\" : \"Doom\",\r\n    \"age\" : 29,\r\n    \"full_name\" : \"Konstantinos Rokanas\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"Tomorrow, and tomorrow, and tomorrow, creeps in this petty pace from day to day, to the last syllable of recorded time; and all our yesterdays have lighted fools the way to dusty death. Out, out, brief candle! Life's but a walking shadow, a poor player, that struts and frets his hour upon the stage,and then is heard no more. It is a tale told by an idiot, full of sound and fury, signifying nothing.\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight\" : 78,\r\n    \"height\" : 174,\r\n    \"martial_art\": [\"Kickboxing\", \"Muay Thai\", \"Brazilian Jiu Jitsu\", \"Wrestling\", \"Boxing\"]\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fighter",
@@ -3346,16 +3590,9 @@
 									"pm.test(\"Response to have all attributes\", function(){\r",
 									"    const responseData = pm.response.json();\r",
 									"\r",
-									"    pm.expect(responseData).to.have.property('email');\r",
-									"    pm.expect(responseData).to.have.property('password');\r",
-									"    pm.expect(responseData).to.have.property('age');\r",
-									"    pm.expect(responseData).to.have.property('full_name');\r",
-									"    pm.expect(responseData).to.have.property('sex');\r",
-									"    pm.expect(responseData).to.have.property('bio');\r",
-									"    pm.expect(responseData).to.have.property('location');\r",
-									"    pm.expect(responseData).to.have.property('fight_record');\r",
-									"    pm.expect(responseData).to.have.property('weight');\r",
-									"    pm.expect(responseData).to.have.property('height');\r",
+									"    pm.expect(responseData).to.have.property('accessToken');\r",
+									"\r",
+									"\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -3373,7 +3610,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"example@email.com\",\r\n    \"password\" : \"Example@123\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Arvin Rahimi\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"I'm a boxer\",\r\n    \"location\" : \"gothenburg\",\r\n    \"fight_record\" : \"0-0-0\",\r\n    \"weight\" : 83,\r\n    \"height\" : 185\r\n}"
+							"raw": "{\r\n    \"email\" : \"arvinrahimi78@gmail.com\",\r\n    \"password\" : \"Arvin\",\r\n    \"age\" : 23,\r\n    \"full_name\" : \"Arvin Rahimi\",\r\n    \"sex\" : \"M\",\r\n    \"bio\" : \"Friends, Romans, countrymen, lend me your ears; I come to bury Caesar, not to praise him. The evil that men do lives after them; The good is oft interred with their bones; So let it be with Caesar. The noble Brutus hath told you Caesar was ambitious: If it were so, it was a grievous fault, and grievously hath Caesar answer’d it. Here, under leave of Brutus and the rest–for Brutus is an honourable man; So are they all, all honourable men–come I to speak in Caesar’s funeral. He was my friend, faithful and just to me: but Brutus says he was ambitious; And Brutus is an honourable man. He hath brought many captives home to Rome whose ransoms did the general coffers fill: did this in Caesar seem ambitious? When that the poor have cried, Caesar hath wept: ambition should be made of sterner stuff: yet Brutus says he was ambitious; and Brutus is an honourable man. You all did see that on the Lupercal I thrice presented him a kingly crown, which he did thrice refuse: was this ambition? Yet Brutus says he was ambitious; and, sure, he is an honourable man. I speak not to disprove what Brutus spoke, but here I am to speak what I do know. You all did love him once, not without cause: what cause withholds you then, to mourn for him? O judgment! thou art fled to brutish beasts, and men have lost their reason. Bear with me; my heart is in the coffin there with Caesar, and I must pause till it come back to me.\",\r\n    \"location\" : \"Gothenburg\",\r\n    \"weight\" : 80,\r\n    \"height\" : 185,\r\n    \"martial_art\": [\"Kickboxing\", \"Muay Thai\", \"Brazilian Jiu Jitsu\", \"Wrestling\"]\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/fighter",
@@ -3430,7 +3667,7 @@
 							"raw": "{\r\n    \"email\" : \"rokanasc94@hotmail.com\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/date/69/fighter",
+							"raw": "http://localhost:3000/api/date/22222/fighter",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -3439,7 +3676,7 @@
 							"path": [
 								"api",
 								"date",
-								"69",
+								"22222",
 								"fighter"
 							]
 						}
@@ -3483,10 +3720,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"example@email.com\"\r\n}"
+							"raw": "{\r\n    \"email\" : \"arvinrahimi78@gmail.com\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/date/69/fighter",
+							"raw": "http://localhost:3000/api/date/22222/fighter",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -3495,7 +3732,7 @@
 							"path": [
 								"api",
 								"date",
-								"69",
+								"22222",
 								"fighter"
 							]
 						}
@@ -3531,7 +3768,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/date/70",
+							"raw": "http://localhost:3000/api/date/22222",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -3540,7 +3777,7 @@
 							"path": [
 								"api",
 								"date",
-								"70"
+								"22222"
 							]
 						}
 					},

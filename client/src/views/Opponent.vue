@@ -171,9 +171,16 @@ export default {
     methods: {
         async getSessionUser() {
             try {
-                const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
-                this.sessionUser = user.data
-
+                if(localStorage.getItem('fightAppAccessToken') === null) {
+                    alert('Unauthorized access')
+                    
+                    router.push({
+                        name: 'Login',
+                    })
+                } else {
+                    const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
+                    this.sessionUser = user.data
+                }
             } catch(error) {
                 console.error(error)
             }
@@ -187,7 +194,7 @@ export default {
 
                     router.push({ 
                         name: 'Profile', 
-                        params: { id: this.sessionUser }
+                        params: { id: this.sessionUser.email }
                     })
                 } else {
                     console.error(error)
@@ -237,27 +244,23 @@ export default {
         },
         async getNearbyFighters() {
             try {
-                const fighterData = await Api.get('/fighter/' + this.sessionUser)
+                const fighterData = await Api.get('/fighter/' + this.sessionUser.email)
                 const location = fighterData.data.location
-                const response = await Api.get('/fighter/opponents/' + location)
+                const response = await Api.get('/fighter/opponent/' + location)
         
-                if(response.length <= 1) {
-                    alert('No nearby fighters at your location. Sorry :(')
-                    router.push({
-                        name: 'Profile',
-                        params: {id: this.sessionUser}
-                    })
-                }
                 this.nearbyFighters = response.data.map(fighter => fighter.email)
-                this.nearbyFighters = this.nearbyFighters.filter(fighter => fighter !== this.sessionUser) // filter the array so the session User isn't able to browse their own profile
+                this.nearbyFighters = this.nearbyFighters.filter(fighter => fighter !== this.sessionUser.email) // filter the array so the session User isn't able to browse their own profile
             } catch(error) {
                 console.error(error)
             }
         },
         async filterUser() { // ensure user isn't able to browse their own profile
-            if(this.sessionUser === this.$route.params.id) {
+            if(this.sessionUser.email === this.$route.params.id) {
                 const randomIndex = Math.floor(Math.random() * this.nearbyFighters.length)
-                router.push({ name: 'Opponent', params: { id: this.nearbyFighters[randomIndex] }})
+                router.push({ 
+                    name: 'Opponent', 
+                    params: { id: this.nearbyFighters[randomIndex] }
+                })
             }
         },
         nextFighter() {

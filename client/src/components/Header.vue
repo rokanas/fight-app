@@ -8,20 +8,28 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav justify-content-between w-100 me-auto me-lg-0 mb-2 mb-lg-0">
+
             <div class="col d-flex flex-wrap justify-content-sm-start justify-content-center">
               <li class="nav-item">
               <div v-if="isLoggedIn">
-                <a href="#" class="nav-link navbar-items text-color">Browse Fighters</a>
+                <a href="#" class="nav-link navbar-items text-color" v-on:click ="goToProfile">Fighter<br>Profile</a>
               </div>
             </li>
+
+            <li class="nav-item ms-5">
+              <div v-if="isLoggedIn">
+                <a href="#" class="nav-link navbar-items text-color" v-on:click ="goToOpponent">Browse<br>Fighters</a>
+              </div>
+            </li>
+            
             </div>
             <div class="col">
               <a href="#" class="fake-navbar-logo text-color" id="logo">FightApp</a>
             </div>
             <div class="col d-flex flex-wrap justify-content-sm-end justify-content-center">
-              <li class="nav-item">
+              <li class="nav-item d-flex align-items-center">
               <div v-if="isLoggedIn">
-                <a href="#" class="nav-link navbar-items text-color">Logout</a>
+                <a href="#" class="nav-link navbar-items text-color" v-on:click ="logOut">Logout</a>
               </div>
             </li>
             </div> 
@@ -33,9 +41,75 @@
 </template>
 
 <script>
+import { Api } from '@/Api'
+import router from "../router";
+
   export default {
   name: 'Header',
-  inject: ['isLoggedIn'] // injected from "App.vue"
+  data() {
+    return {
+      isLoggedIn: false
+    }
+  },
+  created() {
+    this.checkIsLoggedIn();
+  },
+  watch: {
+    // Watch for changes in localStorage and update the login status
+    '$localStorage.fightAppAccessToken'(newVal) {
+      this.isLoggedIn = newVal !== null;
+    },
+    '$route.params.id': 'checkIsLoggedIn',
+  },
+  methods: {
+    checkIsLoggedIn() {
+      this.isLoggedIn = localStorage.getItem('fightAppAccessToken') !== null;
+    },
+    async goToProfile() {
+      try {
+        const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
+        router.push({
+          name: 'Profile',
+          params: { id: user.data }
+        })
+      } catch(error) {
+        console.error(error)
+      }
+    },
+    async goToOpponent() {
+      try {
+        const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
+
+        const fighterData = await Api.get('/fighter/' + user.data)
+        const location = fighterData.data.location
+        const response = await Api.get('/fighter/opponents/' + location)
+        
+        if(response.data.length <= 1) {
+          alert('No nearby fighters at your location. Sorry :(')
+          router.push({
+            name: 'Profile',
+            params: {id: user.data.email}
+          })
+        } else {
+          let nearbyFighters = response.data.map(fighter => fighter.email)
+          nearbyFighters = nearbyFighters.filter(fighter => fighter !== user.data.email) // filter the array so the session User isn't able to browse their own profile
+          const randomIndex = Math.floor(Math.random() * nearbyFighters.length)
+          router.push({ 
+            name: 'Opponent', 
+            params: { id: nearbyFighters[randomIndex] }
+          })
+        }
+      } catch(error) {
+        console.error(error)
+      }
+    },
+    async logOut() {
+      localStorage.removeItem('fightAppAccessToken')
+      router.push({ 
+            name: 'Login', 
+          })
+    } 
+  }
 }
 </script>
 
