@@ -1,7 +1,7 @@
 <template>
     <div class="container container-padding container-size">
-        <div class="row d-flex flex-wrap">
-            <div class="col-5 col-sm-4 d-flex flex-fill flex-column">
+        <div class="row d-flex flex-wrap mb-3">
+            <div class="col-5 col-sm-4 d-flex flex-fill align-content-end">
                 <div class="row d-flex flex-column">
                     <div class="col">
                         <button type="button" class="fs-2 background-color button-border text-color" v-on:click="gotTofighter2">{{ fighter2.full_name }}</button>
@@ -15,10 +15,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-2 col-sm-4 d-flex  flex-fill align-items-center justify-content-center">
+            <div class="col-2 col-sm-4 d-flex flex-fill align-items-center justify-content-center">
                 <p class="fs-1 text-color">VS</p>
             </div>
-            <div class="col-5 col-sm-4 d-flex flex-fill flex-column">
+            <div class="col-5 col-sm-4 d-flex flex-fill align-content-end">
                 <div class="row d-flex flex-column">
                     <div class="col">
                         <button type="button" class="fs-2 background-color button-border text-color" v-on:click="gotTofighter1">{{ fighter1.full_name }}</button>
