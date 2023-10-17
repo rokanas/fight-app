@@ -84,8 +84,8 @@
                     <div class="col-sm-6 col-12 background-color mt-sm-0 mt-2">
                         <div class="row">
                             <div class="col d-flex flex-wrap w-100">
-                                <label class="fs-4 flex-wrap flex-fill align-self-top w-100 text-color" for="martialArtBox">Martial Arts:</label>
-                                <ul v-for="item in selectedMartialArts" class="flex-row flex-wrap align-items-center justify-content-center list-group" id="martialArtBox">
+                                <p class="fs-4 flex-wrap flex-fill align-self-top w-100 text-color">Martial Arts:</p>
+                                <ul v-for="item in selectedMartialArts" class="flex-row flex-wrap align-items-center justify-content-center list-group">
                                     <li class="d-inline-flex rounded-pill text-color list-border list-margin">{{ item.name }}</li>
                                 </ul>
                             </div>
