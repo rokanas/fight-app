@@ -1,0 +1,24 @@
+/*
+This file defines global css styles.
+*/
+
+/* custom font */
+@font-face {
+    font-family: 'MetalMania';
+    src: url('../assets/fonts/MetalMania-Regular.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Mohave';
+    src: url('../assets/fonts/Mohave-Regular.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'RoadRage';
+    src: url('../assets/fonts/Road_Rage.otf') format('opentype');
+  }
+
+  a {
+    color: #45C059;                      /* Link color */
+    font-size: 2.5vh;
+}

@@ -103,10 +103,10 @@
                                 </div>
                                 <div class="col-md-6 col-12 d-flex flex-wrap flex-column box-height background-color ms-md-2">
                                     <div class="col-2 col-sm-2 d-flex justify-content-center text-color mb-3 w-100">
-                                        <label class="fs-4" for="martialArtBox">Martial Arts:</label>
+                                        <p class="fs-4" for="martialArtBox">Martial Arts:</p>
                                     </div>
                                     <div class="col-10 col-sm-10 d-flex align-items-center flex-wrap w-100">
-                                        <ul v-for="item in selectedMartialArts" class="flex-row flex-wrap justify-content-center list-group" id="martialArtBox">
+                                        <ul v-for="item in selectedMartialArts" class="flex-row flex-wrap justify-content-center list-group">
                                         <li class="d-inline-flex rounded-pill text-color list-border list-margin">{{ item.name }}</li>
                                         </ul>
                                         <button type="button" class="d-inline-flex justify-content-center rounded-circle text-color list-border list-margin plus-button-size" data-bs-toggle="modal" data-bs-target="#martialArtsModal">+</button>
@@ -199,16 +199,24 @@ export default {
     methods: {
         async authenticateUser() {
             try {
-                const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
-                this.sessionUser = user.data
-                if(this.$route.params.id !== user.data) {
+                if(localStorage.getItem('fightAppAccessToken') === null) {
                     alert('Unauthorized access')
                     
                     router.push({
-                        name: 'Profile',
-                        params: {id: this.sessionUser}
+                        name: 'Login',
                     })
+                } else {
+                    const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
+                    this.sessionUser = user.data
+                    if(this.$route.params.id !== user.data) {
+                        alert('Unauthorized access')
+                    
+                        router.push({
+                            name: 'Profile',
+                            params: {id: this.sessionUser}
+                        })
                     }
+                }
             } catch(error) {
                 console.error(error)
             }

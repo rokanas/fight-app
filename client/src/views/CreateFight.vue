@@ -63,10 +63,10 @@
                 </div>
                 <div class="row d-flex flex-row mt-1">
                     <div class="col-6">
-                        <label for="martialArtsBox" class="form-label text-color">Martial arts:</label>
+                        <p class="form-label text-color">Martial arts:</p>
                     </div>
                     <div class="col-6">
-                        <ul v-for="item in selectedMartialArts" id="selectedMartialArtsBox" class="d-flex flex-row text-color">
+                        <ul v-for="item in selectedMartialArts" class="d-flex flex-row text-color">
                             <li class="flex-fill">{{ item.name }} </li>
                         </ul>
                         <li type="button" class="flex-fill text-color mb-3" data-bs-toggle="modal" data-bs-target="#martialArtsModal">Add martial arts...</li>
@@ -134,8 +134,16 @@ export default {
     methods: {
         async authenticateUser() {
             try {
-                const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
-                this.sessionUser = user.data
+                if(localStorage.getItem('fightAppAccessToken') === null) {
+                    alert('Unauthorized access')
+                    
+                    router.push({
+                        name: 'Login',
+                    })
+                } else {
+                    const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
+                    this.sessionUser = user.data
+                }
             } catch(error) {
                 console.error(error)
             }

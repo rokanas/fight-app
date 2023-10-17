@@ -34,23 +34,24 @@
             </div>
         </div>
         <div class="row" :class="{ 'list-display' : winnerExists }">
-                <div class="col mt-2">
-                    <select class="form-select" aria-label="winner select box" v-on:change="saveWinner" v-model="selectedWinner">
-                    <option value="0">Choose Winner</option>
-                    <option value="1">{{ fighter1.full_name }}</option>
-                    <option value="2">{{ fighter2.full_name }}</option>
-                </select>
+            <div class="col mt-2">
+               <label for="winnerSelect"></label>
+               <select id="winnerSelect" class="form-select" aria-label="winner select box" v-on:change="saveWinner" v-model="selectedWinner">
+                   <option value="0">Choose Winner</option>
+                   <option value="1">{{ fighter1.full_name }}</option>
+                   <option value="2">{{ fighter2.full_name }}</option>
+               </select>
             </div>
         </div>
         <div class="row d-flex flex-column justify-content-center mt-2">
             <div class="col d-flex flex-row flex-wrap flex-fill align-items-center background-color text-color">
                 <i class="bi bi-trophy w-25"></i>
-                <p class="fs-4 w-50 pt-1">Winner: {{ winner }}</p>
+                <h4 class="w-50 pt-1">WINNER: {{ winner }}</h4>
                 <i class="bi bi-trophy w-25"></i>
             </div>
             <div class="col d-flex flex-column">
                 <div class="col-1 col-sm-2 w-100 d-flex flex-fill align-content-center justify-content-center mt-2">
-                    <p class="fs-1 text-color">Fight details:</p>
+                    <p class="fs-1 text-color">FIGHT DETAILS:</p>
                 </div>
                 <div class="col-11 col-sm-10 w-100 flex-fill justify-content-center background-color text-color">
                     <div class="row d-flex flex-row mt-2">
@@ -148,8 +149,16 @@ export default {
     methods: {
         async authenticateUser() {
             try {
-                const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
-                this.sessionUser = user.data
+                if(localStorage.getItem('fightAppAccessToken') === null) {
+                    alert('Unauthorized access')
+                    
+                    router.push({
+                        name: 'Login',
+                    })
+                } else {
+                    const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
+                    this.sessionUser = user.data
+                }
             } catch(error) {
                 console.error(error)
             }
@@ -260,6 +269,11 @@ export default {
 </script>
 
 <style scoped>
+@import '../css/fonts.css';
+h4{
+    font-family: 'RoadRage';
+    -webkit-text-stroke: 0.4px #000;
+}
 .list-display{
     display: none;
 }

@@ -22,12 +22,12 @@ const routes = [
   {
     path: '/profile/:id',
     name: 'Profile',
-    component: Profile
+    component: Profile,
   },
   {
     path: '/profile/:id/edit',
     name: 'EditProfile',
-    component: EditProfile
+    component: EditProfile,
   },
   {
     path: '/opponent/:id',

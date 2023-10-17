@@ -1,5 +1,5 @@
 <template>
-    <div class="contatiner">
+    <div class="contatiner mb-5">
         <div class="row d-flex flex-row flex-wrap mt-3">
             <div class="col-2 col-sm-2 d-flex align-items-center justify-content-end">
                 <button type="button" class="bi bi-arrow-left-circle-fill text-color" style="background: none; border: none;" v-on:click ="previousFighter"></button>
@@ -7,103 +7,113 @@
             <div class="col-8 col-sm-8">
                 <div class="row">
                     <div class="col-12">
-                        <div class="container-fluid mt-5 bg-black">
-        <div class="row">
-            <div class="col-md-4 d-flex flex-column align-items-center">
-                <div class="col-3 pt-1">
-                    <p class="fs-2 text-color" >{{ fullName }}</p>
-                </div>
-                <div class="col-9">
-                    <img
-                    src="../../public/Godzilla.png"
-                    class="img-fluid profile-pic-size background-color img-thumbnail"
-                    alt="Profile picture needed">
-                </div>
-                
-            </div>
-            <div class="col-md-8">
-                <div class="row d-flex flex-row align-items-center mt-1 mb-2">
-                    <div class="col-5 ">
-                        <span class="fs-3 text-color">Fighter Stats</span>
-                    </div>
-                    <div class="col-1 win-style">
-                        <span class="span-center">{{ win }}</span>
-                    </div>
-                    <div class="col-1 loss-style mx-1">
-                        <span class="span-center">{{ loss }}</span>
-                    </div>
-                    <div class="col-1 draw-style">
-                        <span class="span-center">{{ draw }}</span>
-                    </div>
-                    <div class="col-3">
-                        <button class="button-border text-color background-color" v-on:click="goToHistory">Fight / Date History</button>
-                    </div>
-                </div>
-                <div class="row d-flex flex-row justify-content-center">
-                    <div class="col-5 background-color me-2">
-                        <div class="row flex-row text-color">
-                            <div class="col-6 align-items-start">
-                                <p class="flex-fill">Sex:</p>
+                        <div class="container-fluid mt-5" id="containerId">
+                            <div class="row">
+                                <div class="col-xl-4 d-flex flex-column align-items-center">
+                                    <div class="col-3 pt-1">
+                                        <p class="fs-2 text-color" >{{ fullName }}</p>
+                                    </div>
+                                    <div class="col-9">
+                                        <img
+                                        src="../../public/Godzilla.png"
+                                        class="img-fluid profile-pic-size background-color img-thumbnail"
+                                        alt="Profile picture needed">
+                                    </div>
+
+                                </div>
+                                <div class="col-xl-8">
+                                    <div class="row d-flex flex-row align-items-center mt-1 mb-2">
+                                        <div class="col-5 ">
+                                            <span class="fs-3 text-color">Fighter Stats</span>
+                                        </div>
+                                        <div class="col-1 win-style">
+                                            <span class="span-center">{{ win }}</span>
+                                        </div>
+                                        <div class="col-1 loss-style mx-1">
+                                            <span class="span-center">{{ loss }}</span>
+                                        </div>
+                                        <div class="col-1 draw-style">
+                                            <span class="span-center">{{ draw }}</span>
+                                        </div>
+                                        <div class="col-3">
+                                            <button class="button-border text-color background-color" v-on:click="goToHistory">Fight / Date History</button>
+                                        </div>
+                                    </div>
+                                    <div class="row d-flex flex-sm-row flex-column justify-content-sm-center">
+                                        <div class="col-sm-5 col-12 background-color me-sm-2">
+                                            <div class="row">
+                                                <div class="col w-100">
+                                                    <div class="row flex-row text-color">
+                                                        <div class="col-6 align-items-start">
+                                                            <p class="flex-fill">Sex:</p>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">{{ sex }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row flex-row text-color">
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">Age:</p>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">{{ age }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row flex-row text-color">
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">Weight:</p>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">{{ weight }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row flex-row text-color">
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">Height:</p>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">{{ height }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row flex-row text-color">
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">Location:</p>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">{{ location }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        <div class="col-sm-6 col-12 background-color mt-sm-0 mt-2">
+                                            <div class="row">
+                                                <div class="col d-flex flex-wrap w-100">
+                                                    <p class="fs-4 flex-wrap flex-fill align-self-top w-100 text-color">Martial Arts:</p>
+                                                    <ul v-for="item in selectedMartialArts" class="flex-row flex-wrap list-margin align-items-center justify-content-center list-group">
+                                                        <li class="d-inline-flex rounded-pill text-color list-border">{{ item.name }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <p class="flex-fill">{{ sex }}</p>
+                            <div class="row mt-2">
+                                <div class="col-md-12 d-flex flex-column mb-2">
+                                    <div class="col-md-2">
+                                        <h3 class="text-color">Bio</h3>
+                                    </div>
+                                    <div class="col-md-10 w-100 background-color ps-1">
+                                        <p class="text-start text-color">{{ bio }}</p>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                        <div class="row flex-row text-color">
-                            <div class="col-6">
-                                <p class="flex-fill">Age:</p>
-                            </div>
-                            <div class="col-6">
-                                <p class="flex-fill">{{ age }}</p>
-                            </div>
-                        </div>
-                        <div class="row flex-row text-color">
-                            <div class="col-6">
-                                <p class="flex-fill">Weight:</p>
-                            </div>
-                            <div class="col-6">
-                                <p class="flex-fill">{{ weight }}</p>
-                            </div>
-                        </div>
-                        <div class="row flex-row text-color">
-                            <div class="col-6">
-                                <p class="flex-fill">Height:</p>
-                            </div>
-                            <div class="col-6">
-                                <p class="flex-fill">{{ height }}</p>
-                            </div>
-                        </div>
-                        <div class="row flex-row text-color">
-                            <div class="col-6">
-                                <p class="flex-fill">Location:</p>
-                            </div>
-                            <div class="col-6">
-                                <p class="flex-fill">{{ location }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-6 d-flex flex-wrap background-color">
-                        <label class="fs-4 flex-wrap flex-fill align-self-top w-100 text-color" for="martialArtBox">Martial Arts:</label>
-                        <ul v-for="item in selectedMartialArts" class="flex-row flex-wrap align-items-center justify-content-center list-group" id="martialArtBox">
-                            <li class="d-inline-flex rounded-pill text-color list-border list-margin">{{ item.name }}</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-md-12 d-flex flex-column mb-2">
-                <div class="col-md-2">
-                    <h3 class="text-color">Bio</h3>
-                </div>
-                <div class="col-md-10 w-100 background-color ps-1">
-                    <p class="text-start text-color">{{ bio }}</p>
-                </div>
-            </div>
-            
-        </div>
-    </div>
                     </div>
                 </div>
                 <div class="row d-flex flex-row-reverse align-self-start mt-2">
@@ -161,9 +171,16 @@ export default {
     methods: {
         async getSessionUser() {
             try {
-                const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
-                this.sessionUser = user.data
-
+                if(localStorage.getItem('fightAppAccessToken') === null) {
+                    alert('Unauthorized access')
+                    
+                    router.push({
+                        name: 'Login',
+                    })
+                } else {
+                    const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
+                    this.sessionUser = user.data
+                }
             } catch(error) {
                 console.error(error)
             }
@@ -177,7 +194,7 @@ export default {
 
                     router.push({ 
                         name: 'Profile', 
-                        params: { id: this.sessionUser }
+                        params: { id: this.sessionUser.email }
                     })
                 } else {
                     console.error(error)
@@ -227,27 +244,23 @@ export default {
         },
         async getNearbyFighters() {
             try {
-                const fighterData = await Api.get('/fighter/' + this.sessionUser)
+                const fighterData = await Api.get('/fighter/' + this.sessionUser.email)
                 const location = fighterData.data.location
-                const response = await Api.get('/fighter/opponents/' + location)
+                const response = await Api.get('/fighter/opponent/' + location)
         
-                if(response.length <= 1) {
-                    alert('No nearby fighters at your location. Sorry :(')
-                    router.push({
-                        name: 'Profile',
-                        params: {id: this.sessionUser}
-                    })
-                }
                 this.nearbyFighters = response.data.map(fighter => fighter.email)
-                this.nearbyFighters = this.nearbyFighters.filter(fighter => fighter !== this.sessionUser) // filter the array so the session User isn't able to browse their own profile
+                this.nearbyFighters = this.nearbyFighters.filter(fighter => fighter !== this.sessionUser.email) // filter the array so the session User isn't able to browse their own profile
             } catch(error) {
                 console.error(error)
             }
         },
         async filterUser() { // ensure user isn't able to browse their own profile
-            if(this.sessionUser === this.$route.params.id) {
+            if(this.sessionUser.email === this.$route.params.id) {
                 const randomIndex = Math.floor(Math.random() * this.nearbyFighters.length)
-                router.push({ name: 'Opponent', params: { id: this.nearbyFighters[randomIndex] }})
+                router.push({ 
+                    name: 'Opponent', 
+                    params: { id: this.nearbyFighters[randomIndex] }
+                })
             }
         },
         nextFighter() {
@@ -299,6 +312,9 @@ export default {
 </script>
 
 <style scoped>
+#containerId {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
 .button-border{
     border-radius: 10px;
     border: none;
@@ -325,7 +341,7 @@ export default {
     background-color: rgba(255, 255, 255, 0.15) !important;
 }
 .list-margin{
-    margin-right: 6px;
+    margin: 3px;
 }
 .profile-pic-size{
     size: 180px;
