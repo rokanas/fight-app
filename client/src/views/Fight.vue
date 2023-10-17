@@ -34,12 +34,13 @@
             </div>
         </div>
         <div class="row" :class="{ 'list-display' : winnerExists }">
-                <div class="col mt-2">
-                    <select class="form-select" aria-label="winner select box" v-on:change="saveWinner" v-model="selectedWinner">
-                    <option value="0">Choose Winner</option>
-                    <option value="1">{{ fighter1.full_name }}</option>
-                    <option value="2">{{ fighter2.full_name }}</option>
-                </select>
+            <div class="col mt-2">
+               <label for="winnerSelect"></label>
+               <select id="winnerSelect" class="form-select" aria-label="winner select box" v-on:change="saveWinner" v-model="selectedWinner">
+                   <option value="0">Choose Winner</option>
+                   <option value="1">{{ fighter1.full_name }}</option>
+                   <option value="2">{{ fighter2.full_name }}</option>
+               </select>
             </div>
         </div>
         <div class="row d-flex flex-column justify-content-center mt-2">
