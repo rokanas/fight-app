@@ -149,7 +149,7 @@ export default {
                         name: 'Profile',
                         params: {id: this.sessionUser}
                     })
-                    }
+                }
             } catch(error) {
                 console.error(error)
             }
@@ -166,8 +166,8 @@ export default {
                 this.fullName = fighterData.data.full_name
                 this.sex = fighterData.data.sex
                 this.age = fighterData.data.age
-                this.weight = fighterData.data.weight
-                this.height = fighterData.data.height
+                this.weight = fighterData.data.weight + ' kg'
+                this.height = fighterData.data.height + ' cm'
                 this.location = fighterData.data.location
                 this.bio = fighterData.data.bio
 

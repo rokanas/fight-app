@@ -108,10 +108,10 @@
                 </div>
                 <div class="row d-flex flex-row-reverse align-self-start mt-2">
                     <div class="col-sm-3 mb-sm-0 mb-2">
-                        <button type="button" class="button-border text-color background-color">Challenge to fight</button>
+                        <button type="button" class="button-border text-color background-color" v-on:click ="challengeOpponent">Challenge to fight</button>
                     </div>
                     <div class="col-sm-3 mb-sm-0 mb-2">
-                        <button type="button" class="button-border text-color background-color">Ask on date</button>
+                        <button type="button" class="button-border text-color background-color" v-on:click ="dateOpponent">Ask on date</button>
                     </div>
                 </div>
             </div>
@@ -192,8 +192,8 @@ export default {
                 this.fullName = fighterData.data.full_name
                 this.sex = fighterData.data.sex
                 this.age = fighterData.data.age
-                this.weight = fighterData.data.weight
-                this.height = fighterData.data.height
+                this.weight = fighterData.data.weight + ' kg'
+                this.height = fighterData.data.height + ' cm'
                 this.location = fighterData.data.location
                 this.bio = fighterData.data.bio
 
@@ -216,7 +216,7 @@ export default {
                 fighterFights.data.forEach(fight => {
                     if (fight.winner === this.$route.params.id) {
                         wins++;
-                    } else {
+                    } else if (fight.winner != '') {
                         losses++;
                     }
                 });
@@ -277,6 +277,18 @@ export default {
         goToHistory() {
             router.push({
                 name: 'FightDateHistory',
+                params: {id: this.$route.params.id}
+            })
+        },
+        challengeOpponent(){
+            router.push({
+                name: 'ChallengeFight',
+                params: {id: this.$route.params.id}
+            })
+        },
+        dateOpponent(){
+            router.push({
+                name: 'AskDate',
                 params: {id: this.$route.params.id}
             })
         }

@@ -88,7 +88,7 @@
                             v-model="height"
                             id ="heightBox"
                             class="form-control"
-                            placeholder="e.g. 180"/>
+                            placeholder="e.g. 180 cm"/>
                         </div>
                         <div class="d-flex align-items-center mt-1 mx-3">
                             <label class= "label-form text-white" for="WeightBox">Weight:</label>
@@ -97,7 +97,7 @@
                             v-model="weight"
                             id ="WeightBox"
                             class="form-control"
-                            placeholder="e.g. 80"/>
+                            placeholder="e.g. 80 kg"/>
                         </div>
                         <div class="d-flex align-items-center mt-1 mx-3">
                             <label class= "label-form text-white" for="locationBox">Location:</label>
