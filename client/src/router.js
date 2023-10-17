@@ -6,8 +6,8 @@ import Opponent from './views/Opponent.vue'
 import FightDateHistory from './views/FightDateHistory.vue'
 import Fight from './views/Fight.vue'
 import Date from './views/Date.vue'
-import ChallengeFight from './views/ChallengeFight.vue'
-import AskDate from './views/AskDate.vue'
+import ChallengeFight from './views/CreateFight.vue'
+import AskDate from './views/CreateDate.vue'
 
 const routes = [
   {

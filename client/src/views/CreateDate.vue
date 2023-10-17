@@ -2,7 +2,7 @@
     <div class="container container-padding">
         <div class="row d-flex flex-row">
             <div class="col-6 d-flex align-items-center justify-content-center">
-                <h1 class="text-color">Potential partner:</h1>
+                <h1 class="text-color">Your sweetheart:</h1>
             </div>
             <div class="col-6 d-flex flex-column">
                 <div class="col">
