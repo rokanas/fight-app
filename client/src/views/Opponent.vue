@@ -194,7 +194,7 @@ export default {
 
                     router.push({ 
                         name: 'Profile', 
-                        params: { id: this.sessionUser.email }
+                        params: { id: this.sessionUser }
                     })
                 } else {
                     console.error(error)
@@ -244,18 +244,18 @@ export default {
         },
         async getNearbyFighters() {
             try {
-                const fighterData = await Api.get('/fighter/' + this.sessionUser.email)
+                const fighterData = await Api.get('/fighter/' + this.sessionUser)
                 const location = fighterData.data.location
-                const response = await Api.get('/fighter/opponent/' + location)
+                const response = await Api.get('/fighter/opponents/' + location)
         
                 this.nearbyFighters = response.data.map(fighter => fighter.email)
-                this.nearbyFighters = this.nearbyFighters.filter(fighter => fighter !== this.sessionUser.email) // filter the array so the session User isn't able to browse their own profile
+                this.nearbyFighters = this.nearbyFighters.filter(fighter => fighter !== this.sessionUser) // filter the array so the session User isn't able to browse their own profile
             } catch(error) {
                 console.error(error)
             }
         },
         async filterUser() { // ensure user isn't able to browse their own profile
-            if(this.sessionUser.email === this.$route.params.id) {
+            if(this.sessionUser === this.$route.params.id) {
                 const randomIndex = Math.floor(Math.random() * this.nearbyFighters.length)
                 router.push({ 
                     name: 'Opponent', 
@@ -264,6 +264,7 @@ export default {
             }
         },
         nextFighter() {
+            console.log(this.nearbyFighters)
             let newIndex
             const currentIndex = this.nearbyFighters.indexOf(this.$route.params.id)
             if(currentIndex === this.nearbyFighters.length - 1) {
