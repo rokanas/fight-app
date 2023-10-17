@@ -1,48 +1,45 @@
 <template>
-    <div class="container container-padding">
+    <div class="container container-padding container-size">
         <div class="row d-flex flex-wrap">
-            <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
-                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter2.full_name }}</label>
-                <img
-                src="../../public/Godzilla.png"
-                class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
-                alt="Profile picture needed"
-                >
+            <div class="col-5 col-sm-4 d-flex flex-fill flex-column">
+                <div class="row d-flex flex-column">
+                    <div class="col">
+                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="gotTofighter2">{{ fighter2.full_name }}</button>
+                    </div>
+                    <div class="col">
+                        <img
+                        src="../../public/Godzilla.png"
+                        class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
+                        alt="Profile picture needed"
+                        >
+                    </div>
+                </div>
             </div>
             <div class="col-2 col-sm-4 d-flex  flex-fill align-items-center justify-content-center">
                 <p class="fs-1 text-color">VS</p>
             </div>
-            <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
-                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter1.full_name }}</label>
-                <img
-                src="../../public/blank-profile-pic.png"
-                class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
-                alt="Profile picture needed"
-                >
+            <div class="col-5 col-sm-4 d-flex flex-fill flex-column">
+                <div class="row d-flex flex-column">
+                    <div class="col">
+                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="gotTofighter1">{{ fighter1.full_name }}</button>
+                    </div>
+                    <div class="col">
+                        <img
+                        src="../../public/blank-profile-pic.png"
+                        class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
+                        alt="Profile picture needed"
+                        >
+                    </div>
+                </div> 
             </div>
         </div>
-        <div class="row">
+        <div class="row" :class="{ 'list-display' : isListHidden }">
             <div class="col mt-2">
-                <button type="button" class="fs-4 background-color text-color button-border pt-1" data-bs-toggle="modal" data-bs-target="#winnerModal">Choose winner</button>
-                <div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="winnerModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                        <div class="modal-content background-color text-color">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Choose the winner!</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body d-flex flex-row flex-wrap align-items-center justify-content-center">
-                                <form>
-                                    <label class="form-label" for="winnerBox">Who won?</label>
-                                    <input type="text" id="winnerBox" class="form-control" placeholder="winner's name">
-                                </form>
-                            </div>
-                            <div class="modal-footer justify-content-center">
-                                <button type="button" class="btn btn-lg justify-content-center modal-button text-color" v-on:click ="submitWinner">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <select class="form-select" aria-label="winner select box" v-on:change="saveWinner" v-model="winner">
+                    <option value="0">Choose Winner</option>
+                    <option value="1">{{ fighter1.full_name }}</option>
+                    <option value="2">{{ fighter2.full_name }}</option>
+                </select>
             </div>
         </div>
         <div class="row d-flex flex-column justify-content-center mt-2">
@@ -120,7 +117,9 @@ export default {
             location: '',
             weightClass: '',
 
-            martialArts: []
+            martialArts: [],
+
+            isListHidden: false
         }
     },
     mounted: async function() {
@@ -209,6 +208,13 @@ export default {
 </script>
 
 <style scoped>
+.list-display{
+    display: none;
+}
+.container-size{
+    width: 100%;
+    max-width: 600px;
+}
 .button-border{
     border-radius: 10px;
     border: none;

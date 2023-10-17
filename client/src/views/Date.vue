@@ -2,23 +2,35 @@
     <div class="container container-padding">
         <div class="row d-flex flex-wrap">
             <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
-                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter2.full_name }}</label>
-                <img
-                src="../../public/Godzilla.png"
-                class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
-                alt="Profile picture needed"
-                >
+                <div class="row d-flex flex-column">
+                    <div class="col">
+                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="gotTofighter2">{{ fighter2.full_name }}</button>
+                    </div>
+                    <div class="col">
+                        <img
+                        src="../../public/Godzilla.png"
+                        class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
+                        alt="Profile picture needed"
+                        >
+                    </div>
+                </div>
             </div>
             <div class="col-2 col-sm-4 d-flex  flex-fill align-items-center justify-content-center">
                 <i class="bi bi-arrow-through-heart fs-1 text-color"></i>
             </div>
             <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
-                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter1.full_name }}</label>
-                <img
-                src="../../public/blank-profile-pic.png"
-                class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
-                alt="Profile picture needed"
-                >
+                <div class="row d-flex flex-column">
+                    <div class="col">
+                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="gotTofighter1">{{ fighter1.full_name }}</button>
+                    </div>
+                    <div class="col">
+                        <img
+                        src="../../public/blank-profile-pic.png"
+                        class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
+                        alt="Profile picture needed"
+                        >
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row d-flex flex-column justify-content-center mt-2">
