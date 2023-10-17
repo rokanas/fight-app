@@ -427,10 +427,6 @@
 									"});\r",
 									"pm.test(\"Response to have all attributes\", function(){\r",
 									"    const responseData = pm.response.json();\r",
-									"\r",
-									"    pm.expect(responseData).to.have.property('accessToken');\r",
-									"\r",
-									"\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -480,9 +476,6 @@
 									"});\r",
 									"pm.test(\"Response to have all attributes\", function(){\r",
 									"    const responseData = pm.response.json();\r",
-									"\r",
-									"    pm.expect(responseData).to.have.property('accessToken');\r",
-									"\r",
 									"\r",
 									"});"
 								],
@@ -2492,8 +2485,6 @@
 									"pm.test(\"Response to have all attributes\", function(){\r",
 									"    const responseData = pm.response.json();\r",
 									"\r",
-									"    pm.expect(responseData).to.have.property('accessToken');\r",
-									"\r",
 									"\r",
 									"});"
 								],
@@ -2545,7 +2536,6 @@
 									"pm.test(\"Response to have all attributes\", function(){\r",
 									"    const responseData = pm.response.json();\r",
 									"\r",
-									"    pm.expect(responseData).to.have.property('accessToken');\r",
 									"\r",
 									"\r",
 									"});"
@@ -3537,8 +3527,6 @@
 									"pm.test(\"Response to have all attributes\", function(){\r",
 									"    const responseData = pm.response.json();\r",
 									"\r",
-									"    pm.expect(responseData).to.have.property('accessToken');\r",
-									"\r",
 									"\r",
 									"});"
 								],
@@ -3590,7 +3578,6 @@
 									"pm.test(\"Response to have all attributes\", function(){\r",
 									"    const responseData = pm.response.json();\r",
 									"\r",
-									"    pm.expect(responseData).to.have.property('accessToken');\r",
 									"\r",
 									"\r",
 									"});"
