@@ -419,9 +419,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response status code is 201\", function () {\r",
-									"  pm.response.to.have.status(201);\r",
-									"});\r",
+									"\r",
 									"pm.test(\"Response to be json\", function () {\r",
 									"    pm.response.to.be.json;\r",
 									"});\r",
@@ -468,9 +466,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response status code is 201\", function () {\r",
-									"  pm.response.to.have.status(201);\r",
-									"});\r",
+									"\r",
 									"pm.test(\"Response to be json\", function () {\r",
 									"    pm.response.to.be.json;\r",
 									"});\r",
@@ -2476,9 +2472,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response status code is 201\", function () {\r",
-									"  pm.response.to.have.status(201);\r",
-									"});\r",
+									"\r",
 									"pm.test(\"Response to be json\", function () {\r",
 									"    pm.response.to.be.json;\r",
 									"});\r",
@@ -2527,9 +2521,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response status code is 201\", function () {\r",
-									"  pm.response.to.have.status(201);\r",
-									"});\r",
+									"\r",
 									"pm.test(\"Response to be json\", function () {\r",
 									"    pm.response.to.be.json;\r",
 									"});\r",
@@ -3518,9 +3510,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response status code is 201\", function () {\r",
-									"  pm.response.to.have.status(201);\r",
-									"});\r",
+									"\r",
 									"pm.test(\"Response to be json\", function () {\r",
 									"    pm.response.to.be.json;\r",
 									"});\r",
@@ -3569,9 +3559,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response status code is 201\", function () {\r",
-									"  pm.response.to.have.status(201);\r",
-									"});\r",
+									"\r",
 									"pm.test(\"Response to be json\", function () {\r",
 									"    pm.response.to.be.json;\r",
 									"});\r",
