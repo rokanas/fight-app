@@ -1,8 +1,8 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-sm background-color header-be-front text-font">
+    <nav class="navbar navbar-expand-sm background-color header-be-front">
       <div class="container-fluid">
-        <a href="#" class="navbar-logo text-color">FightApp</a>
+        <a href="#" class="navbar-logo text-color" id="logo">FightApp</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -16,7 +16,7 @@
             </li>
             </div>
             <div class="col">
-              <a href="#" class="fake-navbar-logo text-color">FightApp</a>
+              <a href="#" class="fake-navbar-logo text-color" id="logo">FightApp</a>
             </div>
             <div class="col d-flex flex-wrap justify-content-sm-end justify-content-center">
               <li class="nav-item">
@@ -44,9 +44,13 @@
 @import '../css/fonts.css';
 
 a {
-  color: #ffffff;                      /* Link color */
-  font-size: 4vh;
-  }
+  font-family: 'MetalMania';
+  -webkit-text-stroke: 1.3px #000;
+}
+
+#logo {
+  -webkit-text-stroke: 2.4px #000;
+}
 .background-color {
   background-color: rgba(255, 0, 0, 0.301);
 }
@@ -71,9 +75,6 @@ a {
 }
 .navbar-items:hover {
   transform: scale(1.1);
-}
-.text-font {
-  font-family: 'MetalMania';
 }
 .text-color {
   color: #FFFF00;

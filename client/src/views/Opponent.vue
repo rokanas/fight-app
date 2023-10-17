@@ -7,103 +7,113 @@
             <div class="col-8 col-sm-8">
                 <div class="row">
                     <div class="col-12">
-                        <div class="container-fluid mt-5 bg-black">
-        <div class="row">
-            <div class="col-md-4 d-flex flex-column align-items-center">
-                <div class="col-3 pt-1">
-                    <p class="fs-2 text-color" >{{ fullName }}</p>
-                </div>
-                <div class="col-9">
-                    <img
-                    src="../../public/Godzilla.png"
-                    class="img-fluid profile-pic-size background-color img-thumbnail"
-                    alt="Profile picture needed">
-                </div>
-                
-            </div>
-            <div class="col-md-8">
-                <div class="row d-flex flex-row align-items-center mt-1 mb-2">
-                    <div class="col-5 ">
-                        <span class="fs-3 text-color">Fighter Stats</span>
-                    </div>
-                    <div class="col-1 win-style">
-                        <span class="span-center">{{ win }}</span>
-                    </div>
-                    <div class="col-1 loss-style mx-1">
-                        <span class="span-center">{{ loss }}</span>
-                    </div>
-                    <div class="col-1 draw-style">
-                        <span class="span-center">{{ draw }}</span>
-                    </div>
-                    <div class="col-3">
-                        <button class="button-border text-color background-color" v-on:click="goToHistory">Fight / Date History</button>
-                    </div>
-                </div>
-                <div class="row d-flex flex-row justify-content-center">
-                    <div class="col-5 background-color me-2">
-                        <div class="row flex-row text-color">
-                            <div class="col-6 align-items-start">
-                                <p class="flex-fill">Sex:</p>
+                        <div class="container-fluid mt-5" id="containerId">
+                            <div class="row">
+                                <div class="col-xl-4 d-flex flex-column align-items-center">
+                                    <div class="col-3 pt-1">
+                                        <p class="fs-2 text-color" >{{ fullName }}</p>
+                                    </div>
+                                    <div class="col-9">
+                                        <img
+                                        src="../../public/Godzilla.png"
+                                        class="img-fluid profile-pic-size background-color img-thumbnail"
+                                        alt="Profile picture needed">
+                                    </div>
+
+                                </div>
+                                <div class="col-xl-8">
+                                    <div class="row d-flex flex-row align-items-center mt-1 mb-2">
+                                        <div class="col-5 ">
+                                            <span class="fs-3 text-color">Fighter Stats</span>
+                                        </div>
+                                        <div class="col-1 win-style">
+                                            <span class="span-center">{{ win }}</span>
+                                        </div>
+                                        <div class="col-1 loss-style mx-1">
+                                            <span class="span-center">{{ loss }}</span>
+                                        </div>
+                                        <div class="col-1 draw-style">
+                                            <span class="span-center">{{ draw }}</span>
+                                        </div>
+                                        <div class="col-3">
+                                            <button class="button-border text-color background-color" v-on:click="goToHistory">Fight / Date History</button>
+                                        </div>
+                                    </div>
+                                    <div class="row d-flex flex-sm-row flex-column justify-content-sm-center">
+                                        <div class="col-sm-5 col-12 background-color me-sm-2">
+                                            <div class="row">
+                                                <div class="col w-100">
+                                                    <div class="row flex-row text-color">
+                                                        <div class="col-6 align-items-start">
+                                                            <p class="flex-fill">Sex:</p>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">{{ sex }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row flex-row text-color">
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">Age:</p>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">{{ age }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row flex-row text-color">
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">Weight:</p>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">{{ weight }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row flex-row text-color">
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">Height:</p>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">{{ height }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row flex-row text-color">
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">Location:</p>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <p class="flex-fill">{{ location }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        <div class="col-sm-6 col-12 background-color mt-sm-0 mt-2">
+                                            <div class="row">
+                                                <div class="col d-flex flex-wrap w-100">
+                                                    <label class="fs-4 flex-wrap flex-fill align-self-top w-100 text-color" for="martialArtBox">Martial Arts:</label>
+                                                    <ul v-for="item in selectedMartialArts" class="flex-row flex-wrap list-margin align-items-center justify-content-center list-group" id="martialArtBox">
+                                                        <li class="d-inline-flex rounded-pill text-color list-border">{{ item.name }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <p class="flex-fill">{{ sex }}</p>
+                            <div class="row mt-2">
+                                <div class="col-md-12 d-flex flex-column mb-2">
+                                    <div class="col-md-2">
+                                        <h3 class="text-color">Bio</h3>
+                                    </div>
+                                    <div class="col-md-10 w-100 background-color ps-1">
+                                        <p class="text-start text-color">{{ bio }}</p>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                        <div class="row flex-row text-color">
-                            <div class="col-6">
-                                <p class="flex-fill">Age:</p>
-                            </div>
-                            <div class="col-6">
-                                <p class="flex-fill">{{ age }}</p>
-                            </div>
-                        </div>
-                        <div class="row flex-row text-color">
-                            <div class="col-6">
-                                <p class="flex-fill">Weight:</p>
-                            </div>
-                            <div class="col-6">
-                                <p class="flex-fill">{{ weight }}</p>
-                            </div>
-                        </div>
-                        <div class="row flex-row text-color">
-                            <div class="col-6">
-                                <p class="flex-fill">Height:</p>
-                            </div>
-                            <div class="col-6">
-                                <p class="flex-fill">{{ height }}</p>
-                            </div>
-                        </div>
-                        <div class="row flex-row text-color">
-                            <div class="col-6">
-                                <p class="flex-fill">Location:</p>
-                            </div>
-                            <div class="col-6">
-                                <p class="flex-fill">{{ location }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-6 d-flex flex-wrap background-color">
-                        <label class="fs-4 flex-wrap flex-fill align-self-top w-100 text-color" for="martialArtBox">Martial Arts:</label>
-                        <ul v-for="item in selectedMartialArts" class="flex-row flex-wrap align-items-center justify-content-center list-group" id="martialArtBox">
-                            <li class="d-inline-flex rounded-pill text-color list-border list-margin">{{ item.name }}</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-md-12 d-flex flex-column mb-2">
-                <div class="col-md-2">
-                    <h3 class="text-color">Bio</h3>
-                </div>
-                <div class="col-md-10 w-100 background-color ps-1">
-                    <p class="text-start text-color">{{ bio }}</p>
-                </div>
-            </div>
-            
-        </div>
-    </div>
                     </div>
                 </div>
                 <div class="row d-flex flex-row-reverse align-self-start mt-2">
@@ -299,6 +309,9 @@ export default {
 </script>
 
 <style scoped>
+#containerId {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
 .button-border{
     border-radius: 10px;
     border: none;
@@ -325,7 +338,7 @@ export default {
     background-color: rgba(255, 255, 255, 0.15) !important;
 }
 .list-margin{
-    margin-right: 6px;
+    margin: 3px;
 }
 .profile-pic-size{
     size: 180px;

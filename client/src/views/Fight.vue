@@ -45,12 +45,12 @@
         <div class="row d-flex flex-column justify-content-center mt-2">
             <div class="col d-flex flex-row flex-wrap flex-fill align-items-center background-color text-color">
                 <i class="bi bi-trophy w-25"></i>
-                <p class="fs-4 w-50 pt-1">Winner: {{ winner }}</p>
+                <h4 class="w-50 pt-1">WINNER: {{ winner }}</h4>
                 <i class="bi bi-trophy w-25"></i>
             </div>
             <div class="col d-flex flex-column">
                 <div class="col-1 col-sm-2 w-100 d-flex flex-fill align-content-center justify-content-center mt-2">
-                    <p class="fs-1 text-color">Fight details:</p>
+                    <p class="fs-1 text-color">FIGHT DETAILS:</p>
                 </div>
                 <div class="col-11 col-sm-10 w-100 flex-fill justify-content-center background-color text-color">
                     <div class="row d-flex flex-row mt-2">
@@ -260,6 +260,11 @@ export default {
 </script>
 
 <style scoped>
+@import '../css/fonts.css';
+h4{
+    font-family: 'RoadRage';
+    -webkit-text-stroke: 0.4px #000;
+}
 .list-display{
     display: none;
 }
