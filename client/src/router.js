@@ -6,8 +6,8 @@ import Opponent from './views/Opponent.vue'
 import FightDateHistory from './views/FightDateHistory.vue'
 import Fight from './views/Fight.vue'
 import Date from './views/Date.vue'
-import ChallengeToFight from './views/ChallengeToFight.vue'
-import AskOnDate from './views/AskOnDate.vue'
+import ChallengeFight from './views/ChallengeFight.vue'
+import AskDate from './views/AskDate.vue'
 
 const routes = [
   {
@@ -50,14 +50,14 @@ const routes = [
     component: Date
   },
   {
-    path: '/challenge-to-fight',
-    name: 'ChallengeToFight',
-    component: ChallengeToFight
+    path: '/opponent/:id/challenge-fight',
+    name: 'ChallengeFight',
+    component: ChallengeFight
   },
   {
-    path: '/ask-on-date',
-    name: 'AskOnDate',
-    component: AskOnDate
+    path: '/opponent/:id/ask-date',
+    name: 'AskDate',
+    component: AskDate
   }
 ]
 

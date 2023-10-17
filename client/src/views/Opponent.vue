@@ -108,10 +108,10 @@
                 </div>
                 <div class="row d-flex flex-row-reverse align-self-start mt-2">
                     <div class="col-sm-3 mb-sm-0 mb-2">
-                        <button type="button" class="button-border text-color background-color">Challenge to fight</button>
+                        <button type="button" class="button-border text-color background-color" v-on:click ="challengeOpponent">Challenge to fight</button>
                     </div>
                     <div class="col-sm-3 mb-sm-0 mb-2">
-                        <button type="button" class="button-border text-color background-color">Ask on date</button>
+                        <button type="button" class="button-border text-color background-color" v-on:click ="dateOpponent">Ask on date</button>
                     </div>
                 </div>
             </div>
@@ -277,6 +277,18 @@ export default {
         goToHistory() {
             router.push({
                 name: 'FightDateHistory',
+                params: {id: this.$route.params.id}
+            })
+        },
+        challengeOpponent(){
+            router.push({
+                name: 'ChallengeFight',
+                params: {id: this.$route.params.id}
+            })
+        },
+        dateOpponent(){
+            router.push({
+                name: 'AskDate',
                 params: {id: this.$route.params.id}
             })
         }

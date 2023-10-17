@@ -149,7 +149,7 @@ export default {
                         name: 'Profile',
                         params: {id: this.sessionUser}
                     })
-                    }
+                }
             } catch(error) {
                 console.error(error)
             }

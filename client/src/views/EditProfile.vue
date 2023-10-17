@@ -194,7 +194,7 @@ export default {
     mounted: async function() {
         await this.authenticateUser();
         await this.populateProfile();
-        await this.getMartialArts()
+        await this.getMartialArts();
     },
     methods: {
         async authenticateUser() {
@@ -205,18 +205,13 @@ export default {
                     alert('Unauthorized access')
                     
                     router.push({
-                        name: 'EditProfile',
+                        name: 'Profile',
                         params: {id: this.sessionUser}
                     })
                     }
             } catch(error) {
                 console.error(error)
             }
-        },
-        editProfile() {
-            router.push({
-                name: 'EditProfile'
-            })
         },
         async populateProfile() {
             try {
@@ -250,7 +245,7 @@ export default {
                 // if martial art doesn't already exist, add it
                 this.newSelection.push(item);
                 
-            } console.log(this.newSelection)
+            }
         },
         async saveMartialArts() {
             try {
