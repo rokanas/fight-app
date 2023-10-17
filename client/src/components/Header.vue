@@ -92,7 +92,7 @@ import router from "../router";
           })
         } else {
           let nearbyFighters = response.data.map(fighter => fighter.email)
-          nearbyFighters = nearbyFighters.filter(fighter => fighter !== user.data.email) // filter the array so the session User isn't able to browse their own profile
+          nearbyFighters = nearbyFighters.filter(fighter => fighter !== user.data) // filter the array so the session User isn't able to browse their own profile
           const randomIndex = Math.floor(Math.random() * nearbyFighters.length)
           router.push({ 
             name: 'Opponent', 
