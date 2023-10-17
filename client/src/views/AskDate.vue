@@ -120,6 +120,10 @@ export default {
                 // make post request to backend API
                 Api.post('/date', newDate)
 
+                 // create the relationship with the fighters
+                await Api.post(`/fighter/${this.sessionUser}/date`, newDate);
+                await Api.post(`/fighter/${this.fighter2.email}/date`, newDate);
+
                 alert('Date created successfully!')
 
                 router.push({

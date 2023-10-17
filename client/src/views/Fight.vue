@@ -2,7 +2,7 @@
     <div class="container container-padding">
         <div class="row d-flex flex-wrap">
             <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
-                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter2 }}</label>
+                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter2.full_name }}</label>
                 <img
                 src="../../public/Godzilla.png"
                 class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
@@ -13,7 +13,7 @@
                 <p class="fs-1 text-color">VS</p>
             </div>
             <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
-                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter1 }}</label>
+                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter1.full_name }}</label>
                 <img
                 src="../../public/blank-profile-pic.png"
                 class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
@@ -161,11 +161,13 @@ export default {
                 this.weightClass = fightData.data.weight_class
 
                 const fighters = await Api.get('/fight/' + this.$route.params.id + '/fighter')
-                this.fighter1 = fighters.data[0].full_name
-                this.fighter2 = fighters.data[1].full_name
+                this.fighter1 = fighters.data[0]
+                this.fighter2 = fighters.data[1]
 
-                if(!fightData.data.winner.key) { // if winner attribute is empty (therefore the winner key is 'falsy')
+                if(fightData.data.winner === '') { // if winner attribute is empty (therefore the winner key is 'falsy')
                     this.winner = 'TBD'
+                } else {
+                    this.winner = fightData.data.winner
                 }
 
                 const fightMartialArts = await Api.get('/fight/' + this.$route.params.id + '/martial-art')
@@ -179,15 +181,26 @@ export default {
         },
         async deleteFight() {
             try {
-                Api.delete('/fight/' + this.$route.params.id)
+                if(this.sessionUser === this.fighter1.email || this.sessionUser === this.fighter2.email) {
+                    // delete the fight resource
+                    await Api.delete('/fight/' + this.$route.params.id);
 
-                router.push({
-                    name: 'Profile',
-                    params: {id: this.sessionUser}
-        
-                })
+                    // delete the relationship from all fighters in fight
+                    const fighterList = await Api.get('/fighter');
+                    for (const fighter of fighterList.data) {
+                        if (fighter.fight_history.some(fight => fight === this.$route.params.id)) {
+                            await Api.delete('/fighter/' + fighter.email + '/fight/' + this.$route.params.id);
+                        }
+                    }
+                    router.push({
+                        name: 'Profile',
+                        params: { id: this.sessionUser }
+                        });
+                } else {
+                    alert(`Cannot delete other fighter's fights!`)
+                }
             } catch (error) {
-                console.error(error)
+                console.error(error);
             }
         }
     },

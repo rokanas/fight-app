@@ -2,7 +2,7 @@
     <div class="container container-padding">
         <div class="row d-flex flex-wrap">
             <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
-                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter2 }}</label>
+                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter2.full_name }}</label>
                 <img
                 src="../../public/Godzilla.png"
                 class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
@@ -13,7 +13,7 @@
                 <i class="bi bi-arrow-through-heart fs-1 text-color"></i>
             </div>
             <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
-                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter1 }}</label>
+                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter1.full_name }}</label>
                 <img
                 src="../../public/blank-profile-pic.png"
                 class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
@@ -109,20 +109,32 @@ export default {
                 this.location = dateData.data.location
 
                 const fighters = await Api.get('/date/' + this.$route.params.id + '/fighter')
-                this.fighter1 = fighters.data[0].full_name
-                this.fighter2 = fighters.data[1].full_name
+                this.fighter1 = fighters.data[0]
+                this.fighter2 = fighters.data[1]
             } catch(error) {
                 console.error(error)
             }
         },
         async deleteDate() {
             try {
-                Api.delete('/date/' + this.$route.params.id)
+                if(this.sessionUser === this.fighter1.email || this.sessionUser === this.fighter2.email) {
+                // delete the date resource
+                    Api.delete('/date/' + this.$route.params.id)
 
-                router.push({
-                    name: 'Profile',
-                    params: {id: this.sessionUser}
-                })
+                // delete the relationship from all fighters in date
+                const fighterList = await Api.get('/fighter');
+                    for (const fighter of fighterList.data) {
+                        if (fighter.date_history.some(date => date === this.$route.params.id)) {
+                            await Api.delete('/fighter/' + fighter.email + '/date/' + this.$route.params.id);
+                        }
+                    }        
+                    router.push({
+                        name: 'Profile',
+                        params: {id: this.sessionUser}
+                    })
+                } else {
+                    alert(`Cannot delete other fighter's dates!`)
+                }
             } catch (error) {
                 console.error(error)
             }

@@ -192,10 +192,13 @@ export default {
                     winner: '',
                     fighters: [this.fighter1, this.fighter2.email]
                 }
-                console.log(newFight)
 
                 // make post request to backend API
-                Api.post('/fight', newFight)
+                await Api.post('/fight', newFight)
+                
+                // create the relationship with the fighters
+                await Api.post(`/fighter/${this.sessionUser}/fight`, newFight);
+                await Api.post(`/fighter/${this.fighter2.email}/fight`, newFight);
 
                 alert('Fight created successfully!')
 
