@@ -1,85 +1,25 @@
-# Backend and Frontend Template
-
-Latest version: https://git.chalmers.se/courses/dit342/group-00-web
-
-This template refers to itself as `group-00-web`. In your project, use your group number in place of `00`.
-
-## Project Structure
-
-| File        | Purpose           | What you do?  |
-| ------------- | ------------- | ----- |
-| `server/` | Backend server code | All your server code |
-| [server/README.md](server/README.md) | Everything about the server | **READ ME** carefully! |
-| `client/` | Frontend client code | All your client code |
-| [client/README.md](client/README.md) | Everything about the client | **READ ME** carefully! |
-| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Free online production deployment | Deploy your app online in production mode |
-| [docs/LOCAL_DEPLOYMENT.md](docs/LOCAL_DEPLOYMENT.md) | Local production deployment | Deploy your app local in production mode |
-
-## Requirements
-
-The version numbers in brackets indicate the tested versions but feel free to use more recent versions.
-You can also use alternative tools if you know how to configure them (e.g., Firefox instead of Chrome).
-
-* [Git](https://git-scm.com/) (v2) => [installation instructions](https://www.atlassian.com/git/tutorials/install-git)
-  * [Add your Git username and set your email](https://docs.gitlab.com/ce/gitlab-basics/start-using-git.html#add-your-git-username-and-set-your-email)
-    * `git config --global user.name "YOUR_USERNAME"` => check `git config --global user.name`
-    * `git config --global user.email "email@example.com"` => check `git config --global user.email`
-  * > **Windows users**: We recommend to use the [Git Bash](https://www.atlassian.com/git/tutorials/git-bash) shell from your Git installation or the Bash shell from the [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to run all shell commands for this project.
-* [Chalmers GitLab](https://git.chalmers.se/) => Login with your **Chalmers CID** choosing "Sign in with" **Chalmers Login**. (contact [support@chalmers.se](mailto:support@chalmers.se) if you don't have one)
-  * DIT342 course group: https://git.chalmers.se/courses/dit342
-  * [Setup SSH key with Gitlab](https://docs.gitlab.com/ee/ssh/)
-    * Create an SSH key pair `ssh-keygen -t ed25519 -C "email@example.com"` (skip if you already have one)
-    * Add your public SSH key to your Gitlab profile under https://git.chalmers.se/profile/keys
-    * Make sure the email you use to commit is registered under https://git.chalmers.se/profile/emails
-  * Checkout the [Backend-Frontend](https://git.chalmers.se/courses/dit342/group-00-web) template `git clone git@git.chalmers.se:courses/dit342/group-00-web.git`
-* [Server Requirements](./server/README.md#Requirements)
-* [Client Requirements](./client/README.md#Requirements)
-
-## Getting started
-
-```bash
-# Clone repository
-git clone git@git.chalmers.se:courses/dit342/group-00-web.git
-
-# Change into the directory
-cd group-00-web
-
-# Setup backend
-cd server && npm install
-npm run dev
-
-# Setup frontend
-cd client && npm install
-npm run serve
-```
-
-> Check out the detailed instructions for [backend](./server/README.md) and [frontend](./client/README.md).
-
-## Visual Studio Code (VSCode)
-
-Open the `server` and `client` in separate VSCode workspaces or open the combined [backend-frontend.code-workspace](./backend-frontend.code-workspace). Otherwise, workspace-specific settings don't work properly.
-
 ## System Definition (MS0)
 
 ### Purpose
 
-The system is an online geosocial networking application that focuses on matching together users for the purpose of ad-hoc organised martial arts competition. It allows users to create a fighter profile, carefully browse through other profiles from the same geographical location and challenge them to a refereed contest at an agreed upon location and date. Using these fighter profiles, KO! enables users to consentually engage in friendly competition with opponents that are they decide are a good competitive fit.
+The system is an online geosocial networking application that focuses on matching together users for the purpose of ad-hoc organised martial arts competition. It allows users to create a fighter profile, carefully browse through other profiles from the same geographical location and challenge them to a contest at an agreed upon location and date. Using these fighter profiles, FightApp enables users to consentually engage in friendly competition with opponents that they decide are a good competitive fit. They also can date other fighters whom they find attractive with our built in dating feature.
 
 ### Pages
 
-* Login page: where user can create user profile or log in with existing credentials
-* User profile page: where user can view their own user profile and modify any information within it
-* Referee user profile page: where user of referee type can view their user profile and modify any information within it
-* Profile browser page: where user can browse through public profiles of other users and issue challenges
-* Issue challenge page: where user can insert details regarding the issued challenge, such as date and location
-* My challenges / Inbox page: where user can view incoming challenges from other users 
-* Challenge page: where user can view details of pending and accepted challenges.
-* Settings page: where user can modify certain settings, such as changing password, making profile private or deleting it
+* Login page: where user can create user profile or log in with existing credentials.
+* User profile page: where user can view their own user profile and modify any information by using the Edit button.
+* Edit profile page: where user can edit their own user profile information.
+* Opponent page: where user can browse through public profiles of other users and issue challenges or dates.
+* Create fight page: where user can insert details regarding the issued challenge, such as date, location, and martial arts.
+* Create date page: where user can insert details regarding the issued date, such as date and location.
+* Fights/dates history page: where user can view all fights and dates that they have with other users.
+* Fight page: where user can view details of pending, accepted, and finished fights.
+* date page: where user can view details of pending and accepted dates.
 
 ### Entity-Relationship (ER) Diagram
 
-![ER Diagram](./images/er_diagram.png)
+![ER Diagram](./images/FightApp_ER_diagram.png)
 
 ## Teaser (MS3)
 
-![Teaser](./images/teaser.png)
+![Teaser](./images/FightApp_teaser.png)
