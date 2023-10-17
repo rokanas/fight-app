@@ -4,7 +4,7 @@
             <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
                 <div class="row d-flex flex-column">
                     <div class="col">
-                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="gotTofighter2">{{ fighter2.full_name }}</button>
+                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="goToFighter2">{{ fighter2.full_name }}</button>
                     </div>
                     <div class="col">
                         <img
@@ -21,7 +21,7 @@
             <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
                 <div class="row d-flex flex-column">
                     <div class="col">
-                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="gotTofighter1">{{ fighter1.full_name }}</button>
+                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="goToFighter1">{{ fighter1.full_name }}</button>
                     </div>
                     <div class="col">
                         <img
@@ -149,6 +149,32 @@ export default {
                 }
             } catch (error) {
                 console.error(error)
+            }
+        },
+        goToFighter1() {
+            if(this.fighter1.email === this.sessionUser) {
+                router.push({
+                    name: 'Profile',
+                    params: {id: this.fighter1.email}
+                })
+            } else {
+                router.push({
+                    name: 'Opponent',
+                    params: {id: this.fighter1.email}
+                })
+            }
+        },
+        goToFighter2() {
+            if(this.fighter2.email === this.sessionUser) {
+                router.push({
+                    name: 'Profile',
+                    params: {id: this.fighter2.email}
+                })
+            } else {
+                router.push({
+                    name: 'Opponent',
+                    params: {id: this.fighter2.email}
+                })
             }
         }
     }

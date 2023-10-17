@@ -4,7 +4,7 @@
             <div class="col-5 col-sm-4 d-flex flex-fill flex-column">
                 <div class="row d-flex flex-column">
                     <div class="col">
-                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="gotTofighter2">{{ fighter2.full_name }}</button>
+                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="goToFighter2">{{ fighter2.full_name }}</button>
                     </div>
                     <div class="col">
                         <img
@@ -21,7 +21,7 @@
             <div class="col-5 col-sm-4 d-flex flex-fill flex-column">
                 <div class="row d-flex flex-column">
                     <div class="col">
-                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="gotTofighter1">{{ fighter1.full_name }}</button>
+                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="goToFighter1">{{ fighter1.full_name }}</button>
                     </div>
                     <div class="col">
                         <img
@@ -33,9 +33,9 @@
                 </div> 
             </div>
         </div>
-        <div class="row" :class="{ 'list-display' : isListHidden }">
-            <div class="col mt-2">
-                <select class="form-select" aria-label="winner select box" v-on:change="saveWinner" v-model="winner">
+        <div class="row" :class="{ 'list-display' : winnerExists }">
+                <div class="col mt-2">
+                    <select class="form-select" aria-label="winner select box" v-on:change="saveWinner" v-model="selectedWinner">
                     <option value="0">Choose Winner</option>
                     <option value="1">{{ fighter1.full_name }}</option>
                     <option value="2">{{ fighter2.full_name }}</option>
@@ -119,13 +119,31 @@ export default {
 
             martialArts: [],
 
-            isListHidden: false
+            selectedWinner: "",
+            winnerExists: false
         }
     },
     mounted: async function() {
         await this.authenticateUser();
         await this.verifyFight();
         await this.populateFight();
+    },
+    computed: {
+        winner() {
+            if (this.selectedWinner === '1') {
+                return this.fighter1.full_name;
+            } else if (this.selectedWinner === '2') {
+                return this.fighter2.full_name;
+            } else if (this.selectedWinner === '0') {
+                return 'TBD'
+            } else {
+                if(this.winner === this.fighter1.email) {
+                    return this.fighter1.full_name
+                } else if (this.winner === this.fighter2.email) {
+                    return this.fighter2.full_name
+                }
+            }
+        },
     },
     methods: {
         async authenticateUser() {
@@ -163,9 +181,8 @@ export default {
                 this.fighter1 = fighters.data[0]
                 this.fighter2 = fighters.data[1]
 
-                if(fightData.data.winner === '') { // if winner attribute is empty (therefore the winner key is 'falsy')
-                    this.winner = 'TBD'
-                } else {
+                if(fightData.data.winner !== '') { // if winner attribute is not empty
+                    this.winnerExists = true
                     this.winner = fightData.data.winner
                 }
 
@@ -175,8 +192,18 @@ export default {
                 console.error(error)
             }
         },
-        submitWinner() {
-
+        async saveWinner() {
+            if (this.selectedWinner === '1') {
+                await Api.patch('/fight/' + this.$route.params.id, { winner: this.fighter1.email})
+                this.winner = this.fighter1.email
+                this.winnerExists = true
+            } else if (this.selectedWinner === '2') {
+                await Api.patch('/fight/' + this.$route.params.id, { winner: this.fighter2.email})
+                this.winner = this.fighter2.email
+                this.winnerExists = true
+            } else {
+                await Api.patch('/fight/' + this.$route.params.id, { winner: ""})
+            }
         },
         async deleteFight() {
             try {
@@ -201,9 +228,34 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+        },
+        goToFighter1() {
+            if(this.fighter1.email === this.sessionUser) {
+                router.push({
+                    name: 'Profile',
+                    params: {id: this.fighter1.email}
+                })
+            } else {
+                router.push({
+                    name: 'Opponent',
+                    params: {id: this.fighter1.email}
+                })
+            }
+        },
+        goToFighter2() {
+            if(this.fighter2.email === this.sessionUser) {
+                router.push({
+                    name: 'Profile',
+                    params: {id: this.fighter2.email}
+                })
+            } else {
+                router.push({
+                    name: 'Opponent',
+                    params: {id: this.fighter2.email}
+                })
+            }
         }
-    },
-
+    }
 }
 </script>
 

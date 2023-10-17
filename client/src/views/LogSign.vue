@@ -155,6 +155,9 @@ export default {
         bio: ''
     }
   },
+  mounted: async function() {
+    await this.verifyUser()
+  },
   methods: {
     showLogIn() {
         this.isLogIn = true;
@@ -168,6 +171,16 @@ export default {
         this.signupButtonColor = '#B30000';
         this.loginButtonColor = '#6B0801';
     },
+    async verifyUser() {
+        if(localStorage.getItem('fightAppAccessToken') !== null) {
+            const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
+            alert('Already logged in!')
+            router.push({
+                name: 'Profile',
+                params: { id: user.data }
+            })
+        }
+    },
     async loginFighter() {
         try {
         // create fighter object with given data
@@ -175,6 +188,7 @@ export default {
           email: this.email,
           password: this.password,
         }
+        
         // make post request to backend API
         const response = await Api.post('/auth/login', fighter)
 
