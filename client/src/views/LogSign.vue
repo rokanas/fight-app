@@ -172,13 +172,23 @@ export default {
         this.loginButtonColor = '#6B0801';
     },
     async verifyUser() {
-        if(localStorage.getItem('fightAppAccessToken') !== null) {
+        try {
+            if(localStorage.getItem('fightAppAccessToken') !== null) {
             const user = await Api.get('/auth/' + localStorage.getItem('fightAppAccessToken'))
-            alert('Already logged in!')
-            router.push({
-                name: 'Profile',
-                params: { id: user.data }
-            })
+
+                alert('Already logged in!')
+                router.push({
+                    name: 'Profile',
+                    params: { id: user.data }
+                    })
+                } 
+        } catch(error) {
+            if(error.response && error.response.status === 404) {
+                localStorage.removeItem('fightAppAccessToken')
+                alert('Access token invalid. Resetting session.')
+            } else {
+                console.error(error)
+            }
         }
     },
     async loginFighter() {
@@ -206,7 +216,13 @@ export default {
         })
 
       } catch (error) {
-        alert(error.message)
+        if(error.response && error.response.status === 401) {
+            alert('Wrong Password!')
+        } else if(error.response && error.response.status === 404) {
+            alert('Email not found!')
+        } else {
+            console.error(error)
+        }
       }
     },
     async registerFighter() {
