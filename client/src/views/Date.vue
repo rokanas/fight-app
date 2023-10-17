@@ -1,24 +1,36 @@
 <template>
-    <div class="container container-padding">
-        <div class="row d-flex flex-wrap">
-            <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
-                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter2.full_name }}</label>
-                <img
-                src="../../public/Godzilla.png"
-                class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
-                alt="Profile picture needed"
-                >
+    <div class="container container-padding container-size">
+        <div class="row d-flex flex-wrap mb-3">
+            <div class="col-5 col-sm-4 d-flex flex-fill align-content-end">
+                <div class="row d-flex flex-column">
+                    <div class="col">
+                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="goToFighter2">{{ fighter2.full_name }}</button>
+                    </div>
+                    <div class="col">
+                        <img
+                        src="../../public/Godzilla.png"
+                        class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
+                        alt="Profile picture needed"
+                        >
+                    </div>
+                </div>
             </div>
-            <div class="col-2 col-sm-4 d-flex  flex-fill align-items-center justify-content-center">
+            <div class="col-2 col-sm-4 d-flex flex-fill align-items-center justify-content-center">
                 <i class="bi bi-arrow-through-heart fs-1 text-color"></i>
             </div>
-            <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
-                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter1.full_name }}</label>
-                <img
-                src="../../public/blank-profile-pic.png"
-                class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
-                alt="Profile picture needed"
-                >
+            <div class="col-5 col-sm-4 d-flex flex-fill align-content-end">
+                <div class="row d-flex flex-column">
+                    <div class="col">
+                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="goToFighter1">{{ fighter1.full_name }}</button>
+                    </div>
+                    <div class="col">
+                        <img
+                        src="../../public/blank-profile-pic.png"
+                        class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
+                        alt="Profile picture needed"
+                        >
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row d-flex flex-column justify-content-center mt-2">
@@ -138,12 +150,42 @@ export default {
             } catch (error) {
                 console.error(error)
             }
+        },
+        goToFighter1() {
+            if(this.fighter1.email === this.sessionUser) {
+                router.push({
+                    name: 'Profile',
+                    params: {id: this.fighter1.email}
+                })
+            } else {
+                router.push({
+                    name: 'Opponent',
+                    params: {id: this.fighter1.email}
+                })
+            }
+        },
+        goToFighter2() {
+            if(this.fighter2.email === this.sessionUser) {
+                router.push({
+                    name: 'Profile',
+                    params: {id: this.fighter2.email}
+                })
+            } else {
+                router.push({
+                    name: 'Opponent',
+                    params: {id: this.fighter2.email}
+                })
+            }
         }
     }
 }
 </script>
 
 <style scoped>
+.container-size{
+    width: 100%;
+    max-width: 600px;
+}
 .button-border{
     border-radius: 10px;
     border: none;

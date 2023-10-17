@@ -1,48 +1,45 @@
 <template>
-    <div class="container container-padding">
-        <div class="row d-flex flex-wrap">
-            <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
-                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter2.full_name }}</label>
-                <img
-                src="../../public/Godzilla.png"
-                class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
-                alt="Profile picture needed"
-                >
-            </div>
-            <div class="col-2 col-sm-4 d-flex  flex-fill align-items-center justify-content-center">
-                <p class="fs-1 text-color">VS</p>
-            </div>
-            <div class="col-5 col-sm-4 d-flex  flex-fill flex-column">
-                <label class="fs-2 text-color" for="fighterOneImage">{{ fighter1.full_name }}</label>
-                <img
-                src="../../public/blank-profile-pic.png"
-                class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
-                alt="Profile picture needed"
-                >
-            </div>
-        </div>
-        <div class="row">
-            <div class="col mt-2">
-                <button type="button" class="fs-4 background-color text-color button-border pt-1" data-bs-toggle="modal" data-bs-target="#winnerModal">Choose winner</button>
-                <div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="winnerModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                        <div class="modal-content background-color text-color">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Choose the winner!</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body d-flex flex-row flex-wrap align-items-center justify-content-center">
-                                <form>
-                                    <label class="form-label" for="winnerBox">Who won?</label>
-                                    <input type="text" id="winnerBox" class="form-control" placeholder="winner's name">
-                                </form>
-                            </div>
-                            <div class="modal-footer justify-content-center">
-                                <button type="button" class="btn btn-lg justify-content-center modal-button text-color" v-on:click ="submitWinner">Submit</button>
-                            </div>
-                        </div>
+    <div class="container container-padding container-size">
+        <div class="row d-flex flex-wrap mb-3">
+            <div class="col-5 col-sm-4 d-flex flex-fill align-content-end">
+                <div class="row d-flex flex-column">
+                    <div class="col">
+                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="goToFighter2">{{ fighter2.full_name }}</button>
+                    </div>
+                    <div class="col">
+                        <img
+                        src="../../public/Godzilla.png"
+                        class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
+                        alt="Profile picture needed"
+                        >
                     </div>
                 </div>
+            </div>
+            <div class="col-2 col-sm-4 d-flex flex-fill align-items-center justify-content-center">
+                <p class="fs-1 text-color">VS</p>
+            </div>
+            <div class="col-5 col-sm-4 d-flex flex-fill align-content-end">
+                <div class="row d-flex flex-column">
+                    <div class="col">
+                        <button type="button" class="fs-2 background-color button-border text-color" v-on:click="goToFighter1">{{ fighter1.full_name }}</button>
+                    </div>
+                    <div class="col">
+                        <img
+                        src="../../public/blank-profile-pic.png"
+                        class="img-fluid profile-pic-size background-color img-thumbnail mt-3"
+                        alt="Profile picture needed"
+                        >
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <div class="row" :class="{ 'list-display' : winnerExists }">
+                <div class="col mt-2">
+                    <select class="form-select" aria-label="winner select box" v-on:change="saveWinner" v-model="selectedWinner">
+                    <option value="0">Choose Winner</option>
+                    <option value="1">{{ fighter1.full_name }}</option>
+                    <option value="2">{{ fighter2.full_name }}</option>
+                </select>
             </div>
         </div>
         <div class="row d-flex flex-column justify-content-center mt-2">
@@ -120,13 +117,33 @@ export default {
             location: '',
             weightClass: '',
 
-            martialArts: []
+            martialArts: [],
+
+            selectedWinner: "",
+            winnerExists: false
         }
     },
     mounted: async function() {
         await this.authenticateUser();
         await this.verifyFight();
         await this.populateFight();
+    },
+    computed: {
+        winner() {
+            if (this.selectedWinner === '1') {
+                return this.fighter1.full_name;
+            } else if (this.selectedWinner === '2') {
+                return this.fighter2.full_name;
+            } else if (this.selectedWinner === '0') {
+                return 'TBD'
+            } else {
+                if(this.winner === this.fighter1.email) {
+                    return this.fighter1.full_name
+                } else if (this.winner === this.fighter2.email) {
+                    return this.fighter2.full_name
+                }
+            }
+        },
     },
     methods: {
         async authenticateUser() {
@@ -164,9 +181,8 @@ export default {
                 this.fighter1 = fighters.data[0]
                 this.fighter2 = fighters.data[1]
 
-                if(fightData.data.winner === '') { // if winner attribute is empty (therefore the winner key is 'falsy')
-                    this.winner = 'TBD'
-                } else {
+                if(fightData.data.winner !== '') { // if winner attribute is not empty
+                    this.winnerExists = true
                     this.winner = fightData.data.winner
                 }
 
@@ -176,8 +192,18 @@ export default {
                 console.error(error)
             }
         },
-        submitWinner() {
-
+        async saveWinner() {
+            if (this.selectedWinner === '1') {
+                await Api.patch('/fight/' + this.$route.params.id, { winner: this.fighter1.email})
+                this.winner = this.fighter1.email
+                this.winnerExists = true
+            } else if (this.selectedWinner === '2') {
+                await Api.patch('/fight/' + this.$route.params.id, { winner: this.fighter2.email})
+                this.winner = this.fighter2.email
+                this.winnerExists = true
+            } else {
+                await Api.patch('/fight/' + this.$route.params.id, { winner: ""})
+            }
         },
         async deleteFight() {
             try {
@@ -202,13 +228,45 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+        },
+        goToFighter1() {
+            if(this.fighter1.email === this.sessionUser) {
+                router.push({
+                    name: 'Profile',
+                    params: {id: this.fighter1.email}
+                })
+            } else {
+                router.push({
+                    name: 'Opponent',
+                    params: {id: this.fighter1.email}
+                })
+            }
+        },
+        goToFighter2() {
+            if(this.fighter2.email === this.sessionUser) {
+                router.push({
+                    name: 'Profile',
+                    params: {id: this.fighter2.email}
+                })
+            } else {
+                router.push({
+                    name: 'Opponent',
+                    params: {id: this.fighter2.email}
+                })
+            }
         }
-    },
-
+    }
 }
 </script>
 
 <style scoped>
+.list-display{
+    display: none;
+}
+.container-size{
+    width: 100%;
+    max-width: 600px;
+}
 .button-border{
     border-radius: 10px;
     border: none;

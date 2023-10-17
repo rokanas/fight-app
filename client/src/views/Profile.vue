@@ -188,7 +188,7 @@ export default {
                 fighterFights.data.forEach(fight => {
                     if (fight.winner === this.$route.params.id) {
                         wins++;
-                    } else {
+                    } else if (fight.winner != '') {
                         losses++;
                     }
                 });

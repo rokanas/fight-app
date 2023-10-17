@@ -130,36 +130,6 @@ router.post('/:id/fighter', async (req, res) => {
     }
   });
 
-// add winner fighter relationship
-router.post('/:id/fighter/winner', async (req, res) => {
-    try {
-  
-      // Find fight by id
-      const fight = await Fight.findOne({ id : req.params.id });
-  
-      if (!fight) {
-        return res.status(404).json({ error: 'Fight not found' });
-      }
-  
-      // Find fighter by email
-      const fighter = await Fighter.findOne({ email : req.body.email });
-  
-      if (!fighter) {
-        return res.status(404).json({ error: 'Fighter not found' });
-      }
-  
-      // Add the fighter to the fight
-      fight.winner = req.body.email;
-  
-      // Save the updated fighter document
-      await fight.save();
-  
-      res.status(201).json(fight); // Respond with the updated fight
-    } catch (err) {
-      res.status(400).json({ error: err.message }); // issue with the client's request
-    }
-  });
-
 // get all fighters in fight
 router.get('/:id/fighter', async (req, res) => {
     try {
